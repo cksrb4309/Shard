@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 544bc0fac5e7ef241bd3245c50b07d6d, type: 3}
-  m_Name: Fast
+  m_Name: CoreUpgradeMoveSpeed
   m_EditorClassIdentifier: 
-  itemName: "\uBE60\uB978 \uACF5\uACA9"
-  explain: "\uACF5\uACA9\uC18D\uB3C4 10% \uC99D\uAC00"
-  itemIcon: {fileID: 21300000, guid: bdd3a3122f650e447bafcb75d8cd604e, type: 3}
+  abilityName: CoreUpgradMoveSpeed
+  explain: a
+  abilityIcon: {fileID: 0}
   passiveData:
-    attribute: 1
-    startValue: 0.1
+    attribute: 2
+    startValue: 1.1
     stackValue: 0.1

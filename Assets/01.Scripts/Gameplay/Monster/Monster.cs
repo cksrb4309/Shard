@@ -11,16 +11,12 @@ public abstract class Monster : MonoBehaviour, IAttackable
     {
         hp -= damage;
 
-        Debug.Log(mobName + " ³²Àº Ã¼·Â: " + hp);
-
         GameManager.Instance.LastHitMonster = this;
 
         if (!IsAlive()) Dead();
     }
     public virtual void Dead()
     {
-        Debug.Log("¸÷ Á×À½");
-
         RewardManager.MonsterDrop(reward);
 
         PoolingManager.Instance.ReturnObject(mobName, gameObject);

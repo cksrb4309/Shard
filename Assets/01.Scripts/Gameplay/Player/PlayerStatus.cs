@@ -109,7 +109,7 @@ public class StatusEffect : ScriptableObject // 상태 변화 효과
     public float interval; // 적용 딜레이
     public int maxStack; // 중첩 횟수
 }
-[CreateAssetMenu(fileName = "Item", menuName = "Item/StatEffect")]
+[CreateAssetMenu(fileName = "Ability", menuName = "Ability/StatEffect")]
 public class StatEffect : StatusEffect
 {
     [Header("Stat")]
@@ -117,7 +117,7 @@ public class StatEffect : StatusEffect
     public float startValue; // 값 선택 (버프 : 1~..., 디버프 : ...~1)
     public float stackValue; // 중첩마다 증가하는 값
 }
-[CreateAssetMenu(fileName = "Item", menuName = "Item/TickEffect")]
+[CreateAssetMenu(fileName = "Ability", menuName = "Ability/TickEffect")]
 public class TickEffect : StatusEffect
 {
     [Header("Tick")]

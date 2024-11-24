@@ -8,11 +8,34 @@ public class ScrollController : MonoBehaviour
 
     public float scrollSpeed = 0.1f;
 
-    private InputActionReference scrollAction;
+    public InputActionReference scrollAction;
+
+    public RectTransform viewPortTransform;
+    public RectTransform contentTransform;
 
     private void OnEnable()
     {
-        // TODO 여기부터 시작
         scrollAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        scrollAction.action.Disable();
+    }
+
+    private void Start()
+    {
+        Debug.Log("---------------------------");
+
+        Debug.Log("Content Height : " + contentTransform.rect.height.ToString());
+
+
+        Debug.Log("ViewPort Height : " + viewPortTransform.rect.height.ToString());
+        Debug.Log("---------------------------");
+
+    }
+    private void Update()
+    {
+
     }
 }

@@ -1,8 +1,7 @@
-using NUnit.Framework.Constraints;
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "KillStatEffect", menuName = "Item/KillStatEffect")]
+[CreateAssetMenu(fileName = "KillStatEffect", menuName = "Ability/KillStatEffect")]
 public class KillStatEffect : Ability, IOnKill
 {
     public StatusEffect statusEffect;
@@ -15,7 +14,7 @@ public class KillStatEffect : Ability, IOnKill
     }
 }
 
-[CreateAssetMenu(fileName = "KillOneSecondTripleKillStatEffect", menuName = "Item/KillOneSecondTripleKillStatEffect")]
+[CreateAssetMenu(fileName = "KillOneSecondTripleKillStatEffect", menuName = "Ability/KillOneSecondTripleKillStatEffect")]
 public class KillOneSecondTripleKillStatEffect : Ability, IOnKill
 {
     public StatusEffect statusEffect;

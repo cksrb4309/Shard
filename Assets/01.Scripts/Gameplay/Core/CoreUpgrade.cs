@@ -32,6 +32,7 @@ public class CoreUpgrade : MonoBehaviour
     #region 유저 강화
     public void UpgradeUserAttackDamage()
     {
+        Debug.Log("---------------!!!!!!!  공격력 증가");
         inventory.GetAbilityApply(coreUpgradeAttackDamage);
     }
     public void UpgradeUserAttackSpeed()

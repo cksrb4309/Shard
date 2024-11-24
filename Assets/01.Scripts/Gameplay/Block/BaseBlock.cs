@@ -3,6 +3,7 @@ using UnityEngine;
 public class BaseBlock : MonoBehaviour, IAttackable
 {
     public float maxHp;
+    public int reward = 5;
     float hp;
     Material material;
     private void Start()
@@ -22,9 +23,9 @@ public class BaseBlock : MonoBehaviour, IAttackable
         {
             PoolingManager.Instance.GetObject("BreakBaseBlock").transform.position = transform.position;
 
-            RewardManager.BaseBlockDrop();
+            RewardManager.BaseBlockDrop(reward);
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else
         {

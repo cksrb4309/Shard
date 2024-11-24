@@ -33,7 +33,11 @@ public class CoreInteractUI : MonoBehaviour
     public CoreUpgrade coreUpgrade;
     public void UpgradeMaxHealth()
     {
+        Debug.Log("최대 체력 업글 시도");
+
         if (!IsUpgrade()) return;
+
+        Debug.Log("최대 체력 업글 성공");
 
         coreUpgrade.UpgradeMaxHealth();
     }
@@ -51,8 +55,11 @@ public class CoreInteractUI : MonoBehaviour
     }
     public void UpgradeUserAttackDamage()
     {
+        Debug.Log("공격력 업글 시도");
+
         if (!IsUpgrade()) return;
 
+        Debug.Log("공격력 업글 성공");
         coreUpgrade.UpgradeUserAttackDamage();
     }
     public void UpgradeUserAttackSpeed()
@@ -94,28 +101,32 @@ public class CoreInteractUI : MonoBehaviour
     #endregion
     #region 비용 확인 함수
     public Inventory inventory;
-    public TMP_Text[] costTextArray;
+    public TMP_Text[] coreUpgradeCostText;
     public int currentCost = 10;
     public float nextCostMultiplier = 1.5f;
 
     bool IsUpgrade()
     {
-        if (inventory.GetEnergyCore() > currentCost)
+        if (inventory.GetEnergyCore() >= currentCost)
         {
             inventory.UseEnergyCore(currentCost);
 
             currentCost = (int)(currentCost * nextCostMultiplier);
 
-            for (int i = 0; i < costTextArray.Length; i++) costTextArray[i].text = "Cost: "+currentCost.ToString();
+            for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: "+currentCost.ToString();
+
+            Debug.Log("비용 통과");
 
             return true;
         }
+
+        Debug.Log("비용 막힘");
 
         return false;
     }
     private void Start()
     {
-        for (int i = 0; i < costTextArray.Length; i++) costTextArray[i].text = "Cost: " + currentCost.ToString();
+        for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: " + currentCost.ToString();
     }
     #endregion
 }

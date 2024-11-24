@@ -132,6 +132,7 @@ public abstract class PlayerSkill : MonoBehaviour
     }
     public void SetCriticalChance(float criticalChance)
     {
+        Debug.Log("크확 설정 " + criticalChance.ToString());
         this.criticalChance = criticalChance;
     }
     public void SetCriticalDamage(float criticalDamage)

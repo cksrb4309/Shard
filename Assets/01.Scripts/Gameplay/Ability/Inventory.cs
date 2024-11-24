@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -10,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     public List<PlayerSkill> playerSkillList;
 
-    Dictionary<int, int> AbilityInventory = new Dictionary<int, int>();
+    Dictionary<int, int> abilityInventory = new Dictionary<int, int>();
 
     int energyCore = 0; // 에너지 결정체 [파편을 통해 얻을 수 있다]
     int soulShard = 0; // 영혼의 파편 [몬스터를 통해 얻을 수 있다]
@@ -52,27 +51,27 @@ public class Inventory : MonoBehaviour
     }
     public void GetAbilityApply(Ability ability)
     {
+        // 어빌리티 ID 등록
+        AbilityNameToIdMapper.RegisterAbility(ability.abilityName);
+
         // 지니고 있던 어빌리티일 경우
-        if (AbilityInventory.ContainsKey(AbilityNameToIdMapper.GetId(ability.abilityName)))
+        if (abilityInventory.ContainsKey(AbilityNameToIdMapper.GetId(ability.abilityName)))
         {
-            AbilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]++;
+            abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]++;
         }
         // 지니지 않던 어빌리티일 경우
         else
         {
-            AbilityInventory.Add(AbilityNameToIdMapper.GetId(ability.abilityName), 1);
+            abilityInventory.Add(AbilityNameToIdMapper.GetId(ability.abilityName), 1);
         }
 
-        // 어빌리티 ID 등록
-        AbilityNameToIdMapper.RegisterAbility(ability.abilityName);
-
         // Icon 셋팅!
-        InventoryUI.SetItem(ability, AbilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
+        InventoryUI.SetItem(ability, abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
 
         // 만약 패시브 어빌리티일 경우
         if (ability.GetCondition() is IPassive passiveAbility)
         {
-            var passiveAttribute = passiveAbility.GetValue(AbilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
+            var passiveAttribute = passiveAbility.GetValue(abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
 
             playerAttributes.ApplyPassiveAbilityAttribute(passiveAttribute.Item1, passiveAttribute.Item2, passiveAttribute.Item3);
         }
@@ -85,13 +84,16 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-    public float GetEnergyCore() => EnergyCore;
+    public float GetEnergyCore()
+    {
+        return EnergyCore;
+    }
     public void UseEnergyCore(int cost)
     {
         EnergyCore -= cost;
     }
     public float GetSoulShard() => SoulShard;
-    public void UseSoulShar(int cost)
+    public void UseSoulShard(int cost)
     {
         SoulShard -= cost;
     }

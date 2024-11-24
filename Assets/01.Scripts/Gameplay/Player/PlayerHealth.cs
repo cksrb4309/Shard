@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,15 +6,17 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public PlayerStatus playerStatus;
-
     public TMP_Text hpText;
     public Slider hpSlider;
-
+    
     float maxHp;
     float hp;
+    float hpRegen = 0;
     private void Start()
     {
         GameManager.Instance.AddPlayer(transform);
+
+        StartCoroutine(RegenCoroutine());
     }
     float MaxHp
     {
@@ -48,19 +51,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         float distance = maxHp - this.maxHp;
 
-        Debug.Log("현재 maxHp:" + this.maxHp.ToString() + " / 설정 maxHp:" + maxHp.ToString());
-
         MaxHp = maxHp;
 
         Hp = Mathf.Clamp(hp + distance, 1, maxHp);
     }
+    public void SetHealthRegen(float hpRegen)
+    {
+        Debug.Log("HpRegen : " + hpRegen.ToString());
+        this.hpRegen = hpRegen;
+    }
     public void Hit(float damage)
     {
-        Debug.Log("맞기 전 체력:" + Hp.ToString());
-
         Hp -= damage;
-        Debug.Log("데미지 : " + damage.ToString());
-        Debug.Log("Hit 남은 hp:" + Hp.ToString());
 
         if (Hp <= 0)
         {
@@ -71,7 +73,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (!IsAlive()) return;
 
+        if (maxHp == hp) return;
+
         Hp += heal;
+
+        if (Hp > maxHp) Hp = maxHp;
     }
     void Dead()
     {
@@ -80,8 +86,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("TakeDamage:" + damage.ToString());
-        
         Hit(damage);
     }
 
@@ -95,5 +99,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public bool IsAlive()
     {
         return Hp > 0;
+    }
+    IEnumerator RegenCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            Debug.Log(hpRegen.ToString());
+            Heal(hpRegen);
+        }
     }
 }

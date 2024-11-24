@@ -43,6 +43,7 @@ public class AttackProjectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        float damage = this.damage;
         if (!isPiercing)
         {
             if (isAttacked) return;
@@ -59,9 +60,6 @@ public class AttackProjectile : MonoBehaviour
 
             attackData.OnCritical();
         }
-
-        Debug.Log("가한 데미지: " + damage.ToString());
-
         attackable.ReceiveHit(damage);
 
         attackData.OnHit(damage);
@@ -70,7 +68,6 @@ public class AttackProjectile : MonoBehaviour
         {
             attackData.OnKill();
         }
-
         if (!isPiercing) PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }
 }

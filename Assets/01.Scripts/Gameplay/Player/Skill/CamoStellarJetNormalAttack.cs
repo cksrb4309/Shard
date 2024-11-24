@@ -1,21 +1,8 @@
-using System;
 using UnityEngine;
 
 public class CamoStellarJetNormalAttack : PlayerSkill
 {
-    public Transform[] firePositions; // 발사 위치 및 회전 값
-
-    Transform FirePos
-    {
-        get
-        {
-            if (currentIndex > 2) currentIndex = 0;
-
-            return firePositions[currentIndex++];
-        }
-    }
-
-    int currentIndex = 0;
+    public Transform firePos;
 
     public float damageMultiplier; // 데미지 계수
     public float baseProjectileDuration; // 기본 투사체 유지시간
@@ -26,21 +13,23 @@ public class CamoStellarJetNormalAttack : PlayerSkill
         {
             if (IsAttack())
             {
-                Transform firePos = FirePos;
-
                 StackCount--;
 
                 AttackProjectile attackProjectile = PoolingManager.Instance.GetObject<AttackProjectile>("CamoStellarJetNormalAttack");
 
+                Vector3 position = firePos.position + firePos.right * Random.Range(-0.1f, 0.1f);
+
+                Debug.Log("크확 확률" + criticalChance.ToString());
+
                 attackProjectile.SetAttackProjectile(
-                    attackData: attackData,
-                    damage: damage * damageMultiplier,
-                    speed: baseProjectileSpeed * projectileSpeed,
+                    attackData:     attackData,
+                    damage:         damage * damageMultiplier,
+                    speed:          baseProjectileSpeed * projectileSpeed,
                     criticalChance: criticalChance,
                     criticalDamage: criticalDamage,
-                    destroyDelay: baseProjectileDuration * projectileDuration,
-                    pos: firePos.position,
-                    rotation: firePos.rotation);
+                    destroyDelay:   baseProjectileDuration * projectileDuration,
+                    pos:            position,
+                    rotation:       firePos.rotation);
             }
         }
     }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
+
 using UnityEngine;
 
 
@@ -136,6 +136,7 @@ public class PlayerAttributes : MonoBehaviour
         //    }
         //}
 
+
         foreach (float value in activeBuffEffects[(int)attribute].Values)
         {
             if (CheckOperationType(attribute))  // 곱연산일 경우
@@ -171,6 +172,8 @@ public class PlayerAttributes : MonoBehaviour
         {
             currentAttributes[(int)Attribute.CriticalChance] =
                 currentAttributes[(int)Attribute.FlatCriticalChance] * currentAttributes[(int)Attribute.RateCriticalChance];
+
+            Debug.Log("치확 값 확인 : " + GetAttribute(Attribute.CriticalChance).ToString());
 
             normalAttack.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
             mainSkill.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
@@ -213,6 +216,10 @@ public class PlayerAttributes : MonoBehaviour
             normalAttack.SetProjectileSpeed(GetAttribute(Attribute.ProjectileSpeed));
             mainSkill.SetProjectileSpeed(GetAttribute(Attribute.ProjectileSpeed));
             subSkill.SetProjectileSpeed(GetAttribute(Attribute.ProjectileSpeed));
+        }
+        else if (attribute == Attribute.HealthRegenRate)
+        {
+            health.SetHealthRegen(GetAttribute(Attribute.HealthRegenRate));
         }
     }
     public float GetAttribute(Attribute attribute) => currentAttributes[(int)attribute];

@@ -9,8 +9,10 @@ public class RewardManager : MonoBehaviour
         instance = this;
     }
 
-    public static void BaseBlockDrop()
+    public static void BaseBlockDrop(int value)
     {
+        Inventory.GainEnergeCore(value);
+
         PlayerLevelManager.AddExperience(10f);
     }
     public static void MonsterDrop(int value)
