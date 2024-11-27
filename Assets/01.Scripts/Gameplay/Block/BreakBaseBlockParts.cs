@@ -26,10 +26,10 @@ public class BreakBaseBlockParts : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += dir * Time.fixedDeltaTime;
+        transform.position += dir * Time.fixedDeltaTime * 2f;
         transform.Rotate(randomRot * Time.fixedDeltaTime * 180f);
 
-        transform.localScale -= shrinkRate * Time.fixedDeltaTime;
+        transform.localScale -= shrinkRate * Time.fixedDeltaTime * 2f;
         transform.localScale = Vector3.Max(transform.localScale, Vector3.zero);
     }
 }

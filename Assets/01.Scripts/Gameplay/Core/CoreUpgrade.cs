@@ -7,13 +7,13 @@ public class CoreUpgrade : MonoBehaviour
     public CoreHealth coreHealth;
     public Inventory inventory;
 
-    public Ability coreUpgradeAttackDamage;
-    public Ability coreUpgradeAttackSpeed;
-    public Ability coreUpgradeCriticalChance;
-    public Ability coreUpgradeCriticalDamage;
-    public Ability coreUpgradeMaxHealth;
-    public Ability coreUpgradeHealthRegen;
-    public Ability coreUpgradeMoveSpeed;
+    public TempAbility coreUpgradeAttackDamage;
+    public TempAbility coreUpgradeAttackSpeed;
+    public TempAbility coreUpgradeCriticalChance;
+    public TempAbility coreUpgradeCriticalDamage;
+    public TempAbility coreUpgradeMaxHealth;
+    public TempAbility coreUpgradeHealthRegen;
+    public TempAbility coreUpgradeMoveSpeed;
 
     #region 코어 강화
     public void UpgradeMaxHealth()

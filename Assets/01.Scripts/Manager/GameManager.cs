@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +12,11 @@ public class GameManager : MonoBehaviour
     public IAttackable LastHitMonster = null;
 
     List<Transform> playerPositions = new List<Transform>();
-
+    Transform playerTransform = null;
     private void Awake()
     {
+        instance = this;   
+        /*
         if (instance == null)
         {
             instance = this;
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }*/
     }
 
     // 게임 매니저에 플레이어를 추가한다
@@ -68,5 +71,17 @@ public class GameManager : MonoBehaviour
             }
         }
         return ret;
+    }
+    public static Transform GetPlayerTransform() => instance.playerTransform;
+    public static void SetPlayerTransform(Transform playerTransform) => instance.playerTransform = playerTransform;
+    public static IAttackable GetLastHit()
+    {
+        return instance.LastHitMonster;
+    }
+    public static void SetLastHit(IAttackable attackable)
+    {
+        Debug.Log("마지막 맞은 Attackable 처리");
+
+        instance.LastHitMonster = attackable;
     }
 }

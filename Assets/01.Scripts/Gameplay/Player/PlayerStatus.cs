@@ -9,8 +9,8 @@ public class PlayerStatus : MonoBehaviour
 
     static PlayerStatus instance = null;
 
-    public Dictionary<string, int> statusEffects = new Dictionary<string, int>();
-    public Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
+    public Dictionary<int, int> statusEffects = new Dictionary<int, int>();
+    public Dictionary<int, Coroutine> coroutines = new Dictionary<int, Coroutine>();
 
     float healingMultiplier; // 치유양 기본 1
 
@@ -24,40 +24,44 @@ public class PlayerStatus : MonoBehaviour
     }
     public void GetStatusEffectApply(StatusEffect statusEffect)
     {
-        if (statusEffects.ContainsKey(statusEffect.effectName))
+        StatusNameToIdMapper.RegisterStatusEffect(statusEffect.effectName);
+        int id = StatusNameToIdMapper.GetId(statusEffect.effectName);
+
+        if (statusEffects.ContainsKey(id))
         {
             // 추가 스택이 가능하면 효과를 1 중첩한다!
-            if (statusEffect.maxStack > statusEffects[statusEffect.effectName])
+            if (statusEffect.maxStack > statusEffects[id])
             {
-                statusEffects[statusEffect.effectName]++;
+                statusEffects[id]++;
             }
             // 아님 말고 ~
         }
         else
         {
             // 상태에 없던 효과였을 때
-            statusEffects.Add(statusEffect.effectName, 1);
+            statusEffects.Add(id, 1);
         }
 
-        if (coroutines.ContainsKey(statusEffect.effectName))
+        if (coroutines.ContainsKey(id))
         {
-            StopCoroutine(coroutines[statusEffect.effectName]);
+            StopCoroutine(coroutines[id]);
         }
 
-
+        #region 상태 효과 적용
         if (statusEffect is StatEffect statEffect)
         {
             playerAttributes.ApplyActiveBuffAttribute(
                 statEffect.attribute,
                 statEffect.effectName,
-                statEffect.startValue + statEffect.stackValue * (statusEffects[statusEffect.effectName] - 1));
+                statEffect.value * statusEffects[id]);
 
-            coroutines[statEffect.effectName] = StartCoroutine(StatEffectCoroutine(statEffect));
+            coroutines[id] = StartCoroutine(StatEffectCoroutine(statEffect));
         }
         if (statusEffect is TickEffect tickEffect)
         {
-            coroutines[tickEffect.effectName] = StartCoroutine(TickEffectCoroutine(tickEffect));
+            coroutines[id] = StartCoroutine(TickEffectCoroutine(tickEffect));
         }
+        #endregion
     }
     IEnumerator StatEffectCoroutine(StatEffect statEffect)
     {
@@ -65,22 +69,25 @@ public class PlayerStatus : MonoBehaviour
 
         playerAttributes.RemoveActiveBuffAttribute(statEffect.attribute, statEffect.effectName);
 
-        statusEffects.Remove(statEffect.effectName);
-        coroutines.Remove(statEffect.effectName);
+        statusEffects.Remove(StatusNameToIdMapper.GetId(statEffect.effectName));
+        coroutines.Remove(StatusNameToIdMapper.GetId(statEffect.effectName));
     }
     IEnumerator TickEffectCoroutine(TickEffect tickEffect)
     {
         float duration = tickEffect.duration;
         float interval = tickEffect.interval;
-
+        int id = StatusNameToIdMapper.GetId(tickEffect.effectName);
         while (true)
         {
-            float damage = tickEffect.startValue + tickEffect.stackValue * (statusEffects[tickEffect.effectName] - 1);
+            float damage = tickEffect.value * statusEffects[id];
 
             if (damage > 0)
             {
                 // 틱 데미지                        모든 틱 데미지는 기본 틱 데미지에 현재 난이도 * 0.2 (20%) 데미지를 추가한다
                 playerHealth.Hit(damage + (damage * DifficultyManager.Difficulty) * 0.2f);
+
+                // 근데 사실 잘 생각해보면 플레이어에게 틱 데미지를 줄 일이 현재로써는 많이 없음
+                // 현재 난이도에 따른 데미지가 맘에 안드는지는 고민해봐야함
             }
             else
             {
@@ -93,35 +100,58 @@ public class PlayerStatus : MonoBehaviour
             duration -= interval;
             if (duration < 0) break;
         }
-        statusEffects.Remove(tickEffect.effectName);
-        coroutines.Remove(tickEffect.effectName);
+        statusEffects.Remove(id);
+        coroutines.Remove(id);
     }
     public void SetHealingMultiplier(float healingMultiplier)
     {
         this.healingMultiplier = healingMultiplier;
     }
+    public static void Healing(float value)
+    {
+        instance.playerHealth.Heal(instance.healingMultiplier * value);
+    }
 }
-public class StatusEffect : ScriptableObject // 상태 변화 효과
+public abstract class StatusEffect : ScriptableObject // 상태 변화 효과
 {
     [Header("Base")]
     public string effectName; // 명칭
     public float duration; // 지속시간
-    public float interval; // 적용 딜레이
+
     public int maxStack; // 중첩 횟수
+
+    public abstract void SetCount(int count);
 }
 [CreateAssetMenu(fileName = "Ability", menuName = "Ability/StatEffect")]
 public class StatEffect : StatusEffect
 {
     [Header("Stat")]
     public Attribute attribute; // 속성 선택
-    public float startValue; // 값 선택 (버프 : 1~..., 디버프 : ...~1)
-    public float stackValue; // 중첩마다 증가하는 값
+    public float startValue; // 속성 적용 초기값 예) 1.1 
+    public float stackValue; // 속성 적용 누적값 예) 0.1
+
+    [HideInInspector] public float value; // 실제 내부적으로 적용해야하는 값
+
+    public override void SetCount(int count)
+    {
+        value = startValue + stackValue * (count - 1);
+    }
 }
 [CreateAssetMenu(fileName = "Ability", menuName = "Ability/TickEffect")]
 public class TickEffect : StatusEffect
 {
     [Header("Tick")]
+
+    public float interval; // 적용 딜레이
+
     // 틱 마다 가하는 데미지 ( 음수일 경우 틱마다 힐을 한다 )
-    public float startValue; // 값 선택 (버프 : 1~..., 디버프 : ...~1)
+    public float startValue; // 값 선택 (버프 : 1~..., 디버프 : ...~0)
     public float stackValue; // 중첩마다 증가하는 값
+
+    [HideInInspector] public float value; // 실제로 적용하는 값
+
+    public override void SetCount(int count)
+    {
+        value = startValue + stackValue * (count - 1);
+    }
 }

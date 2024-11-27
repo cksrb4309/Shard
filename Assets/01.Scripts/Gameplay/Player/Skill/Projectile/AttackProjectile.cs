@@ -62,7 +62,7 @@ public class AttackProjectile : MonoBehaviour
         }
         attackable.ReceiveHit(damage);
 
-        attackData.OnHit(damage);
+        attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
 
         if (!attackable.IsAlive())
         {

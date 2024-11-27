@@ -7,17 +7,27 @@ public abstract class Monster : MonoBehaviour, IAttackable
     public int reward;
     protected float maxHp;
     protected float hp;
+
+    Vector3 deadPosition;
+
     public void ReceiveHit(float damage)
     {
         hp -= damage;
 
-        GameManager.Instance.LastHitMonster = this;
+        GameManager.SetLastHit(this);
 
         if (!IsAlive()) Dead();
+    }
+    public void Heal(float heal)
+    {
+        if (IsAlive())
+            hp += heal;
     }
     public virtual void Dead()
     {
         RewardManager.MonsterDrop(reward);
+
+        deadPosition = transform.position;
 
         PoolingManager.Instance.ReturnObject(mobName, gameObject);
     }
@@ -27,4 +37,28 @@ public abstract class Monster : MonoBehaviour, IAttackable
         return true;
     }
     public abstract void Setting(float hp, float damage);
+
+    public Vector3 GetPosition()
+    {
+        if (IsAlive())
+        {
+            return transform.position;
+        }
+        return deadPosition;
+    }
+    public void ReceiveDebuff(StatusEffect effect, float damage)
+    {
+        ReceiveHit(damage);
+
+
+
+        if (effect is StatEffect statEffect)
+        {
+            
+        }
+        else if (effect is TickEffect tickEffect)
+        {
+
+        }
+    }
 }

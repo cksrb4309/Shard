@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     public List<PlayerSkill> playerSkillList;
 
-    Dictionary<int, int> abilityInventory = new Dictionary<int, int>();
+    Dictionary<int, TempAbility> abilityInventory = new Dictionary<int, TempAbility>();
 
     int energyCore = 0; // 에너지 결정체 [파편을 통해 얻을 수 있다]
     int soulShard = 0; // 영혼의 파편 [몬스터를 통해 얻을 수 있다]
@@ -45,11 +45,11 @@ public class Inventory : MonoBehaviour
     {
         instance = this;
     }
-    public static void GetAbility(Ability ability)
+    public static void GetAbility(TempAbility ability)
     {
         instance.GetAbilityApply(ability);
     }
-    public void GetAbilityApply(Ability ability)
+    public void GetAbilityApply(TempAbility ability)
     {
         // 어빌리티 ID 등록
         AbilityNameToIdMapper.RegisterAbility(ability.abilityName);
@@ -57,37 +57,51 @@ public class Inventory : MonoBehaviour
         // 지니고 있던 어빌리티일 경우
         if (abilityInventory.ContainsKey(AbilityNameToIdMapper.GetId(ability.abilityName)))
         {
-            abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]++;
+            abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)].Add();
         }
         // 지니지 않던 어빌리티일 경우
         else
         {
-            abilityInventory.Add(AbilityNameToIdMapper.GetId(ability.abilityName), 1);
+            abilityInventory.Add(AbilityNameToIdMapper.GetId(ability.abilityName), ability);
+            abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)].SetCount(1);
         }
 
         // Icon 셋팅!
-        InventoryUI.SetItem(ability, abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
+        //InventoryUI.SetItem(ability, abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
 
         // 만약 패시브 어빌리티일 경우
         if (ability.GetCondition() is IPassive passiveAbility)
         {
-            var passiveAttribute = passiveAbility.GetValue(abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)]);
+            var passiveAttribute = passiveAbility.GetValue();
 
             playerAttributes.ApplyPassiveAbilityAttribute(passiveAttribute.Item1, passiveAttribute.Item2, passiveAttribute.Item3);
         }
         // 만약 처치 시 발동 어빌리티일 경우
         else if (ability.GetCondition() is IOnKill onKillItem)
         {
-            foreach (var skill in playerSkillList)
+            // 아이템 개수가 만약 1개일 때
+            if (abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)].GetCount() == 1)
             {
-                skill.AddOnKillAbility(onKillItem);
+                foreach (var skill in playerSkillList)
+                {
+                    skill.AddOnKillAbility(onKillItem);
+                }
+            }
+        }
+        // 만약 때렸을 때 총 데미지를 기반으로 확률적 발동하는 어빌리티일 경우
+        else if (ability.GetCondition() is IOnHitChanceDamage onHitChanceDamage)
+        {
+            // 아이템 개수가 만약 1개일 때
+            if (abilityInventory[AbilityNameToIdMapper.GetId(ability.abilityName)].GetCount() == 1)
+            {
+                foreach (var skill in playerSkillList)
+                {
+                    skill.AddOnHitChanceDamage(onHitChanceDamage);
+                }
             }
         }
     }
-    public float GetEnergyCore()
-    {
-        return EnergyCore;
-    }
+    public float GetEnergyCore() => EnergyCore;
     public void UseEnergyCore(int cost)
     {
         EnergyCore -= cost;

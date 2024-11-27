@@ -11,6 +11,7 @@ public class PlayerAttributes : MonoBehaviour
     const int AttributeCount = 22;
 
     public PlayerHealth health;
+    public PlayerStatus status;
 
     public PlayerSkill normalAttack;
     public PlayerSkill mainSkill;
@@ -62,6 +63,8 @@ public class PlayerAttributes : MonoBehaviour
 
         // 플레이어 최대 체력 설정
         health.InitializeHp(GetAttribute(Attribute.Hp));
+
+        LuckManager.SetLuck((int)GetAttribute(Attribute.Luck));
     }
     void Initialize()
     {
@@ -151,41 +154,47 @@ public class PlayerAttributes : MonoBehaviour
     }
     void UpdateAttributes(Attribute attribute) // 적용 마무리 처리
     {
+        #region 공격력 적용
         if (attribute == Attribute.AttackDamage)
         {
             normalAttack.SetDamage(GetAttribute(Attribute.AttackDamage));
             mainSkill.SetDamage(GetAttribute(Attribute.AttackDamage));
             subSkill.SetDamage(GetAttribute(Attribute.AttackDamage));
         }
+        #endregion
+        #region 공격 속도 적용
         else if (attribute == Attribute.AttackSpeed)
         {
             normalAttack.SetCoolDown(GetAttribute(Attribute.AttackSpeed));
         }
-        // 변화시킨 속성이 방어력과 관련 있을 경우
+        #endregion
+        #region 방어력 적용
         else if (attribute == Attribute.FlatDefense || attribute == Attribute.RateDefense)
         {
             currentAttributes[(int)Attribute.Defense] =
                 currentAttributes[(int)Attribute.FlatDefense] * currentAttributes[(int)Attribute.RateDefense];
         }
-        // 변화시킨 속성이 치명타와 관련 있을 경우
+        #endregion
+        #region 치명타 확률 적용
         else if (attribute == Attribute.FlatCriticalChance || attribute == Attribute.RateCriticalChance)
         {
             currentAttributes[(int)Attribute.CriticalChance] =
                 currentAttributes[(int)Attribute.FlatCriticalChance] * currentAttributes[(int)Attribute.RateCriticalChance];
 
-            Debug.Log("치확 값 확인 : " + GetAttribute(Attribute.CriticalChance).ToString());
-
             normalAttack.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
             mainSkill.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
             subSkill.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
         }
+        #endregion
+        #region 치명타 데미지 적용
         else if (attribute == Attribute.CriticalDamage)
         {
             normalAttack.SetCriticalDamage(GetAttribute(Attribute.CriticalDamage));
             mainSkill.SetCriticalDamage(GetAttribute(Attribute.CriticalDamage));
             subSkill.SetCriticalDamage(GetAttribute(Attribute.CriticalDamage));
         }
-        // 변화시킨 속성이 HP와 관련 있을 경우
+        #endregion
+        #region 체력 적용
         else if (attribute == Attribute.FlatHp || attribute == Attribute.RateHp)
         {
             currentAttributes[(int)Attribute.Hp] =
@@ -193,7 +202,8 @@ public class PlayerAttributes : MonoBehaviour
 
             health.SetMaxHp(currentAttributes[(int)Attribute.Hp]);
         }
-        // 메인 스킬의 스택이 달라졌을 때
+        #endregion
+        #region 스킬 충전 스택 적용
         else if (attribute == Attribute.MainSkillStack)
         {
             // 스킬 최대 충전 스택 설정
@@ -205,6 +215,8 @@ public class PlayerAttributes : MonoBehaviour
             // 스킬 최대 충전 스택 설정
             subSkill.SetStack((int)GetAttribute(Attribute.SubSkillStack));
         }
+        #endregion
+        #region 투사체 적용
         else if (attribute == Attribute.ProjectileDuration)
         {
             normalAttack.SetProjectileDuration(GetAttribute(Attribute.ProjectileDuration));
@@ -217,10 +229,25 @@ public class PlayerAttributes : MonoBehaviour
             mainSkill.SetProjectileSpeed(GetAttribute(Attribute.ProjectileSpeed));
             subSkill.SetProjectileSpeed(GetAttribute(Attribute.ProjectileSpeed));
         }
+        #endregion
+        #region 초당 체력 재생 적용
         else if (attribute == Attribute.HealthRegenRate)
         {
-            health.SetHealthRegen(GetAttribute(Attribute.HealthRegenRate));
+            health.SetHealthRegen(GetAttribute(attribute));
         }
+        #endregion
+        #region 행운 적용
+        else if (attribute == Attribute.Luck)
+        {
+            LuckManager.SetLuck((int)GetAttribute(Attribute.Luck));
+        }
+        #endregion
+        #region 체력 회복 증가
+        else if (attribute == Attribute.Healing)
+        {
+            status.SetHealingMultiplier(GetAttribute(attribute));
+        }
+        #endregion
     }
     public float GetAttribute(Attribute attribute) => currentAttributes[(int)attribute];
     bool CheckOperationType(Attribute attribute) // true일 경우 곱연산 / false일 경우 합연산
@@ -275,6 +302,7 @@ public class PlayerAttributes : MonoBehaviour
 
         UpdateBuffAttribute(attribute);
     }
+    public static float Get(Attribute attribute) => instance.GetAttribute(attribute);
 }
 public enum Attribute {
     AttackDamage,               // 데미지

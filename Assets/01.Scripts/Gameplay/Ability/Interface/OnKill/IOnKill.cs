@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IOnKill : ICondition
 {
-    public void OnKill();
+    public void OnKill(AttackData attackData);
 }

@@ -16,6 +16,8 @@ public class PlayerInputAndMove : MonoBehaviour
     public InputActionReference moveUpAction;       // 상 이동 액션
     public InputActionReference moveDownAction;     // 하 이동 액션
 
+    public InputActionReference runAction; // 부스트 액션
+
     public InputActionReference normalAttackAction; // 일반 공격 액션
     public InputActionReference mainSkillAction;    // 메인 스킬 액션
     public InputActionReference subSkillAction;     // 서브 스킬 액션
@@ -43,6 +45,11 @@ public class PlayerInputAndMove : MonoBehaviour
 
     Vector3 currentDirection;  // 현재 이동 방향
 
+    private void Awake()
+    {
+        GameManager.SetPlayerTransform(transform);
+    }
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -60,14 +67,18 @@ public class PlayerInputAndMove : MonoBehaviour
         moveUpAction.action.Enable();
         moveDownAction.action.Enable();
 
+        runAction.action.Enable();
+        runAction.action.started += OnRun;
+        runAction.action.canceled += OnWalk;
+
         equipmentAction.action.Enable();
-        equipmentAction.action.performed += OnEquipment;
+        equipmentAction.action.started += OnEquipment;
 
         subSkillAction.action.Enable();
-        subSkillAction.action.performed += OnSubSkill;
+        subSkillAction.action.started += OnSubSkill;
 
         mainSkillAction.action.Enable();
-        mainSkillAction.action.performed += OnMainSkill;
+        mainSkillAction.action.started += OnMainSkill;
 
         normalAttackAction.action.Enable();
         //normalAttackAction.action.performed += OnNormalAttack;
@@ -81,13 +92,17 @@ public class PlayerInputAndMove : MonoBehaviour
         moveUpAction.action.Disable();
         moveDownAction.action.Disable();
 
-        equipmentAction.action.performed -= OnEquipment;
+        runAction.action.Disable();
+        runAction.action.started -= OnRun;
+        runAction.action.canceled -= OnWalk;
+
+        equipmentAction.action.started -= OnEquipment;
         equipmentAction.action.Disable();
 
-        subSkillAction.action.performed -= OnSubSkill;
+        subSkillAction.action.started -= OnSubSkill;
         subSkillAction.action.Disable();
 
-        mainSkillAction.action.performed -= OnMainSkill;
+        mainSkillAction.action.started -= OnMainSkill;
         mainSkillAction.action.Disable();
 
         //normalAttackAction.action.performed -= OnNormalAttack;
@@ -117,8 +132,17 @@ public class PlayerInputAndMove : MonoBehaviour
         Debug.Log("서브 스킬 사용");
         subSkill.UseSkill();
     }
+    private void OnRun(InputAction.CallbackContext context)
+    {
+
+    }
+    private void OnWalk(InputAction.CallbackContext context)
+    {
+
+    }
     private void OnEquipment(InputAction.CallbackContext context)
     {
+        // 사실 이제 장비 없음 추가 할 수 잇으면 하고...
         Debug.Log("장비 사용");
     }
     private void FixedUpdate()

@@ -106,7 +106,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             yield return new WaitForSeconds(1f);
 
-            Debug.Log(hpRegen.ToString());
             Heal(hpRegen);
         }
     }

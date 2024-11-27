@@ -19,8 +19,6 @@ public class CamoStellarJetNormalAttack : PlayerSkill
 
                 Vector3 position = firePos.position + firePos.right * Random.Range(-0.1f, 0.1f);
 
-                Debug.Log("Å©È® È®·ü" + criticalChance.ToString());
-
                 attackProjectile.SetAttackProjectile(
                     attackData:     attackData,
                     damage:         damage * damageMultiplier,

@@ -28,7 +28,7 @@ public abstract class PlayerSkill : MonoBehaviour
 
     protected bool isAttack = true; // ( 딜레이로 인한 ) 현재 공격 가능 여부 
 
-    protected AttackData attackData = new AttackData();
+    protected AttackData attackData = new AttackData(true);
 
     protected int StackCount
     {
@@ -112,8 +112,6 @@ public abstract class PlayerSkill : MonoBehaviour
     public void SetDamage(float damage)
     {
         this.damage = damage;
-
-        Debug.Log("데미지 세팅 : " + damage.ToString());
     }
     public void SetStack(int stackCount)
     {
@@ -191,11 +189,11 @@ public abstract class PlayerSkill : MonoBehaviour
     }
     public void AddOnHitChanceDamage(IOnHitChanceDamage onHitChanceDamage)
     {
-        attackData.onHitDamageChanceAction += onHitChanceDamage.OnHit;
+        attackData.onHitDamageChanceAction += onHitChanceDamage.OnHitChanceDamage;
     }
     public void RemoveOnHitChanceDamage(IOnHitChanceDamage onHitChanceDamage)
     {
-        attackData.onHitDamageChanceAction -= onHitChanceDamage.OnHit;
+        attackData.onHitDamageChanceAction -= onHitChanceDamage.OnHitChanceDamage;
     }
     #endregion
 }
