@@ -4,8 +4,8 @@ public class TrackingPlayer : MonoBehaviour
 {
     public Transform target;
 
-    Vector2 max = new Vector2(50.1f, 20.3f);
-    Vector2 min = new Vector2(-50.8f, -30.4f);
+    Vector2 max = new Vector2(50.1f, 13.73f);
+    Vector2 min = new Vector2(-50.8f, -37.1f);
 
     Vector3 offset;
     Vector3 targetPos;

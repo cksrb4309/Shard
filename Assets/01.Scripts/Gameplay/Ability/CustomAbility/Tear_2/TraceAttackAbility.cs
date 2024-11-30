@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "TraceAttackAbility", menuName = "Ability/Tear2/TraceAttackAbility")]
-public class TraceAttackAbility : TempAbility, IOnHitChanceDamage
+public class TraceAttackAbility : Ability, IOnHitChanceDamage
 {
     public float speed;
     public float duration;
@@ -41,13 +41,6 @@ public class TraceAttackAbility : TempAbility, IOnHitChanceDamage
     public override void SetCount(int count)
     {
         this.count = count;
-
-        chance = startChance + stackChance * (count - 1);
-        damage = startDamage + stackDamage * (count - 1);
-    }
-    public override void Add()
-    {
-        count++;
 
         chance = startChance + stackChance * (count - 1);
         damage = startDamage + stackDamage * (count - 1);

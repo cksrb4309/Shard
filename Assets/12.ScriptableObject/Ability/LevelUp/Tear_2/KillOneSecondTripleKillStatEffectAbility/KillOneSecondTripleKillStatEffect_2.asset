@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d793b09fb1f7ad842adace04a115d4a9, type: 3}
+  m_Name: KillOneSecondTripleKillStatEffect_2
+  m_EditorClassIdentifier: 
+  effectName: "1\uCD08 3\uAC1C\uCCB4 \uCC98\uCE58 \uC2DC \uBC84\uD5042"
+  duration: 3
+  maxCount: 0
+  startCount: 1
+  stackCount: 0
+  attribute: 2
+  startValue: 1.5
+  stackValue: 0
+  startCountValue: 0
+  stackCountValue: 0
+  value: 0
+  countValue: 0

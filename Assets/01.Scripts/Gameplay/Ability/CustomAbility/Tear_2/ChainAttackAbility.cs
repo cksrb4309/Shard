@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ChainAttackAbility", menuName = "Ability/Tear2/ChainAttackAbility")]
-public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
+public class ChainAttackAbility : Ability, IOnHitChanceDamage
 {
     public float startRange;
     public float stackRange;
@@ -32,21 +32,11 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
         damage = startDamage + stackDamage * (count - 1);
         maxCount = startMaxCount + stackMaxCount * (count - 1);
     }
-    public override void Add()
-    {
-        base.Add();
-
-        range = startRange + stackRange * (count - 1);
-        damage = startDamage + stackDamage * (count - 1);
-        maxCount = startMaxCount + stackMaxCount * (count - 1);
-    }
 
     public bool OnHitChanceDamage(AttackData attackData, float damage)
     {
-        Debug.Log("확률 계산 시작 " + maxCount.ToString());
         if (!LuckManager.Calculate(probability, true)) return false;
 
-        Debug.Log("확률 계산 통과");
         GameManager.Instance.StartCoroutine(ChainAttackReadyCoroutine(attackData, damage));
 
         return true;
@@ -54,15 +44,14 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
     
     IEnumerator ChainAttackReadyCoroutine(AttackData attackData, float damage)
     {
-        Debug.Log("체인 공격 실시");
-
         List<IAttackable> list = new List<IAttackable>();
 
         list.Add(GameManager.GetLastHit());
 
+        yield return null;
+
         for (int i = 0; i < maxCount; i++)
         {
-            yield return new WaitForSeconds(0.01f);
             IAttackable nextTarget = null;
 
             for (int j = 0; j < list.Count; j++)
@@ -76,7 +65,7 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
 
                 // 현재 찾은 대상과 찾기 시작한 위치의 IAttackable을 넘겨서 공격을 재생한다
                 GameManager.Instance.StartCoroutine(
-                    AttackCoroutine(attackData, damage * this.damage, list[list.Count - 2], nextTarget));
+                    AttackCoroutine(attackData, damage * this.damage, list[list.Count-2], nextTarget));
 
                 break;
             }
@@ -88,8 +77,6 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
     }
     IEnumerator AttackCoroutine(AttackData attackData, float damage, IAttackable current, IAttackable next)
     {
-        Debug.Log("공격 실행");
-
         float t = 0;
 
         Vector3 midPosition = Vector3.Lerp(current.GetPosition(), next.GetPosition(), 0.5f);
@@ -97,16 +84,13 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
         midPosition +=
             (Quaternion.Euler(new Vector3(0, 90 * (Random.value > 0.5f ? 1 : -1), 0)) * 
             (next.GetPosition() - current.GetPosition()).normalized) *
-            (Vector3.Magnitude(current.GetPosition()-next.GetPosition()) * 0.3f);
-
+            (Vector3.Magnitude(current.GetPosition()-next.GetPosition()) * Random.Range(0.3f, 0.8f));
 
         Transform trail = PoolingManager.Instance.GetObject("LightningTrail").transform;
 
         while (t < 1f)
         {
-            Debug.Log("위치 변경");
-
-            t += Time.deltaTime * 5;
+            t += Time.deltaTime * 5f;
 
             trail.position = Vector3.Lerp(
                 Vector3.Lerp(current.GetPosition(), midPosition, t),
@@ -119,13 +103,20 @@ public class ChainAttackAbility : TempAbility, IOnHitChanceDamage
         if (next.IsAlive())
         {
             if (LuckManager.Calculate(PlayerAttributes.Get(Attribute.CriticalChance), true))
+            {
                 damage *= PlayerAttributes.Get(Attribute.CriticalDamage);
 
-            attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - current.GetPosition()).normalized);
+                attackData.OnCritical();
+            }
 
-            next.ReceiveHit(damage);
+            if (next.IsAlive())
+            {
+                next.ReceiveHit(damage);
 
-            Debug.Log("공격 성공");
+                attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - current.GetPosition()).normalized);
+
+                if (!next.IsAlive()) attackData.OnKill();
+            }
         }
     }
 }

@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileName: TraceProjectile
+  isNearest: 0
 --- !u!54 &1498119286094517307
 Rigidbody:
   m_ObjectHideFlags: 0

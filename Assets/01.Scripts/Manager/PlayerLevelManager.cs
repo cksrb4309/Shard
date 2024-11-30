@@ -86,8 +86,8 @@ public class PlayerLevelManager : MonoBehaviour
 
         XPToNextLevel *= 1.2f;
 
-
-
         PlayerAttributes.LevepUp();
+
+        AbilitySelector.ShowSelectAbility();
     }
 }

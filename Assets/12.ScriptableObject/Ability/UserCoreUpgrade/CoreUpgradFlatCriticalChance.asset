@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ff21154d65fc418da85ec5730f480, type: 3}
   m_Name: CoreUpgradFlatCriticalChance
   m_EditorClassIdentifier: 
-  abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960 \uC99D\uAC00"
+  abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960 \uC99D\uAC00 (Core)"
   attribute: 7
   startValue: 1.1
   stackValue: 0.1

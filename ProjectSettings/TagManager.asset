@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Block
+  - cube
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Core
   - Interact
   - Wall
-  - 
-  - 
+  - BlockSearch
+  - MonsterSearch
   - 
   - 
   - 

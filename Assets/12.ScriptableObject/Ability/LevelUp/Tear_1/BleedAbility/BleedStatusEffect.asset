@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885db56f8cfd4e24b842cdeaa52e825c, type: 3}
+  m_Name: BleedStatusEffect
+  m_EditorClassIdentifier: 
+  effectName: "\uCD9C\uD608"
+  duration: 2
+  maxCount: 0
+  startCount: 1000
+  stackCount: 0
+  interval: 0.3
+  startValue: 0.4
+  stackValue: 0.4
+  value: 0

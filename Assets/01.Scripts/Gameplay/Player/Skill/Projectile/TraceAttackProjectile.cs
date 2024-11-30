@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 public class TraceAttackProjectile : MonoBehaviour
 {
     public string projectileName;
+
+    public bool isNearest = true;
 
     AttackData attackData = null;
 
@@ -20,7 +23,10 @@ public class TraceAttackProjectile : MonoBehaviour
 
     public void SetAttackProjectile(AttackData attackData, float damage, float speed, float criticalChance, float criticalDamage, float destroyDelay, Vector3 pos)
     {
-        target = NearestAttackableSelector.GetAttackable();
+        if (isNearest)
+            target = NearestAttackableSelector.GetAttackable();
+        else
+            target = NearestAttackableSelector.GetAttackable(attackData.position);
 
         if (target == null) 
         {
@@ -56,7 +62,13 @@ public class TraceAttackProjectile : MonoBehaviour
     private void FixedUpdate()
     {
         if (!hasNearbyTarget) return;
-        if (!target.IsAlive()) target = NearestAttackableSelector.GetAttackable();
+        if (!target.IsAlive())
+        {
+            if (isNearest)
+                target = NearestAttackableSelector.GetAttackable();
+            else
+                target = NearestAttackableSelector.GetAttackable(attackData.position);
+        }
         if (target == null) { hasNearbyTarget = false; return; }
         Vector3 dir = (target.GetPosition() - transform.position).normalized;
 

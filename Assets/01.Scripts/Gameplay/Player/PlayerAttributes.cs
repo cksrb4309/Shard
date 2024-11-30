@@ -8,10 +8,11 @@ public class PlayerAttributes : MonoBehaviour
 {
     static PlayerAttributes instance = null;
 
-    const int AttributeCount = 22;
+    const int AttributeCount = 24;
 
     public PlayerHealth health;
     public PlayerStatus status;
+    public PlayerInputAndMove move;
 
     public PlayerSkill normalAttack;
     public PlayerSkill mainSkill;
@@ -110,6 +111,13 @@ public class PlayerAttributes : MonoBehaviour
 
         foreach (float value in passiveStatModifiers[(int)attribute].Values)
         {
+            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
+            {
+                Debug.Log(attribute.ToString() + " BeforeA : " + passiveAttributes[(int)attribute].ToString());
+
+                Debug.Log(" Value : " + value.ToString());
+            }
+
             if (CheckOperationType(attribute))  // 곱연산일 경우
                 //passiveAttributes[attribute] *= value;
                 passiveAttributes[(int)attribute] *= value;
@@ -117,6 +125,12 @@ public class PlayerAttributes : MonoBehaviour
                 //passiveAttributes[attribute] += value;
                 passiveAttributes[(int)attribute] += value;
 
+            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
+            {
+                Debug.Log(attribute.ToString() + " AfterA : " + passiveAttributes[(int)attribute].ToString());
+
+                Debug.Log(" Value : " + value.ToString());
+            }
         }
 
         UpdateBuffAttribute(attribute);
@@ -142,12 +156,28 @@ public class PlayerAttributes : MonoBehaviour
 
         foreach (float value in activeBuffEffects[(int)attribute].Values)
         {
+            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
+            {
+                Debug.Log(attribute.ToString() + " BeforeB : " + passiveAttributes[(int)attribute].ToString());
+
+                Debug.Log(" Value : " + value.ToString());
+            }
+
+
             if (CheckOperationType(attribute))  // 곱연산일 경우
                 //currentAttributes[attribute] *= value;
                 currentAttributes[(int)attribute] *= value;
             else  // 합연산일 경우
                 //currentAttributes[attribute] += value;
                 currentAttributes[(int)attribute] += value;
+
+
+            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
+            {
+                Debug.Log(attribute.ToString() + " AfterB : " + passiveAttributes[(int)attribute].ToString());
+
+                Debug.Log(" Value : " + value.ToString());
+            }
         }
 
         UpdateAttributes(attribute);
@@ -157,9 +187,9 @@ public class PlayerAttributes : MonoBehaviour
         #region 공격력 적용
         if (attribute == Attribute.AttackDamage)
         {
-            normalAttack.SetDamage(GetAttribute(Attribute.AttackDamage));
-            mainSkill.SetDamage(GetAttribute(Attribute.AttackDamage));
-            subSkill.SetDamage(GetAttribute(Attribute.AttackDamage));
+            normalAttack.SetDamage(GetAttribute(attribute));
+            mainSkill.SetDamage(GetAttribute(attribute));
+            subSkill.SetDamage(GetAttribute(attribute));
         }
         #endregion
         #region 공격 속도 적용
@@ -216,6 +246,16 @@ public class PlayerAttributes : MonoBehaviour
             subSkill.SetStack((int)GetAttribute(Attribute.SubSkillStack));
         }
         #endregion
+        #region 스킬 쿨타임 시간 비율 감소
+        else if (attribute == Attribute.MainSkillCooltimeRatio)
+        {
+            mainSkill.SetCooltimeRatio(GetAttribute(attribute));
+        }
+        else if (attribute == Attribute.SubSkillCooltimeRatio)
+        {
+            subSkill.SetCooltimeRatio(GetAttribute(attribute));
+        }
+        #endregion
         #region 투사체 적용
         else if (attribute == Attribute.ProjectileDuration)
         {
@@ -246,6 +286,12 @@ public class PlayerAttributes : MonoBehaviour
         else if (attribute == Attribute.Healing)
         {
             status.SetHealingMultiplier(GetAttribute(attribute));
+        }
+        #endregion
+        #region 이동속도 적용
+        else if (attribute == Attribute.MoveSpeed)
+        {
+            move.SetMoveSpeed(GetAttribute(attribute));
         }
         #endregion
     }
@@ -321,9 +367,11 @@ public enum Attribute {
     Healing,                    // 회복 증가
     Luck,                       // 행운
     MainSkillStack,             // 메인 스킬 누적 횟수
-    MainSkillCoolDown,          // 메인 스킬 쿨다운
+    MainSkillCoolDown,          // 메인 스킬 쿨다운 속도 증가
+    MainSkillCooltimeRatio,          // 메인 스킬 쿨타임 초 감소
     SubSkillStack,              // 서브 스킬 누적 횟수
-    SubSkillCoolDown,           // 서브 스킬 쿨다운
+    SubSkillCoolDown,           // 서브 스킬 쿨다운 속도 증가
+    SubSkillCooltimeRatio,           // 서브 스킬 쿨타임 초 감소
     ProjectileDuration,         // 투사체 유지시간
     ProjectileSpeed,            // 투사체 속도
     HealthRegenRate,            // 초당 재생력

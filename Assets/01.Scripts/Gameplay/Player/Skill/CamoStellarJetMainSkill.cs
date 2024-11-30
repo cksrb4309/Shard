@@ -21,10 +21,14 @@ public class CamoStellarJetMainSkill : PlayerSkill
     public float damageMultiplier; // 데미지 계수
     public float baseProjectileDuration; // 기본 투사체 유지시간
     public float baseProjectileSpeed; // 기본 투사체 속도
+
+    bool isShooting = false;
     public override void UseSkill()
     {
         if (StackCount > 0)
         {
+            if (isShooting) return;
+
             if (IsAttack())
             {
                 StackCount--;
@@ -40,6 +44,8 @@ public class CamoStellarJetMainSkill : PlayerSkill
         float attackDelay = 0.1f / normalAttack.GetAttackSpeed();
 
         playerInputAndMove.StopRotation();
+
+        isShooting = true;
 
         for (; t < 0.75f;)
         {
@@ -61,6 +67,8 @@ public class CamoStellarJetMainSkill : PlayerSkill
 
             yield return new WaitForSeconds(attackDelay);
         }
+
+        isShooting = false;
 
         playerInputAndMove.PlayRotation();
 

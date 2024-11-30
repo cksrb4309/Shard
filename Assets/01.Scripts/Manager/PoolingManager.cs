@@ -48,6 +48,8 @@ public class PoolingManager : MonoBehaviour
         {
             return pools[poolName].GetObject();
         }
+
+        Debug.LogWarning("너! 오브젝트 풀 세팅 안했잖아 !! : " + poolName);
         return null;
     }
 

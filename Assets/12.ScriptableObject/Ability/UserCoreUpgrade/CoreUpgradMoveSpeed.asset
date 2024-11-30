@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ff21154d65fc418da85ec5730f480, type: 3}
   m_Name: CoreUpgradMoveSpeed
   m_EditorClassIdentifier: 
-  abilityName: "\uC774\uB3D9 \uC18D\uB3C4 \uC99D\uAC00"
+  abilityName: "\uC774\uB3D9 \uC18D\uB3C4 \uC99D\uAC00 (Core)"
   attribute: 2
   startValue: 1.1
   stackValue: 0.1

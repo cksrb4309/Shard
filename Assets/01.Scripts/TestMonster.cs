@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEditor.Rendering;
+
 public class TestMonster : Monster
 {
     public TickEffect tickEffect;
@@ -16,7 +16,6 @@ public class TestMonster : Monster
 
     Transform myTransfrom;
 
-    Vector3 targetPosition = Vector3.zero;
     Vector3 moveDir = Vector3.zero;
 
     public override void Setting(float hpMultiplier, float damageMultiplier)

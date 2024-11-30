@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CoreInteractUI : MonoBehaviour
 {
+    public Inventory inventory;
     #region 패널 활성화 및 비활성화
     public GameObject mainPanel;
     public void ShowPanel()
@@ -29,13 +30,13 @@ public class CoreInteractUI : MonoBehaviour
         summonPanel.SetActive(true);
     }
     #endregion
-    #region 버튼 할당 함수들
+    #region 코어 버튼 할당 함수들
     public CoreUpgrade coreUpgrade;
     public void UpgradeMaxHealth()
     {
         Debug.Log("최대 체력 업글 시도");
 
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         Debug.Log("최대 체력 업글 성공");
 
@@ -43,13 +44,13 @@ public class CoreInteractUI : MonoBehaviour
     }
     public void UpgrageDefense()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeDefense();
     }
     public void UpgradeHealthRegen()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeHealthRegen();
     }
@@ -57,63 +58,78 @@ public class CoreInteractUI : MonoBehaviour
     {
         Debug.Log("공격력 업글 시도");
 
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         Debug.Log("공격력 업글 성공");
         coreUpgrade.UpgradeUserAttackDamage();
     }
     public void UpgradeUserAttackSpeed()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserAttackSpeed();
     }
     public void UpgradeUserCriticalChance()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserCriticalChance();
     }
     public void UpgradeUserCriticalDamage()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserCriticalDamage();
     }
     public void UpgradeUserMaxHealth()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserMaxHealth();
     }
     public void UpgradeUserHealthRegen()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserHealthRegen();
     }
     public void UpgradeUserMoveSpeed()
     {
-        if (!IsUpgrade()) return;
+        if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeUserMoveSpeed();
     }
     #endregion
-    #region 비용 확인 함수
-    public Inventory inventory;
-    public TMP_Text[] coreUpgradeCostText;
-    public int currentCost = 10;
-    public float nextCostMultiplier = 1.5f;
-
-    bool IsUpgrade()
+    #region 소환 버튼 할당 함수들
+    public CoreTeammateController teammateController;
+    public void Summon(Teammate teammate)
     {
-        if (inventory.GetEnergyCore() >= currentCost)
+        if (!IsSummonUpgrade()) return;
+
+        teammateController.Summon(teammate);
+    }
+    public void SummonAttackDamageUpgrade()
+    {
+        teammateController.AttackDamageUpgrade();
+    }
+    public void SummonAttackSpeedUpgrade()
+    {
+        teammateController.AttackSpeedUpgrade();
+    }
+    #endregion
+    #region 코어 업글 비용 확인 함수
+    public TMP_Text[] coreUpgradeCostText;
+    public int currentCoreCost = 10;
+    public float nextCoreCostMultiplier = 1.5f;
+    bool IsCoreUpgrade()
+    {
+        if (inventory.GetEnergyCore() >= currentCoreCost)
         {
-            inventory.UseEnergyCore(currentCost);
+            inventory.UseEnergyCore(currentCoreCost);
 
-            currentCost = (int)(currentCost * nextCostMultiplier);
+            currentCoreCost = (int)(currentCoreCost * nextCoreCostMultiplier);
 
-            for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: "+currentCost.ToString();
+            for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: "+currentCoreCost.ToString();
 
             Debug.Log("비용 통과");
 
@@ -124,9 +140,30 @@ public class CoreInteractUI : MonoBehaviour
 
         return false;
     }
-    private void Start()
+    #endregion
+    #region 소환 비용 확인 함수
+    public TMP_Text[] summonCostText;
+    public int currentSummonCost = 5;
+    public float nextSummonCostMultiplier = 1.3f;
+    bool IsSummonUpgrade()
     {
-        for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: " + currentCost.ToString();
+        if (inventory.GetSoulShard() >= currentSummonCost)
+        {
+            inventory.UseSoulShard(currentSummonCost);
+
+            currentSummonCost = (int)(currentSummonCost * nextSummonCostMultiplier);
+
+            for (int i = 0; i < summonCostText.Length; i++) summonCostText[i].text = "Cost: " + currentSummonCost.ToString();
+
+            return true;
+        }
+        return false;
     }
     #endregion
+
+    private void Start()
+    {
+        for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: " + currentCoreCost.ToString();
+        for (int i = 0; i < summonCostText.Length; i++) summonCostText[i].text = "Cost: " + currentSummonCost.ToString();
+    }
 }

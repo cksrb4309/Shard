@@ -80,8 +80,6 @@ public class GameManager : MonoBehaviour
     }
     public static void SetLastHit(IAttackable attackable)
     {
-        Debug.Log("마지막 맞은 Attackable 처리");
-
         instance.LastHitMonster = attackable;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,24 +27,30 @@ public class PlayerInputAndMove : MonoBehaviour
     public LayerMask groundLayer; // 바닥 레이어 마스크 설정
 
     public float maxRotationSpeed = 360f; // 최대 회전 속도 (도/초)
-    public float moveSpeed = 5f;
-    public float maxVelocity = 5f;
 
     Rigidbody rb;
 
+    float Speed
+    {
+        get
+        {
+            return Mathf.Lerp(walkSpeed, runSpeed, boost);
+        }
+    }
+    float boost = 0;
+    float walkSpeed;
+    float runSpeed;
+    float moveX = 0, moveY = 0;
+    float velocity = 0; // 현재 이동하는 힘
+    Coroutine boostCoroutine = null;
+
     Vector2 mousePosition;
     Camera mainCamera;
-
     bool canRotate = true;
-
-    float moveX = 0, moveY = 0;
-
-    float velocity = 0; // 현재 이동하는 힘
-
     float rotationSpeed = 30f; // 회전 속도
     float deceleration = 10f; // 감속 속도
 
-    Vector3 currentDirection;  // 현재 이동 방향
+    Vector3 inputDir;  // 현재 이동 방향
 
     private void Awake()
     {
@@ -75,10 +82,8 @@ public class PlayerInputAndMove : MonoBehaviour
         equipmentAction.action.started += OnEquipment;
 
         subSkillAction.action.Enable();
-        subSkillAction.action.started += OnSubSkill;
 
         mainSkillAction.action.Enable();
-        mainSkillAction.action.started += OnMainSkill;
 
         normalAttackAction.action.Enable();
         //normalAttackAction.action.performed += OnNormalAttack;
@@ -99,10 +104,8 @@ public class PlayerInputAndMove : MonoBehaviour
         equipmentAction.action.started -= OnEquipment;
         equipmentAction.action.Disable();
 
-        subSkillAction.action.started -= OnSubSkill;
         subSkillAction.action.Disable();
 
-        mainSkillAction.action.started -= OnMainSkill;
         mainSkillAction.action.Disable();
 
         //normalAttackAction.action.performed -= OnNormalAttack;
@@ -116,29 +119,63 @@ public class PlayerInputAndMove : MonoBehaviour
         {
             OnNormalAttack();
         }
+        if (subSkillAction.action.IsPressed())
+        {
+            OnSubSkill();
+        }
+        if (mainSkillAction.action.IsPressed())
+        {
+            OnMainSkill();
+        }
     }
-
+    public void SetMoveSpeed(float speed)
+    {
+        walkSpeed = speed;
+        runSpeed = speed * 1.5f;
+    }
     private void OnNormalAttack(/*InputAction.CallbackContext context*/)
     {
         normalAttack.UseSkill();
     }
-    private void OnMainSkill(InputAction.CallbackContext context)
+    private void OnMainSkill()
     {
-        Debug.Log("메인 스킬 사용");
         mainSkill.UseSkill();
     }
-    private void OnSubSkill(InputAction.CallbackContext context)
+    private void OnSubSkill()
     {
-        Debug.Log("서브 스킬 사용");
         subSkill.UseSkill();
     }
     private void OnRun(InputAction.CallbackContext context)
     {
+        if (boostCoroutine != null) StopCoroutine(boostCoroutine);
 
+        boostCoroutine = StartCoroutine(SpeedUpCoroutine());
     }
     private void OnWalk(InputAction.CallbackContext context)
     {
+        if (boostCoroutine != null) StopCoroutine(boostCoroutine);
 
+        boostCoroutine = StartCoroutine(SpeedDownCoroutine());
+    }
+    IEnumerator SpeedUpCoroutine()
+    {
+        while (boost < 1f)
+        {
+            boost += Time.deltaTime * 3f;
+
+            yield return null;
+        }
+        boost = 1;
+    }
+    IEnumerator SpeedDownCoroutine()
+    {
+        while (boost > 0)
+        {
+            boost -= Time.deltaTime * 3f;
+
+            yield return null;
+        }
+        boost = 0;
     }
     private void OnEquipment(InputAction.CallbackContext context)
     {
@@ -156,14 +193,13 @@ public class PlayerInputAndMove : MonoBehaviour
         // 이동 값 가져왔을 때
         if (moveX != 0 || moveY != 0)
         {
-            // 현재 방향
-            currentDirection = new Vector3(moveX, 0, moveY).normalized;
+            inputDir = new Vector3(moveX, 0, moveY).normalized;
             
-            velocity = Mathf.Clamp(velocity + Time.fixedDeltaTime * moveSpeed, 0, maxVelocity);
+            velocity = Mathf.Clamp(velocity + Time.fixedDeltaTime * Speed, 0, Speed);
         }
         else if (velocity > 0)
         {
-            velocity = Mathf.Clamp(velocity - Time.fixedDeltaTime * moveSpeed * 3f, 0, maxVelocity);
+            velocity = Mathf.Clamp(velocity - Time.fixedDeltaTime * Speed * 3f, 0, Speed);
         }
 
         if (velocity > 0)
@@ -171,7 +207,7 @@ public class PlayerInputAndMove : MonoBehaviour
             // 현재 위치에 속도 값을 반영하여 이동
             // transform.position += currentDirection * velocity * Time.fixedDeltaTime;
 
-            rb.linearVelocity = currentDirection * velocity;
+            rb.linearVelocity = inputDir * velocity;
         }
         else rb.linearVelocity = Vector3.zero;
 

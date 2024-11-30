@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd52e41de6176b41bb2eec2c7bc701e, type: 3}
+  m_Name: ChanceBombAbility
+  m_EditorClassIdentifier: 
+  abilityName: "\uD655\uB960\uC801 \uD3ED\uD0C4 \uC124\uCE58"
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 640
+  startProbability: 0.05
+  stackProbability: 0.05

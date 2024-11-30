@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TraceKnifeAttackAbility", menuName = "Ability/Tear3/TraceKnifeAttackAbility")]
-public class TraceKnifeAttackAbility : TempAbility, IOnKill
+public class TraceKnifeAttackAbility : Ability, IOnKill
 {
     public float speed;
     public float duration;
@@ -35,12 +35,6 @@ public class TraceKnifeAttackAbility : TempAbility, IOnKill
     public override void SetCount(int count)
     {
         base.SetCount(count);
-
-        damage = (startDamage + stackDamage * (count - 1)) * PlayerAttributes.Get(Attribute.AttackDamage);
-    }
-    public override void Add()
-    {
-        base.Add();
 
         damage = (startDamage + stackDamage * (count - 1)) * PlayerAttributes.Get(Attribute.AttackDamage);
     }

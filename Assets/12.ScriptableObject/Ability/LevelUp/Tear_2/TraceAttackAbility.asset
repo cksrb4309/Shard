@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TraceAttackAbility
   m_EditorClassIdentifier: 
   abilityName: TraceAbility
-  speed: 10
-  duration: 2
+  speed: 15
+  duration: 4
   spawnRange: 1
   startChance: 0.1
   stackChance: 0.1
   startDamage: 1
-  stackDamage: 1
+  stackDamage: 0.2

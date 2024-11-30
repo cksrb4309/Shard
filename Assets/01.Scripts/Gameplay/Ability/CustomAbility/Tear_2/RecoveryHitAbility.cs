@@ -1,6 +1,6 @@
 using UnityEngine;
 [CreateAssetMenu(fileName = "RecoveryHitAbility", menuName = "Ability/Tear2/RecoveryHitAbility")]
-public class RecoveryHitAbility : TempAbility, IOnHit
+public class RecoveryHitAbility : Ability, IOnHit
 {
     int healingValue = 0;
 
@@ -10,16 +10,9 @@ public class RecoveryHitAbility : TempAbility, IOnHit
 
         healingValue = count;
     }
-    public override void Add()
-    {
-        base.Add();
-
-        healingValue = count;
-    }
-
     public void OnHit(AttackData attackData)
     {
-        PlayerStatus.Healing(healingValue);
+        PlayerStatus.Healing((float)healingValue);
     }
     public override ICondition GetCondition() => this;
 }

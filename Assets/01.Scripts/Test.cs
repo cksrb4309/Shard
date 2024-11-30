@@ -7,7 +7,7 @@ public class Test : MonoBehaviour
     public Transform spawnTransform;
     public Monster testMob;
 
-    public List<TempAbility> abilities;
+    public List<Ability> abilities;
 
     public Transform startTransform;
     public Transform endTransform;
@@ -17,27 +17,15 @@ public class Test : MonoBehaviour
 
     public float angle = 0f;
     public bool start = false;
-    private void Start()
-    {
-        // testMob.Setting(1f, 1f);
 
-        for (int i = 0; i < 10; i++)
-        {
-            foreach (TempAbility ability in abilities)
-                Inventory.GetAbility(ability);
-        }
-
-        StartCoroutine(SpawnCoroutine());
-    }
     private void FixedUpdate()
     {
         if (start == true)
         {
             start = false;
 
-            //Quaternion.LookRotation((endTransform.position - startTransform.position).normalized).ToAngleAxis(out angle, out axis);
-
-            Debug.Log((Quaternion.Euler(new Vector3(0,angle,0)) * dir).ToString());
+            foreach (Ability ability in abilities)
+                Inventory.GetAbility(ability);
         }
 
     }
@@ -54,6 +42,18 @@ public class Test : MonoBehaviour
             yield return new WaitForSeconds(1);
 
             Spawn();
+        }
+    }
+
+
+    public Transform[] beforeTransformArray;
+    public Transform[] afterTransformArray;
+    public Transform rotateTransform;
+    public void Excute()
+    {
+        for (int i = 0; i < afterTransformArray.Length; i++)
+        {
+            afterTransformArray[i].position = rotateTransform.rotation * beforeTransformArray[i].position;
         }
     }
 }

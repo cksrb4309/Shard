@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ChainAttackAbility
   m_EditorClassIdentifier: 
   abilityName: ChainAttack
-  startRange: 2
-  stackRange: 1
+  startRange: 3
+  stackRange: 0.5
   startDamage: 0.8
   stackDamage: 0.4
   startMaxCount: 3

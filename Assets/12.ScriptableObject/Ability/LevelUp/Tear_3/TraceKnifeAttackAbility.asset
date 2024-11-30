@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b7b88f96665304aa11bce8740f7bd6, type: 3}
   m_Name: TraceKnifeAttackAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uCD94\uC801 \uB2E8\uAC80"
-  speed: 15
-  duration: 0.5
-  startDamage: 1.5
-  stackDamage: 0.5
+  abilityName: "\uC801 \uCC98\uCE58 \uC2DC \uCD94\uC801 \uD22C\uC0AC\uCCB4 \uBC1C\uC0DD"
+  speed: 45
+  duration: 1
+  startDamage: 0.1
+  stackDamage: 0.1

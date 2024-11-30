@@ -16,7 +16,7 @@ public class InventoryUI : MonoBehaviour
     public TMP_Text energyCoreText;
     public TMP_Text soulShardText;
 
-    Dictionary<string, ItemSlot> slots = new Dictionary<string, ItemSlot>();
+    // Dictionary<string, ItemSlot> slots = new Dictionary<string, ItemSlot>();
 
     private void OnEnable()
     {
@@ -32,7 +32,7 @@ public class InventoryUI : MonoBehaviour
     {
         instance = this;
     }
-    public static void SetItem(Ability item, int count)
+    /*public static void SetItem(Ability item, int count)
     {
         instance.SetItemApply(item, count);
     }
@@ -51,7 +51,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         slot.SetItemSlot(item.abilityIcon, 1);
-    }
+    }*/
     public static void SetEnergyCoreText(int amount)
     {
         instance.SetEnergyCoreTextApply(amount);

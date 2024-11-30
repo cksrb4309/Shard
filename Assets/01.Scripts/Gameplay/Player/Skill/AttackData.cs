@@ -13,7 +13,9 @@ public class AttackData
     public Vector3 position = Vector3.zero;
     public Vector3 rotation = Vector3.zero;
 
-    bool isMainAttack;
+    bool isMainAttack = false;
+    //bool killActionIsUsable = false;
+
     public AttackData(bool isMainAttack = false)
     {
         onKillAction = null;
@@ -24,6 +26,7 @@ public class AttackData
         onHitDamageChanceAction = null;
 
         this.isMainAttack = isMainAttack;
+        //killActionIsUsable = false;
     }
     public AttackData(AttackData attackData)
     {
@@ -38,10 +41,15 @@ public class AttackData
         rotation = attackData.rotation;
 
         isMainAttack = false;
+        //killActionIsUsable = attackData.killActionIsUsable;
     }
     public void OnKill()
     {
-        onKillAction?.Invoke(this);
+        //if (killActionIsUsable) return;
+
+        //killActionIsUsable = true;
+
+        onKillAction?.Invoke(new AttackData(this));
     }
     public void OnHit(float damage, Vector3 position, Vector3 rotation)
     {
@@ -55,7 +63,13 @@ public class AttackData
     }
     public void OnCritical()
     {
-        onCriticalAction?.Invoke(new AttackData(this));
+        if (onCriticalAction != null)
+        {
+            foreach (var handler in onCriticalAction.GetInvocationList())
+            {
+                ((Action<AttackData>)handler)(new AttackData(this));
+            }
+        }
     }
     void OnHit()
     {
@@ -89,19 +103,21 @@ public class AttackData
     {
         if (onHitDamageChanceAction != null)
         {
-            foreach (var handler in onHitDamageChanceAction.GetInvocationList())
+            foreach (var handler_1 in onHitDamageChanceAction.GetInvocationList())
             {
                 AttackData temp = new AttackData(this);
 
-                bool result = ((Func<AttackData, float, bool>)handler)(temp, damage);
+                Func<AttackData, float, bool> handler_2 = (Func<AttackData, float, bool>)handler_1;
+
+                bool result = handler_2(temp, damage);
 
                 if (result) // 만약 해당 공격을 성공 시켰을 때
                 {
-                    // 메인 공격이 아닐 때 자신의 해당 공격에 대한 함수를 제거
-                    if (!isMainAttack) onHitDamageChanceAction -= (Func<AttackData, float, bool>)handler;
+                    // 새로 넘긴 AttackData는 똑같은 공격을 막기 위해 함수를 제거한다
+                    temp.onHitDamageChanceAction -= handler_2;
 
-                    // 해당 공격에 새로 넘긴 AttackData 또한 똑같은 공격을 막기 위해 함수를 제거한다
-                    temp.onHitDamageChanceAction -= (Func<AttackData, float, bool>)handler;
+                    // 메인 공격이 아닐 때 자신의 해당 공격에 대한 함수를 제거
+                    if (!isMainAttack) onHitDamageChanceAction -= handler_2;
                 }
             }
         }

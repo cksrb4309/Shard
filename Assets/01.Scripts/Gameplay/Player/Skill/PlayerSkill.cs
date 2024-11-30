@@ -11,7 +11,7 @@ public abstract class PlayerSkill : MonoBehaviour
 
     int baseStackCount; // 기본 스킬 저장 횟수
 
-    float currentCooltime; // 현재 스킬 충전 쿨타임
+    protected float currentCooltime; // 현재 스킬 충전 쿨타임
     // int currentStackCount; // 현재 스킬 저장 횟수
 
     public SkillSlot skillSlot = null;
@@ -108,6 +108,12 @@ public abstract class PlayerSkill : MonoBehaviour
             return false;
         }
     }
+    public void ResetCooltime()
+    {
+        stackCount = baseStackCount;
+
+        Cooltime = 0;
+    }
     #region 데미지, 스택, 쿨다운 속도, 치명타 확률 설정 함수
     public void SetDamage(float damage)
     {
@@ -120,17 +126,13 @@ public abstract class PlayerSkill : MonoBehaviour
     public void SetCoolDown(float speed)
     {
         cooldownSpeed = speed;
-
-        // 임시 !
-        currentCooltime = baseCooltime;
     }
-    public void SetCooltimeDecrease(float cooldownTime)
+    public void SetCooltimeRatio(float ratio)
     {
-        currentCooltime = baseCooltime -= cooldownTime;
+        currentCooltime = baseCooltime - (baseCooltime * ratio);
     }
     public void SetCriticalChance(float criticalChance)
     {
-        Debug.Log("크확 설정 " + criticalChance.ToString());
         this.criticalChance = criticalChance;
     }
     public void SetCriticalDamage(float criticalDamage)
@@ -155,7 +157,7 @@ public abstract class PlayerSkill : MonoBehaviour
     {
         attackData.onKillAction -= onKill.OnKill;
     }
-    public void AddOnHitItem(IOnHit onHit)
+    public void AddOnHit(IOnHit onHit)
     {
         attackData.onHitAction += onHit.OnHit;
     }
@@ -163,7 +165,7 @@ public abstract class PlayerSkill : MonoBehaviour
     {
         attackData.onHitAction -= onHit.OnHit;
     }
-    public void AddOnCriticalItem(IOnCritical onCritical)
+    public void AddOnCritical(IOnCritical onCritical)
     {
         attackData.onCriticalAction += onCritical.OnCritical;
     }
@@ -171,7 +173,7 @@ public abstract class PlayerSkill : MonoBehaviour
     {
         attackData.onCriticalAction -= onCritical.OnCritical;
     }
-    public void AddOnHitDamageItem(IOnHitDamage onHitDamage)
+    public void AddOnHitDamage(IOnHitDamage onHitDamage)
     {
         attackData.onHitDamageAction += onHitDamage.OnHit;
     }
