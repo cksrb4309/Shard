@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 0
-  mobName: M_S_1_5
+  mobName: M_S_1_6
   baseMaxHp: 2000
   reward: 100
   rb: {fileID: 4834928861140992540}

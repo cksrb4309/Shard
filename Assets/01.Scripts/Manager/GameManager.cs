@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class GameManager : MonoBehaviour
     }
     public IAttackable LastHitMonster = null;
 
+    public Transform coreTransform = null;
+
     List<Transform> playerPositions = new List<Transform>();
+
     Transform playerTransform = null;
     private void Awake()
     {
@@ -55,14 +59,18 @@ public class GameManager : MonoBehaviour
     }
     public Transform GetPlayerTransform(Vector3 position)
     {
-        // position과 가장 가까운 플레이어의 위치를 반환한다
-        float minRange = float.MaxValue;
+    }
+    public static Transform GetMonsterTargetTransform(Vector3 position) => instance.GetMonsterTargetTransformExcute(position);
+    public Transform GetMonsterTargetTransformExcute(Vector3 position)
+    {
+        float minRange = Vector3.Magnitude(position - coreTransform.position);
 
-        Transform ret = null;
+        Transform ret = coreTransform;
 
         for (int i = 0; i < playerPositions.Count; i++)
         {
             float temp = Vector3.Magnitude(position - playerPositions[i].position);
+
             if (temp < minRange)
             {
                 minRange = temp;
@@ -72,7 +80,6 @@ public class GameManager : MonoBehaviour
         }
         return ret;
     }
-    public static Transform GetPlayerTransform() => instance.playerTransform;
     public static void SetPlayerTransform(Transform playerTransform) => instance.playerTransform = playerTransform;
     public static IAttackable GetLastHit()
     {

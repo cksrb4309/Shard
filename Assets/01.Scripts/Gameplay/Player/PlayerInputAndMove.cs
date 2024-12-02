@@ -49,7 +49,7 @@ public class PlayerInputAndMove : MonoBehaviour
     bool canRotate = true;
     float rotationSpeed = 30f; // 회전 속도
     float deceleration = 10f; // 감속 속도
-
+                
     Vector3 inputDir;  // 현재 이동 방향
 
     private void Awake()
@@ -251,5 +251,10 @@ public class PlayerInputAndMove : MonoBehaviour
     public void PlayRotation()
     {
         canRotate = true;
+    }
+    public void ResetVelocity()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 }

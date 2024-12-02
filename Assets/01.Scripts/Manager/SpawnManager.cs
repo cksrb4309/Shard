@@ -20,14 +20,18 @@ public class SpawnManager : MonoBehaviour
 
     public int monsterSpawnCount = 10;
 
+    [Range(0, 7568)] public int appearBossBlockCount;
+
     int currentStage = 0;
 
     float time = 0;
+    public static int currentBlockCount;
+    const int blockCount = 7569;
     private void Start()
     {
         StartMonsterSpawn();
 
-        
+        currentBlockCount = blockCount;
     }
 
     public void StartMonsterSpawn()
@@ -43,7 +47,36 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             time++;
+
+            if (currentBlockCount < appearBossBlockCount)
+            {
+                BossSpawn();
+            }
         }
+    }// TODO 이거하슈
+    void BossSpawn()
+    {
+        // 스폰 중인 코루틴 및 시간 올리던 코루틴 종료 !
+        StopAllCoroutines();
+
+        StartCoroutine(BossSpawnCoroutine());
+    }
+    IEnumerator BossSpawnCoroutine()
+    {
+        // 보스 등장한다는 경고 !
+
+
+        yield return null;
+
+        // 보스 스폰 !
+        Monster boss = PoolingManager.Instance.GetObject<Monster>(monsterSets[currentStage].bossMonster.mobName);
+
+        int spawnIndex = Random.Range(0, bossSpawnPoints.Length);
+
+        boss.transform.position = bossSpawnPoints[spawnIndex].position;
+        boss.transform.rotation = bossSpawnPoints[spawnIndex].rotation;
+
+        boss.Setting(DifficultyManager.Difficulty + 1, DifficultyManager.Difficulty + 1); // 보스 설정
     }
     IEnumerator SpawnCoroutine()
     {
@@ -54,6 +87,7 @@ public class SpawnManager : MonoBehaviour
             // 스폰 시킬 위치 및 회전 값 가져오기
             // 회전 값은 진형을 만들 때 이용함 (SpawnPoint는 코어 방향을 쳐다보게 만들었음)
             // 몬스터끼리의 기본적인 위치를 진형으로 정한 후에 해당 위치와 회전을 적용해야 한다!
+
             Vector3 spawnPosition = defaultSpawnPoints[Random.Range(0, defaultSpawnPoints.Length)].position;
             Quaternion spawnRotation = defaultSpawnPoints[Random.Range(0, defaultSpawnPoints.Length)].rotation;
 

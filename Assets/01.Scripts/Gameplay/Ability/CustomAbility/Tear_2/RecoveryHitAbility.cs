@@ -12,6 +12,8 @@ public class RecoveryHitAbility : Ability, IOnHit
     }
     public void OnHit(AttackData attackData)
     {
+        Debug.Log("È¸º¹");
+
         PlayerStatus.Healing((float)healingValue);
     }
     public override ICondition GetCondition() => this;

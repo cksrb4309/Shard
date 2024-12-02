@@ -12,29 +12,31 @@ public class DefaultMonster : Monster
     public Transform myTransform;
 
     Vector3 moveDir = Vector3.zero;
+    Transform target = null;
     public override void Setting(float monsterHpMultiplier, float damageMultiplier)
     {
         base.Setting(monsterHpMultiplier, damageMultiplier);
+
+        target = GameManager.GetMonsterTargetTransform(transform.position);
 
         StartCoroutine(TrackingCoroutine());
     }
     public void FixedUpdate()
     {
-        if (moveDir != Vector3.zero)
-        {
-            transform.position += moveDir * moveSpeed * Time.fixedDeltaTime;
-            //rb.MovePosition(myTransform.position + moveDir * moveSpeed * Time.fixedDeltaTime);
+        transform.position += moveDir * moveSpeed * Time.fixedDeltaTime;
+        //rb.MovePosition(myTransform.position + moveDir * moveSpeed * Time.fixedDeltaTime);
 
-            // 현재 바라보는 방향을 점진적으로 플레이어 방향으로 회전
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        }
+        // 현재 바라보는 방향을 점진적으로 플레이어 방향으로 회전
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
     }
     IEnumerator TrackingCoroutine()
     {
+        yield return new WaitForSeconds(Random.value);
+
         while (true)
         {
-            moveDir = (GameManager.Instance.GetPlayerPosition(myTransform.position) - myTransform.position).normalized;
+            moveDir = (target.position - myTransform.position).normalized;
 
             yield return new WaitForSeconds(updateInterval);
         }

@@ -10,6 +10,7 @@ public class BlockCustomEditor : Editor
         // 기존 기본 Inspector UI 표시
         serializedObject.Update();
         base.OnInspectorGUI();
+
         BaseBlock baseBlock = (BaseBlock)target;
 
         if (GUILayout.Button("위치를 통한 경도 구하기"))

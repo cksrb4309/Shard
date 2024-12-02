@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class BaseBlock : MonoBehaviour, IAttackable
 {
+    public static bool isSetting = false;
+
+    public bool isNearest = false;
+
     public Transform coreTransform = null;
+
+    public ParticleSystem blockOnEffect;
 
     public float maxHp = 1000f;
     public float minMaxHp = 1000f;
@@ -42,6 +48,8 @@ public class BaseBlock : MonoBehaviour, IAttackable
     {
         if (!IsAlive()) return;
 
+        if (isSetting) return;
+
         hp -= damage;
 
         DamageTextController.OnDamageText(pos, damage);
@@ -63,18 +71,18 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         RewardManager.BaseBlockDrop(reward);
 
+        SpawnManager.currentBlockCount--;
+
         blockObj.SetActive(false);
 
         cd.enabled = false;
 
         material.SetFloat("_DamageLevel", 0);
     }
-
     public Vector3 GetPosition()
     {
         return pos;
     }
-
     public void ReceiveDebuff(StatusEffect effect, float damage)
     {
         ReceiveHit(damage);
@@ -89,5 +97,28 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         maxHp = Mathf.Lerp(minMaxHp, maxMaxHp, Mathf.InverseLerp(minLength, maxLength, length));
         reward = (int)Mathf.Lerp(minReward, maxReward, Mathf.InverseLerp(minLength, maxLength, length));
+    }
+    public void ReSetting()
+    {
+        // 콜라이더 비활성화 ! 재배치 하는 동안 공격을 안 받기 위해
+        // 를 빼고 데미지만 안받도록 설정 위에 주석 ㄴㄴ
+
+        blockObj.SetActive(true); // 보이도록 활성화
+
+        cd.enabled = true; // 죽어있었다면 콜라이더가 비활성화 되어있으므로 활성화 시킴
+
+        // 블럭의 체력 또한 다음 스테이지에 대한 값으로 바꿔야한다
+        maxHp *= 3f; // 우선은 최대 체력을 스테이지 넘어갈 때마다 *3을 적용한다
+
+        hp = maxHp;
+       
+        material.SetFloat("_DamageLevel", 0); // 데미지 정도도 수정한다
+        
+        if (isNearest)
+        {
+            blockOnEffect.transform.position = pos;
+
+            blockOnEffect.Play();
+        }
     }
 }

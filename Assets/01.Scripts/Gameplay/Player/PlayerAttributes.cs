@@ -94,43 +94,15 @@ public class PlayerAttributes : MonoBehaviour
     }
     public void UpdatePassiveAttribute(Attribute attribute) // 패시브 적용
     {
-        //passiveAttributes[attribute] = baseAttributes[attribute];
-        passiveAttributes[(int)attribute] = baseAttributes[(int)attribute];
 
-        // 해당 속성에 대해 지속적으로 적용되는 아이템이 있을 때
-        //if (passiveStatModifiers.ContainsKey(attribute))
-        //{
-        //    foreach (float value in passiveStatModifiers[attribute].Values)
-        //    {
-        //        if (CheckOperationType(attribute))  // 곱연산일 경우
-        //            passiveAttributes[attribute] *= value;
-        //        else  // 합연산일 경우
-        //            passiveAttributes[attribute] += value;
-        //    }
-        //}
+        passiveAttributes[(int)attribute] = baseAttributes[(int)attribute];
 
         foreach (float value in passiveStatModifiers[(int)attribute].Values)
         {
-            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
-            {
-                Debug.Log(attribute.ToString() + " BeforeA : " + passiveAttributes[(int)attribute].ToString());
-
-                Debug.Log(" Value : " + value.ToString());
-            }
-
             if (CheckOperationType(attribute))  // 곱연산일 경우
-                //passiveAttributes[attribute] *= value;
                 passiveAttributes[(int)attribute] *= value;
             else  // 합연산일 경우
-                //passiveAttributes[attribute] += value;
                 passiveAttributes[(int)attribute] += value;
-
-            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
-            {
-                Debug.Log(attribute.ToString() + " AfterA : " + passiveAttributes[(int)attribute].ToString());
-
-                Debug.Log(" Value : " + value.ToString());
-            }
         }
 
         UpdateBuffAttribute(attribute);
@@ -238,12 +210,16 @@ public class PlayerAttributes : MonoBehaviour
         {
             // 스킬 최대 충전 스택 설정
             mainSkill.SetStack((int)GetAttribute(Attribute.MainSkillStack));
+
+            Debug.Log("메인 스킬 스택 확인 : " + (int)GetAttribute(Attribute.MainSkillStack));
         }
         // 서브 스킬의 스택이 달라졌을 때
         else if (attribute == Attribute.MainSkillStack)
         {
             // 스킬 최대 충전 스택 설정
             subSkill.SetStack((int)GetAttribute(Attribute.SubSkillStack));
+
+            Debug.Log("서브 스킬 스택 확인 : " + (int)GetAttribute(Attribute.SubSkillStack));
         }
         #endregion
         #region 스킬 쿨타임 시간 비율 감소
@@ -309,10 +285,6 @@ public class PlayerAttributes : MonoBehaviour
     }
     public void ApplyPassiveAbilityAttribute(Attribute attribute, string abilityName, float value)
     {
-        //if (!passiveStatModifiers.ContainsKey(attribute)) passiveStatModifiers.Add(attribute, new Dictionary<string, float>());
-
-        // 패시브 아이템의 Value를 그대로 적용한다
-        //passiveStatModifiers[attribute][itemName] = value;
 
         passiveStatModifiers[(int)attribute][AbilityNameToIdMapper.GetId(abilityName)] = value;
 

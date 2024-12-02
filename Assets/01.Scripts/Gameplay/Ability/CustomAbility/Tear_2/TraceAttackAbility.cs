@@ -23,7 +23,7 @@ public class TraceAttackAbility : Ability, IOnHitChanceDamage
 
         TraceAttackProjectile projectile = PoolingManager.Instance.GetObject<TraceAttackProjectile>("TraceProjectile");
 
-        Vector3 pos = GameManager.GetPlayerTransform().position;
+        Vector3 pos = GameManager.GetMonsterTargetTransform().position;
 
         pos += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * spawnRange;
 

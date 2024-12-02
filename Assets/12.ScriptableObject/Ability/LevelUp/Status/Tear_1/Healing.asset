@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ff21154d65fc418da85ec5730f480, type: 3}
   m_Name: Healing
   m_EditorClassIdentifier: 
-  abilityName: "\uCCB4\uB825 \uD68C\uBCF5\uB7C9 \uC99D"
+  abilityName: "\uCCB4\uB825 \uD68C\uBCF5\uB7C9 \uC99D\uAC00"
   attribute: 13
   startValue: 1.1
   stackValue: 0.1

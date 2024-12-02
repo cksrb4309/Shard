@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HealthRegenRate
   m_EditorClassIdentifier: 
   abilityName: "\uCCB4\uB825 \uC7AC\uC0DD \uC99D\uAC00"
-  attribute: 21
+  attribute: 23
   startValue: 1
   stackValue: 1

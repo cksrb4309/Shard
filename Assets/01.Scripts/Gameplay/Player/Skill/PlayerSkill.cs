@@ -71,7 +71,7 @@ public abstract class PlayerSkill : MonoBehaviour
             Cooltime += Time.fixedDeltaTime * cooldownSpeed;
 
             // 만약 쿨타임이 다 찼을 경우
-            if (currentCooltime <= Cooltime)
+            if (Cooltime >= currentCooltime)
             {
                 // 스킬 충전 횟수를 늘린다
                 stackCount++;
@@ -121,6 +121,8 @@ public abstract class PlayerSkill : MonoBehaviour
     }
     public void SetStack(int stackCount)
     {
+        Debug.Log("스킬 스택 업데이트 : " + stackCount.ToString());
+
         baseStackCount = stackCount;
     }
     public void SetCoolDown(float speed)

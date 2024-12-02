@@ -49,11 +49,17 @@ public class Test : MonoBehaviour
     public Transform[] beforeTransformArray;
     public Transform[] afterTransformArray;
     public Transform rotateTransform;
+
+    public MeshRenderer meshRenderer;
+    public Material m3;
     public void Excute()
     {
-        for (int i = 0; i < afterTransformArray.Length; i++)
-        {
-            afterTransformArray[i].position = rotateTransform.rotation * beforeTransformArray[i].position;
-        }
+        #region 위치 * 회전 확인 테스트
+        //for (int i = 0; i < afterTransformArray.Length; i++)
+        //{
+        //    afterTransformArray[i].position = rotateTransform.rotation * beforeTransformArray[i].position;
+        //}
+        #endregion
+
     }
 }

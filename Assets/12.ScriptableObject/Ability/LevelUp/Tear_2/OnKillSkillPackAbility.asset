@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: OnKillSkillPackAbility
   m_EditorClassIdentifier: 
   abilityName: "\uCC98\uCE58 \uC2DC \uC2A4\uD0AC \uD329 \uD655\uB960 \uB4DC\uB78D"
-  startProbability: 0.15
-  stackProbability: 0.35
+  startProbability: 0.05
+  stackProbability: 0.2
