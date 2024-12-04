@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa78f7fc49759e14387c25980007045c, type: 3}
   m_Name: ChainAttackAbility
   m_EditorClassIdentifier: 
-  abilityName: ChainAttack
+  abilityName: "\uC801\uC911 \uC2DC \uC5F0\uC1C4 \uBC88\uAC1C \uBC1C\uC0DD"
+  tear: 2
   startRange: 3
   stackRange: 0.5
   startDamage: 0.8

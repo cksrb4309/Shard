@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9752b0c8e144801967e6897679604b, type: 3}
+  m_Name: vHierarchy Data
+  m_EditorClassIdentifier: 
+  sceneDatas_byGuid:
+    keys:
+    - 4963c3f6a73d330499e7e2d9c66a088f
+    values:
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1013068766-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1541281672-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1499515259-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1772811694-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1000013331216677-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1608447650-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1174567808-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1034076818683133862-731629474538852955
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1755939586-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-933338589-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-80537109-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1980841646-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-326370209-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-931077087-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1828693392-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1380718667-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-363545782-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-991179087-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-2106288224-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-775984102-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-1385963259109133113-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-4323379989063343202-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4963c3f6a73d330499e7e2d9c66a088f-86490275-0
+        values:
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 7
+          iconNameOrGuid: 
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 6
+          iconNameOrGuid: 

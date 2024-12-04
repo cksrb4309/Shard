@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RateDefense
   m_EditorClassIdentifier: 
   abilityName: "\uBC29\uC5B4\uB825 \uC99D\uAC00"
+  tear: 1
   attribute: 4
   startValue: 1.1
   stackValue: 0.1

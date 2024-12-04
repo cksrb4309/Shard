@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6e75886eb09e643ac5470498cc71db, type: 3}
   m_Name: BleedAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uD655\uB960\uC801 \uCD9C\uD608"
+  abilityName: "\uD655\uB960\uC801 \uCD9C\uD608 \uBC1C\uC0DD"
+  tear: 1
   bleedStatusEffect: {fileID: 11400000, guid: e044f68d5378f44479da2c8323b99e7a, type: 2}

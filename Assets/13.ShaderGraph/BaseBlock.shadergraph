@@ -17,6 +17,9 @@
         },
         {
             "m_Id": "6844214dcb004e67b46a562b4d7bdd79"
+        },
+        {
+            "m_Id": "bc27d84653f2477cb6b5503da71fbf70"
         }
     ],
     "m_Keywords": [],
@@ -650,8 +653,8 @@
     "m_ObjectId": "25df3089252444899d3cf56ca6755101",
     "m_Title": "DamageLevel",
     "m_Position": {
-        "x": -1874.39990234375,
-        "y": -200.80001831054688
+        "x": -1874.0001220703125,
+        "y": -200.00003051757813
     }
 }
 
@@ -1562,8 +1565,8 @@
     "m_ObjectId": "79199c3157bf4a978d2653fd5378fd6b",
     "m_Title": "Base",
     "m_Position": {
-        "x": -2030.39990234375,
-        "y": 355.99993896484377
+        "x": -2030.0001220703125,
+        "y": 357.00006103515627
     }
 }
 
@@ -1876,6 +1879,9 @@
         },
         {
             "m_Id": "6844214dcb004e67b46a562b4d7bdd79"
+        },
+        {
+            "m_Id": "bc27d84653f2477cb6b5503da71fbf70"
         }
     ]
 }
@@ -2283,6 +2289,34 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector2ShaderProperty",
+    "m_ObjectId": "bc27d84653f2477cb6b5503da71fbf70",
+    "m_Guid": {
+        "m_GuidSerialized": "89e6d9f9-67eb-4445-94ac-eb376769da34"
+    },
+    "m_Name": "Vector2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Vector2",
+    "m_DefaultReferenceName": "_Vector2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
 }
 
 {

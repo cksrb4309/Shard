@@ -30,6 +30,7 @@ public class SmallCamoStellarJet : Teammate
 
                 yield return null;
             }
+
             yield return null;
         }
 

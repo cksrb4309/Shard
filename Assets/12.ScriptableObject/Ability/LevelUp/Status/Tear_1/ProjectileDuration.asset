@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ProjectileDuration
   m_EditorClassIdentifier: 
   abilityName: "\uD22C\uC0AC\uCCB4 \uC9C0\uC18D \uC2DC\uAC04 \uC99D\uAC00"
+  tear: 1
   attribute: 21
   startValue: 1.1
   stackValue: 0.1

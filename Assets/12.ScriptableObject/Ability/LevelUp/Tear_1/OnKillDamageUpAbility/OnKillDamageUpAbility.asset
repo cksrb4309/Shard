@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8414391ab62c2704aa1ad11f9d8aa40d, type: 3}
   m_Name: OnKillDamageUpAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uCC98\uCE58 \uC2DC 2\uCD08\uAC04 \uACF5\uACA9\uB825 \uC99D\uAC00"
+  abilityName: "\uCC98\uCE58 \uD639\uC740 \uD30C\uAD34 \uC2DC 2\uCD08\uAC04 \uACF5\uACA9\uB825
+    \uC99D\uAC00"
+  tear: 1
   statusEffect: {fileID: 11400000, guid: 9ebcb4341338c8948885d24817acc887, type: 2}

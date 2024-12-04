@@ -14,28 +14,24 @@ public class GameManager : MonoBehaviour
 
     public Transform coreTransform = null;
 
+    public SearchNearPlayers searchNearPlayers;
+
     List<Transform> playerPositions = new List<Transform>();
 
-    Transform playerTransform = null;
+    Transform myTransform = null;
     private void Awake()
     {
-        instance = this;   
-        /*
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }*/
+        instance = this;
+
+        Debug.Log("GameManager Awake");
     }
 
     // 게임 매니저에 플레이어를 추가한다
-    public void AddPlayer(Transform playerTransform)
+    public static void AddPlayer(Transform playerTransform)
     {
-        playerPositions.Add(playerTransform);
+        instance.playerPositions.Add(playerTransform);
+
+        instance.searchNearPlayers.SetPlayerCount(instance.playerPositions.Count);
     }
 
     public Vector3 GetPlayerPosition(Vector3 position)
@@ -57,9 +53,8 @@ public class GameManager : MonoBehaviour
         }
         return ret;
     }
-    public Transform GetPlayerTransform(Vector3 position)
-    {
-    }
+    public static Transform GetUserTransform() => instance.myTransform;
+    public static Transform GetCoreTransform() => instance.coreTransform;
     public static Transform GetMonsterTargetTransform(Vector3 position) => instance.GetMonsterTargetTransformExcute(position);
     public Transform GetMonsterTargetTransformExcute(Vector3 position)
     {
@@ -78,15 +73,10 @@ public class GameManager : MonoBehaviour
                 ret = playerPositions[i];
             }
         }
+
         return ret;
     }
-    public static void SetPlayerTransform(Transform playerTransform) => instance.playerTransform = playerTransform;
-    public static IAttackable GetLastHit()
-    {
-        return instance.LastHitMonster;
-    }
-    public static void SetLastHit(IAttackable attackable)
-    {
-        instance.LastHitMonster = attackable;
-    }
+    public static void SetMyTransform(Transform playerTransform) => instance.myTransform = playerTransform;
+    public static IAttackable GetLastHit() => instance.LastHitMonster;
+    public static void SetLastHit(IAttackable attackable) => instance.LastHitMonster = attackable;
 }

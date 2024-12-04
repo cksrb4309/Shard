@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MaxHealth
   m_EditorClassIdentifier: 
   abilityName: "\uCCB4\uB825 \uC99D\uAC00"
+  tear: 1
   attribute: 11
   startValue: 1.1
   stackValue: 0.1

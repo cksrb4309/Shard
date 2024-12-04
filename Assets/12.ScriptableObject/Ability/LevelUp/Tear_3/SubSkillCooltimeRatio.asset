@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SubSkillCooltimeRatio
   m_EditorClassIdentifier: 
   abilityName: "\uC11C\uBE0C \uC2A4\uD0AC \uCFE8\uD0C0\uC784 25% \uAC10\uC18C"
+  tear: 3
   attribute: 20
   startValue: 0.25
   stackValue: 0.25

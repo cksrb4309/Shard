@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Healing
   m_EditorClassIdentifier: 
   abilityName: "\uCCB4\uB825 \uD68C\uBCF5\uB7C9 \uC99D\uAC00"
+  tear: 1
   attribute: 13
   startValue: 1.1
   stackValue: 0.1

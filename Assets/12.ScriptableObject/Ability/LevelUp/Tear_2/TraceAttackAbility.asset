@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9d6bf293def064fb015454f6bf1186, type: 3}
   m_Name: TraceAttackAbility
   m_EditorClassIdentifier: 
-  abilityName: TraceAbility
+  abilityName: "\uC801\uC911 \uC2DC \uD655\uB960\uC801\uC73C\uB85C \uCD94\uC801 \uD22C\uC0AC\uCCB4
+    \uBC1C\uC0DD"
+  tear: 2
   speed: 15
   duration: 4
   spawnRange: 1

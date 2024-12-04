@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6783af4ab76f7941a6484d35b2a0c17, type: 3}
   m_Name: KillOneSecondTripleKillStatEffectAbility
   m_EditorClassIdentifier: 
-  abilityName: KillOneSecondTripleKillStatEffect
+  abilityName: "1\uCD08 \uB0B4 3\uAC1C\uCCB4 \uCC98\uCE58 \uD639\uC740 \uD30C\uAD34
+    \uC2DC \uBC84\uD504"
+  tear: 2
   statusEffect_1: {fileID: 11400000, guid: 8a172b556a02031418757457ca60bab9, type: 2}
   statusEffect_2: {fileID: 11400000, guid: 18f9a4bb2c971e243915e38ea5ed96d7, type: 2}

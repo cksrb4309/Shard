@@ -9,16 +9,22 @@ public class CoreHealth : MonoBehaviour, IDamageable
 
     public float healthRegen = 1;
 
+    public Material coreMaterial;
     private void Start()
     {
         currentHealth = maxHealth;
+
+        coreMaterial.SetFloat("_DamageLevel", 0);
     }
     public void UpgradeMaxHealth()
     {
         float beforeMaxHealth = maxHealth;
+
         maxHealth *= 1.1f;
 
         currentHealth += maxHealth - beforeMaxHealth;
+
+        coreMaterial.SetFloat("_DamageLevel", 1 - currentHealth / maxHealth);
     }
     public void UpgradeDefense()
     {
@@ -31,6 +37,10 @@ public class CoreHealth : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+
+        if (currentHealth < 0) currentHealth = 0;
+
+        coreMaterial.SetFloat("_DamageLevel", 1 - currentHealth / maxHealth);
 
         if (!IsAlive()) Dead();
     }

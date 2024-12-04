@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SplashDamageAbility
   m_EditorClassIdentifier: 
   abilityName: "\uBAA8\uB4E0 \uACF5\uACA9 \uAD11\uC5ED \uB370\uBBF8\uC9C0 \uCD94\uAC00"
+  tear: 3
   startRange: 1.5
   stackRange: 0.75

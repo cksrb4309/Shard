@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Luck
   m_EditorClassIdentifier: 
   abilityName: "\uD589\uC6B4 \uC99D\uAC00"
+  tear: 3
   attribute: 14
   startValue: 1
   stackValue: 1

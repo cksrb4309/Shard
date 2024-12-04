@@ -3,12 +3,16 @@ using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
 {
-    public static int Difficulty = 0;
+    static DifficultyManager instance = null;
+
+    public static float Difficulty = 1;
 
     float time = 0;
 
     public void Start()
     {
+        instance = this;
+
         StartCoroutine(IncreaseDifficultyCoroutine());
     }
 
@@ -24,7 +28,7 @@ public class DifficultyManager : MonoBehaviour
             {
                 time = 0;
 
-                Difficulty++;
+                Difficulty *= 1.5f;
             }
         }
     }
@@ -34,17 +38,17 @@ public class DifficultyManager : MonoBehaviour
         StopCoroutine(IncreaseDifficultyCoroutine());
     }
 
-    public void NextStageSetting()
+    public static void NextStageSetting()
     {
-        time += 30;
+        instance.time += 30;
 
-        if (time > 60)
+        if (instance.time > 60)
         {
-            time -= 60;
+            instance.time -= 60;
 
-            Difficulty++;
+            Difficulty *= 1.5f;
         }
 
-        StartCoroutine(IncreaseDifficultyCoroutine());
+        instance.StartCoroutine(instance.IncreaseDifficultyCoroutine());
     }
 }

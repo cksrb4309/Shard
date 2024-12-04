@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd52e41de6176b41bb2eec2c7bc701e, type: 3}
   m_Name: ChanceBombAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uD655\uB960\uC801 \uD3ED\uD0C4 \uC124\uCE58"
+  abilityName: "\uD655\uB960\uC801 \uC2DC\uD55C\uD3ED\uD0C4 \uC124\uCE58"
+  tear: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 640

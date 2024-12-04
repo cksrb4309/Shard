@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ProjectileSpeed
   m_EditorClassIdentifier: 
   abilityName: "\uD22C\uC0AC\uCCB4 \uC18D\uB3C4 \uC99D\uAC00"
+  tear: 1
   attribute: 22
   startValue: 1.1
   stackValue: 0.1

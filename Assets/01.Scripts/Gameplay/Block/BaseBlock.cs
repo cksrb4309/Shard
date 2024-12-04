@@ -9,7 +9,7 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
     public Transform coreTransform = null;
 
-    public ParticleSystem blockOnEffect;
+    public BlockSettingEffect blockOnEffect;
 
     public float maxHp = 1000f;
     public float minMaxHp = 1000f;
@@ -100,8 +100,7 @@ public class BaseBlock : MonoBehaviour, IAttackable
     }
     public void ReSetting()
     {
-        // 콜라이더 비활성화 ! 재배치 하는 동안 공격을 안 받기 위해
-        // 를 빼고 데미지만 안받도록 설정 위에 주석 ㄴㄴ
+        if (isNearest) blockOnEffect.Play(pos);
 
         blockObj.SetActive(true); // 보이도록 활성화
 
@@ -111,14 +110,9 @@ public class BaseBlock : MonoBehaviour, IAttackable
         maxHp *= 3f; // 우선은 최대 체력을 스테이지 넘어갈 때마다 *3을 적용한다
 
         hp = maxHp;
-       
-        material.SetFloat("_DamageLevel", 0); // 데미지 정도도 수정한다
-        
-        if (isNearest)
-        {
-            blockOnEffect.transform.position = pos;
 
-            blockOnEffect.Play();
-        }
+        reward *= 3; // 보상 또한 3배로 늘림
+
+        material.SetFloat("_DamageLevel", 0); // 데미지 정도도 수정한다
     }
 }

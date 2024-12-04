@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TraceKnifeAttackAbility
   m_EditorClassIdentifier: 
   abilityName: "\uC801 \uCC98\uCE58 \uC2DC \uCD94\uC801 \uD22C\uC0AC\uCCB4 \uBC1C\uC0DD"
+  tear: 3
   speed: 45
   duration: 1
   startDamage: 0.1

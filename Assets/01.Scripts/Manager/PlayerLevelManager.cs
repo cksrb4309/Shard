@@ -73,7 +73,7 @@ public class PlayerLevelManager : MonoBehaviour
     {
         CurrentXP += xp;
 
-        if (CurrentXP > XPToNextLevel)
+        while (CurrentXP > XPToNextLevel)
         {
             CurrentXP -= XPToNextLevel;
 

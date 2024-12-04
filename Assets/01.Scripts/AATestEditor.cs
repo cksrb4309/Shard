@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(AAAAAA))]
+[CustomEditor(typeof(BlockGroup))]
 [CanEditMultipleObjects]
 public class AATestEditor : Editor
 {
@@ -9,13 +9,13 @@ public class AATestEditor : Editor
     {
         base.OnInspectorGUI();
 
-        AAAAAA myScript = (AAAAAA)target;
+        BlockGroup myScript = (BlockGroup)target;
 
         if (GUILayout.Button("½ÇÇà"))
         {
             foreach (var i in targets)
             {
-                ((AAAAAA)i).Excute();
+                ((BlockGroup)i).Excute();
             }
         }
 

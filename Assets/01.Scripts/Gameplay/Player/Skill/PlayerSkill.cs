@@ -76,6 +76,8 @@ public abstract class PlayerSkill : MonoBehaviour
                 // 스킬 충전 횟수를 늘린다
                 stackCount++;
 
+                Debug.Log("Skill Stack : " + stackCount.ToString());
+
                 // 쿨타임 적용
                 Cooltime -= currentCooltime;
             }

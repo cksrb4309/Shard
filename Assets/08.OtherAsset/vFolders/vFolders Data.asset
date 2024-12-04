@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
+  m_Name: vFolders Data
+  m_EditorClassIdentifier: 
+  folderDatas_byGuid:
+    keys:
+    - 2c770f7143287774e83e0fa6addb10ce
+    - 9c53962885c2c4f449125a979d6ad240
+    - ae61c36517a498a49b3233882b894ae9
+    - 96df4e30548611e42a35505ac6cca603
+    - cb95231acf2930c4eb0db64d0439c249
+    - 59556a33c3c515d4f9f2900c1a091e25
+    - 75b2386bdeea8204a90e29e796320f37
+    - 709f11a7f3c4041caa4ef136ea32d874
+    - e335ba84ca0f5f1458bc3ff147c41299
+    - 6ad371c96ee7f3f49aed091519e4fb26
+    - 812b9bb1fc5f61c45a68360d1ecdb219
+    - e20a637cf7e52034c9c99e57810f145e
+    - b89629f6b6b96174e994d421a3261152
+    - 3d882643df36c704fb04c6dc7ff8ca1a
+    - 1ed3a57c2a2e71747b52406bd61c7edb
+    - 374fef75b5dee9f4da45f7d02eff2531
+    - c98f81f9bfb6def479c5f51a0510493f
+    - 4983016d026f2a54f97ad3cf54d9faa0
+    - 66ad1d956e0c973438b91c2d24f5dc1b
+    - 4eabe5ee3f721544aaf3ec04fee156a5
+    - 3d4637e1b557d824f98821d91a26fd6f
+    - 86c8d7949b44c9748b09ddea159f51fb
+    - 7ff39f0204ddeb64a8a05973562e5554
+    - b90d41e30949926459e75d813f862ee6
+    - b11a1c61a624dfa41b43a7551571da2a
+    - d41c4fe5628592f44b1894dbd0f5bfed
+    - b499e131f9766ee49847e6289f12641e
+    - e7a03dae63c071c478a835d0f07e33c2
+    - ffef2eb688ae03146b37d92016430dee
+    - 7e90c8c3ee85eda4c829245d100dd26b
+    - 1cc08b8fe598dfc41ab7e2c431b0479c
+    - 27b52dd1d048a1a4382bf074bd40de78
+    - a7f421d9cb41fd142b6e0d0421aeb560
+    - 8805d850d95f5934191eb5d4e4be3266
+    - 908135644af6c584c9a75e1a522e14dc
+    - e2c721f3d31256042b0495871821d396
+    - 8106ea8e85a9a564a9c576ccac574571
+    - f54d1bd14bd3ca042bd867b519fee8cc
+    - 109ccfb08b9fd4bf5a9d8deee2ace2ed
+    - dd2b9e231b0ec4a9f97e258072ae2b33
+    - f42d0374f4587401395165a2788ee07c
+    - 53bcf63735db770418df9f76a21b5072
+    - cfdcd1965544c5b44ad6e7523ce27d1b
+    - cabcaac6a59e0f341885873d0cd894ca
+    - 2c7ee892bb81bb848b8d5bdb18332edf
+    - 2e34f46ed7a1d7142847af65dd1a9494
+    values:
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 2
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Material Icon
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Font Icon
+      colorIndex: 5
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: SceneAsset Icon
+      colorIndex: 8
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Settings Icon
+      colorIndex: 9
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: PrefabModel Icon
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioClip Icon
+      colorIndex: 9
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: ScriptableObject Icon
+      colorIndex: 8
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Shader Icon
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: PrefabModel Icon
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Settings Icon
+      colorIndex: 5
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 9
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 9
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 0
+      isIconRecursive: 1
+      isColorRecursive: 0
+  bookmarks:
+  - guid: 8805d850d95f5934191eb5d4e4be3266
+  - guid: 2e34f46ed7a1d7142847af65dd1a9494

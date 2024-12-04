@@ -54,7 +54,7 @@ public class PlayerInputAndMove : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.SetPlayerTransform(transform);
+        GameManager.SetMyTransform(transform);
     }
 
     private void Start()

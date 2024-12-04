@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MainSkillStackAdd
   m_EditorClassIdentifier: 
   abilityName: "\uBA54\uC778 \uC2A4\uD0AC \uC2A4\uD0DD \uCD94\uAC00"
+  tear: 2
   attribute: 15
   startValue: 1
   stackValue: 1

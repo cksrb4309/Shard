@@ -11,6 +11,8 @@ public class DamageTextController : MonoBehaviour
     public Transform initialParent;
     public Transform finalParent;
 
+    public Transform targetTransform;
+
     private void Awake()
     {
         instance = this;
@@ -26,19 +28,25 @@ public class DamageTextController : MonoBehaviour
         if (pos.x < -100f || pos.x > Screen.width + 100f ||
             pos.y < -50f || pos.y > Screen.height + 50f) return;
 
-        TMP_Text text;
+        RectTransform obj;
 
         if (isUser)
-            text = PoolingManager.Instance.GetObject<TMP_Text>("UserHitDamageText");
+            obj = PoolingManager.Instance.GetObject("UserHitDamageText").GetComponent<RectTransform>();
         else
-            text = PoolingManager.Instance.GetObject<TMP_Text>("MonsterHitDamageText");
+            obj = PoolingManager.Instance.GetObject("MonsterHitDamageText").GetComponent<RectTransform>();
 
-        text.text = damage.ToString("F0");
+        //TMP_Text text = obj.GetComponentInChildren<TMP_Text>();
 
-        text.rectTransform.SetParent(initialParent);
+        //text.text = damage.ToString("F0");
 
-        text.rectTransform.localPosition = pos - new Vector3(Screen.width*0.5f, Screen.height*0.5f, 0);
+        obj.GetComponentInChildren<TMP_Text>().text = damage.ToString("F0");
 
-        text.rectTransform.SetParent(finalParent);
+        //obj.SetParent(initialParent);
+
+        targetTransform.localPosition = pos - new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+
+        obj.position = targetTransform.position;
+
+        //obj.SetParent(initialParent);
     }
 }

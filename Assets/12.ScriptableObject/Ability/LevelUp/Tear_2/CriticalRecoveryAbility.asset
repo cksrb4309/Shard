@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544829b3bc1305e498b05fdc0de8e448, type: 3}
   m_Name: CriticalRecoveryAbility
   m_EditorClassIdentifier: 
-  abilityName: CriticalRecoveryAbility
+  abilityName: "\uCE58\uBA85\uD0C0 \uBC1C\uC0DD \uC2DC \uD68C\uBCF5"
+  tear: 2
   startValue: 8
   stackValue: 4

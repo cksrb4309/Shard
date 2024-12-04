@@ -46,14 +46,11 @@ public class AbilitySelector : MonoBehaviour
         {
             if (!isSelect)
             {
-                Debug.Log("IsSelectExcute");
-
                 ShowSelectAbilityApply();
             }
 
             yield return null;
         }
-        Debug.Log("IsSelect Exit");
         coroutine = null;
     }
 
@@ -61,14 +58,11 @@ public class AbilitySelector : MonoBehaviour
     {
         if (isSelect)
         {
-            Debug.Log("If IsSelect");
             if (coroutine == null)
             {
-                Debug.Log("StartCoroutine");
                 coroutine = StartCoroutine(AbilityGetDelayCoroutine());
             }
 
-            Debug.Log("Return");
             return;
         }
 
@@ -92,6 +86,7 @@ public class AbilitySelector : MonoBehaviour
             }
             selectGroups[i].ability = ability;
             selectGroups[i].abilityNameText.text = ability.abilityName;
+            selectGroups[i].abilityTearText.text = "Tear " + ability.tear.ToString();
         }
         selectedItems.Clear();
 
@@ -105,11 +100,10 @@ public class AbilitySelector : MonoBehaviour
 
         for (int i = 0; i < selectGroups.Length; i++)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(0.25f);
 
             selectGroups[i].gameObject.SetActive(true);
         }
-
         isCheck = true;
 
         while (selectAbility == null) yield return null;
@@ -118,7 +112,6 @@ public class AbilitySelector : MonoBehaviour
         {
             selectGroups[i].gameObject.SetActive(false);
         }
-
         panelGroup.SetActive(false);
 
         Inventory.GetAbility(selectAbility);
@@ -126,8 +119,6 @@ public class AbilitySelector : MonoBehaviour
         selectAbility = null;
 
         isSelect = false;
-
-        Debug.Log("LevelUpCount : " + levelUpCount.ToString());
 
         if (--levelUpCount == 0) Time.timeScale = 1;
     }
@@ -147,4 +138,5 @@ public class SelectGroup
     [HideInInspector] public Ability ability;
     public GameObject gameObject;
     public TMP_Text abilityNameText;
+    public TMP_Text abilityTearText;
 }

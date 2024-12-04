@@ -1,9 +1,33 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockGroup : MonoBehaviour
 {
     public BaseBlock[] blocks;
+
+    public List<BaseBlock> isNearBlockList = new List<BaseBlock>();
+    public List<BaseBlock> otherBlockList = new List<BaseBlock>();
+
+    public BlockSettingEffect blockSettingEffect;
+    public bool isCheck = false;
+    public float speed = 1f;
+
+    public float t = 0;
+    public int beforeCount = 0;
+    public int count = 0;
+    public float blockCount;
+
+
+    private void Update()
+    {
+        if (isCheck == true)
+        {
+            isCheck = false;
+            StartCoroutine(StageClearCoroutine());
+        }
+    }
+
     public void StageClear()
     {
         StartCoroutine(StageClearCoroutine());
@@ -12,33 +36,73 @@ public class BlockGroup : MonoBehaviour
     {
         BaseBlock.isSetting = true;
 
-        float t = 0;
+        foreach (BaseBlock block in otherBlockList) block.ReSetting();
 
-        int beforeCount = 0;
-        int count = 0;
+        t = 0;
+        beforeCount = 0;
+        count = 0;
 
-        while (count <= 7569)
+        blockCount = isNearBlockList.Count - 1;
+
+        while (t < blockCount)
         {
-            yield return null;
+            yield return null; // 한 프레임 넘김
 
             // t [0 ~ 1]
-            t += Time.deltaTime * 3f;
+            t += Time.deltaTime * speed;
 
-            count = (int)(t * 7569);
+            if (t > blockCount) t = blockCount;
 
-            for (; beforeCount <= count && beforeCount != 7570; beforeCount++)
+            count = (int)t;
+
+            for (; beforeCount <= count; beforeCount++)
             {
-                blocks[beforeCount].ReSetting();
+                isNearBlockList[beforeCount].ReSetting();
             }
         }
 
-        /*
-        for (int i = 0; i < blocks.Length; i++)
+        for (; beforeCount <= blockCount; beforeCount++)
         {
-            yield return new WaitForSeconds(0.001f);
-            blocks[i].ReSetting();
-        }*/
+            isNearBlockList[beforeCount].ReSetting();
+        }
 
         BaseBlock.isSetting = false;
+    }
+    public void Excute()
+    {
+        List<BaseBlock> sortList = new List<BaseBlock>(isNearBlockList);
+
+        // Z축 내림차순 -> Z축 같으면 X축 오름차순으로 정렬
+        sortList.Sort((a, b) =>
+        {
+            // Z축 기준 내림차순 정렬
+            int zComparison = b.transform.position.z.CompareTo(a.transform.position.z);
+
+            if (zComparison != 0)
+            {
+                return zComparison;
+            }
+
+            // Z축이 같다면 X축 기준 오름차순 정렬
+            return a.transform.position.x.CompareTo(b.transform.position.x);
+        });
+
+        // 정렬된 리스트를 isNearBlockList에 다시 할당
+        isNearBlockList = sortList;
+
+        //isNearBlockList.Clear();
+        //otherBlockList.Clear();
+
+        //for (int i = 0; i < blocks.Length; i++)
+        //{
+        //    if (blocks[i].isNearest)
+        //    {
+        //        isNearBlockList.Add(blocks[i]);
+        //    }
+        //    else
+        //    {
+        //        otherBlockList.Add(blocks[i]);
+        //    }
+        //}
     }
 }

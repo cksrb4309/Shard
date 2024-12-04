@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf794c55a0e4e44448e207a37a8c636c, type: 3}
   m_Name: RecoveryHitAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uC801\uC911 \uC2DC \uD53C \uD68C\uBCF5"
+  abilityName: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
+  tear: 2

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ec469806528f749b8f3dea5413b78d, type: 3}
   m_Name: OnKillSheildAbility
   m_EditorClassIdentifier: 
-  abilityName: "\uCC98\uCE58 \uC2DC \uBCF4\uD638\uB9C9 \uD68D\uB4DD"
+  abilityName: "\uCC98\uCE58 \uD639\uC740 \uD30C\uAD34 \uC2DC \uBCF4\uD638\uB9C9
+    \uD68D\uB4DD"
+  tear: 1
   startValue: 5
   stackValue: 5

@@ -17,12 +17,18 @@ public class Monster : MonoBehaviour, IAttackable
 
     public List<MonsterAttack> monsterAttacks; // 현재 몬스터가 가지고 있는 공격들
 
+    public bool isFastReturn = true;
+
+    Collider cd = null;
+
     protected float maxHp; // 최대 HP
     protected float hp; // 현재 HP
 
     private void Awake()
     {
         material = meshRenderer.material; // 몬스터 개인의 재질 가져오기
+
+        cd = GetComponentInChildren<Collider>();
     }
     public void LateUpdate()
     {
@@ -30,8 +36,10 @@ public class Monster : MonoBehaviour, IAttackable
         rb.angularVelocity = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
     }
-    public void ReceiveHit(float damage)
+    public virtual void ReceiveHit(float damage)
     {
+        if (!IsAlive()) return; // 살아있지 않다면 리턴
+
         // 만약 파편 안에 있다면 데미지를 2분의 1로 감소시킨다
         if (inShard) damage *= 0.5f;
 
@@ -59,8 +67,9 @@ public class Monster : MonoBehaviour, IAttackable
         // 죽은 위치를 기록한다 [ 없어도 되는 지 확인해야 함 ! ]
         deadPosition = transform.position;
 
-        // 현재는 사망 효과는 따로 넣지 않고 ObjectPool에 돌려줌
-        PoolingManager.Instance.ReturnObject(mobName, gameObject);
+        cd.enabled = false;
+
+        if (isFastReturn) PoolingManager.Instance.ReturnObject(mobName, gameObject);
     }
     public bool IsAlive()
     {
@@ -80,6 +89,9 @@ public class Monster : MonoBehaviour, IAttackable
         {
             monsterAttack.Setting(hpMultiplier, damageMultiplier);
         }
+
+        if (cd != null) cd.enabled = true;
+
         #endregion
 
         #region 파편 내부에 대한 초기화
@@ -237,9 +249,10 @@ public class Monster : MonoBehaviour, IAttackable
     }
     #endregion
 }
+/*
 public enum MonsterType
 {
     Front,  // 전열 (진형의 가장 앞쪽에 우선적으로 배치
     Back,   // 후열 (진형의 가장 뒤쪽에 우선적으로 배치
     Mid // 중열 or 특이한 놈들 배치 (진형이 비었을 때 마지막으로 투입됨/라고 생각했지만 그냥 배치함 그런거 없음)
-}
+}*/

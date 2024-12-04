@@ -110,10 +110,14 @@ public class CoreInteractUI : MonoBehaviour
     }
     public void SummonAttackDamageUpgrade()
     {
+        if (!IsSummonUpgrade()) return;
+
         teammateController.AttackDamageUpgrade();
     }
     public void SummonAttackSpeedUpgrade()
     {
+        if (!IsSummonUpgrade()) return;
+
         teammateController.AttackSpeedUpgrade();
     }
     #endregion

@@ -5,18 +5,18 @@ using UnityEngine;
 public class MonsterSet : ScriptableObject
 {
     public MonsterSpawnAmount[] monsterSpawnAmounts;
-    public Monster bossMonster;
+    public CustomMonster bossMonster;
 
-    public List<Monster> GetMonsterList(float time)
+    public List<CustomMonster> GetMonsterList(float time)
     {
-        List<Monster> monsterList = new List<Monster>();
+        List<CustomMonster> monsterList = new List<CustomMonster>();
 
         foreach (MonsterSpawnAmount amount in monsterSpawnAmounts)
         {
             int count = (int)amount.spawnAmountCurve.Evaluate(time);
 
             for (int i = 0; i < count; i++)
-                monsterList.Add(PoolingManager.Instance.GetObject<Monster>(amount.monster.mobName));
+                monsterList.Add(PoolingManager.Instance.GetObject<CustomMonster>(amount.monster.mobName));
         }
         return monsterList;
     }
@@ -25,6 +25,6 @@ public class MonsterSet : ScriptableObject
 [System.Serializable]
 public class MonsterSpawnAmount
 {
-    public Monster monster;
+    public CustomMonster monster;
     public AnimationCurve spawnAmountCurve;
 }

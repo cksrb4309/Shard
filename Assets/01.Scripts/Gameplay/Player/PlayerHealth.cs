@@ -27,7 +27,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     }
     private void Start()
     {
-        GameManager.Instance.AddPlayer(transform);
+        Debug.Log("PlayerHealth Start");
+
+        GameManager.AddPlayer(transform);
 
         StartCoroutine(RegenCoroutine());
     }

@@ -15,13 +15,17 @@ public class StageManager : MonoBehaviour
 
     public BlockGroup blockGroup;
 
+    public GameObject searchNearPlayersObj;
+
+    public ParticleSystem stageChangeParticle;
+
     Vignette vignette;
 
-    int currentStage = 0;
+    int currentStage = -1;
 
     [HideInInspector] public bool isAroundPlayers = false;
 
-
+    Color blackColor = Color.black;
     public void Awake()
     {
         instance = this;
@@ -39,7 +43,7 @@ public class StageManager : MonoBehaviour
     }
     void ChangeStageColor()
     {
-        vignette.color.value = stageColors[currentStage];
+        vignette.color.value = stageColors[++currentStage];
     }
     public static void OnKillBoss()
     {
@@ -51,15 +55,51 @@ public class StageManager : MonoBehaviour
     }
     IEnumerator WaitNextStageCoroutine()
     {
+        searchNearPlayersObj.SetActive(true); // 찾기 활성화
+
         while (!isAroundPlayers) yield return null;
 
         blockGroup.StageClear(); // 블럭 다시 세팅 시작
 
         // 코어 쪽에 파티클 추가할지는 고민하는중...
         // 여기다가 파티클 추가
+        stageChangeParticle.Play();
+
+        StartCoroutine(NextStageColorCoroutine());
 
         yield return new WaitForSeconds(1f);
 
-        spawnManager.StartMonsterSpawn();
+        spawnManager.StartMonsterSpawn(); // 몬스터 스폰 시작
+
+        DifficultyManager.NextStageSetting(); // 난이도 설정
+    }
+    IEnumerator NextStageColorCoroutine()
+    {
+        float t = 0;
+
+        Color st = stageColors[currentStage];
+        Color ed = stageColors[++currentStage];
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 2f;
+
+            vignette.color.value = Color.Lerp(st, blackColor, t);
+
+            yield return null;
+        }
+
+        t = 1f;
+
+        while (t > 0f)
+        {
+            t -= Time.deltaTime * 2f;
+
+            vignette.color.value = Color.Lerp(ed, blackColor, t);
+
+            yield return null;
+        }
+
+        vignette.color.value = ed;
     }
 }

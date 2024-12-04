@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AttackDamage
   m_EditorClassIdentifier: 
   abilityName: "\uACF5\uACA9\uB825 \uC99D\uAC00"
+  tear: 1
   attribute: 0
   startValue: 1.1
   stackValue: 0.1

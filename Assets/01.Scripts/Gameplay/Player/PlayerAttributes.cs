@@ -214,7 +214,7 @@ public class PlayerAttributes : MonoBehaviour
             Debug.Log("메인 스킬 스택 확인 : " + (int)GetAttribute(Attribute.MainSkillStack));
         }
         // 서브 스킬의 스택이 달라졌을 때
-        else if (attribute == Attribute.MainSkillStack)
+        else if (attribute == Attribute.SubSkillStack)
         {
             // 스킬 최대 충전 스택 설정
             subSkill.SetStack((int)GetAttribute(Attribute.SubSkillStack));
@@ -280,7 +280,9 @@ public class PlayerAttributes : MonoBehaviour
             attribute == Attribute.CriticalDamage ||
             attribute == Attribute.RateCriticalChance ||
             attribute == Attribute.RateHp ||
-            attribute == Attribute.Healing) return true;
+            attribute == Attribute.Healing ||
+            attribute == Attribute.ProjectileDuration ||
+            attribute == Attribute.ProjectileSpeed) return true;
         return false;
     }
     public void ApplyPassiveAbilityAttribute(Attribute attribute, string abilityName, float value)
