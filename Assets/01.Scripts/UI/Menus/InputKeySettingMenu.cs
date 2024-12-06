@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using Michsky.UI.Shift;
 
 public class InputKeySettingMenu : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class InputKeySettingMenu : MonoBehaviour
 
     [Header("UI Elements")]
     public List<Button> rebindButtons;  // 각 키를 재설정하는 UI 버튼들
-    public List<TMP_Text> keyDisplayTexts;  // 각 키의 현재 설정된 키를 표시할 UI 텍스트들
+    //public List<TMP_Text> keyDisplayTexts;  // 각 키의 현재 설정된 키를 표시할 UI 텍스트들
+    public List<MainButton> keyDisplayTexts;  // 각 키의 현재 설정된 키를 표시할 UI 텍스트들
 
     private const string BindingFilePath = "inputBindings.json";
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
@@ -37,13 +39,23 @@ public class InputKeySettingMenu : MonoBehaviour
         for (int i = 0; i < rebindButtons.Count; i++)
             UpdateKeyText(inputActions[i].action, keyDisplayTexts[i]);  // 현재 키를 표시
     }
-    private void UpdateKeyText(InputAction action, TMP_Text keyText)
+    private void UpdateKeyText(InputAction action, MainButton keyText)
     {
         // 첫 번째 바인딩된 키의 이름을 가져와 표시 (예: "W", "A" 등)
         if (action.bindings.Count > 0)
         {
             var binding = action.bindings[0];
-            keyText.text = InputControlPath.ToHumanReadableString(binding.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+            string str = InputControlPath.ToHumanReadableString(
+                binding.effectivePath,
+                InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+            if (str.Contains("Button", System.StringComparison.OrdinalIgnoreCase))
+            {
+                str = str.Replace("Button", "Mouse", System.StringComparison.OrdinalIgnoreCase);
+            }
+
+            keyText.TextSetting(str);
         }
     }
 
@@ -64,7 +76,7 @@ public class InputKeySettingMenu : MonoBehaviour
         File.WriteAllText(Path.Combine(Application.persistentDataPath, BindingFilePath), jsonData);
     }
 
-    private void StartRebinding(InputAction action, TMP_Text keyText)
+    private void StartRebinding(InputAction action, MainButton keyText)
     {
         // 기존 리바인딩 작업이 있다면 중지
         if (rebindingOperation != null)
@@ -73,7 +85,7 @@ public class InputKeySettingMenu : MonoBehaviour
             UpdateKeyTexts();
         }
 
-        keyText.text = "...";  // 안내 문구
+        keyText.TextSetting("...");
 
 
         action.Dispose();

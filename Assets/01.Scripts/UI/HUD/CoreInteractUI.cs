@@ -4,6 +4,12 @@ using UnityEngine;
 public class CoreInteractUI : MonoBehaviour
 {
     public Inventory inventory;
+
+    public void UIConnect(Inventory inventory)
+    {
+        this.inventory = inventory;
+    }
+
     #region 패널 활성화 및 비활성화
     public GameObject mainPanel;
     public void ShowPanel()
@@ -99,6 +105,12 @@ public class CoreInteractUI : MonoBehaviour
 
         coreUpgrade.UpgradeUserMoveSpeed();
     }
+    public void UpgradeUserStat(Ability ability)
+    {
+        if (!IsCoreUpgrade()) return;
+
+        coreUpgrade.UpgradeUserStat(ability);
+    }
     #endregion
     #region 소환 버튼 할당 함수들
     public CoreTeammateController teammateController;
@@ -122,7 +134,7 @@ public class CoreInteractUI : MonoBehaviour
     }
     #endregion
     #region 코어 업글 비용 확인 함수
-    public TMP_Text[] coreUpgradeCostText;
+    public TMP_Text coreUpgradeCostText;
     public int currentCoreCost = 10;
     public float nextCoreCostMultiplier = 1.5f;
     bool IsCoreUpgrade()
@@ -133,20 +145,15 @@ public class CoreInteractUI : MonoBehaviour
 
             currentCoreCost = (int)(currentCoreCost * nextCoreCostMultiplier);
 
-            for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: "+currentCoreCost.ToString();
-
-            Debug.Log("비용 통과");
+            coreUpgradeCostText.text = "필요 파편 : "+currentCoreCost.ToString();
 
             return true;
         }
-
-        Debug.Log("비용 막힘");
-
         return false;
     }
     #endregion
     #region 소환 비용 확인 함수
-    public TMP_Text[] summonCostText;
+    public TMP_Text summonCostText;
     public int currentSummonCost = 5;
     public float nextSummonCostMultiplier = 1.3f;
     bool IsSummonUpgrade()
@@ -157,7 +164,7 @@ public class CoreInteractUI : MonoBehaviour
 
             currentSummonCost = (int)(currentSummonCost * nextSummonCostMultiplier);
 
-            for (int i = 0; i < summonCostText.Length; i++) summonCostText[i].text = "Cost: " + currentSummonCost.ToString();
+            summonCostText.text = "필요 영혼 : " + currentSummonCost.ToString();
 
             return true;
         }
@@ -167,7 +174,7 @@ public class CoreInteractUI : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < coreUpgradeCostText.Length; i++) coreUpgradeCostText[i].text = "Cost: " + currentCoreCost.ToString();
-        for (int i = 0; i < summonCostText.Length; i++) summonCostText[i].text = "Cost: " + currentSummonCost.ToString();
+        coreUpgradeCostText.text = "필요 파편 : " + currentCoreCost.ToString();
+        summonCostText.text = "필요 영혼 : " + currentSummonCost.ToString();
     }
 }

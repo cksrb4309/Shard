@@ -6,6 +6,8 @@ public class CamoStellarJetMainSkill : PlayerSkill
     public PlayerInputAndMove playerInputAndMove;
     public Transform[] firePositions; // 발사 위치 및 회전 값
     public CamoStellarJetNormalAttack normalAttack;
+
+    public ParticleSystem attackParticle;
     Transform FirePos
     {
         get
@@ -64,6 +66,8 @@ public class CamoStellarJetMainSkill : PlayerSkill
                 rotation: firePos.rotation);
 
             t += attackDelay;
+
+            attackParticle.Play();
 
             yield return new WaitForSeconds(attackDelay);
         }

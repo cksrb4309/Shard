@@ -109,6 +109,7 @@ MonoBehaviour:
   moveScript: {fileID: 5720945526446464324}
   traceScript: {fileID: 8011394754361629936}
   searchTarget: {fileID: 3372254956858720145}
+  searchShard: {fileID: 725380519565276132}
   monsterAttacks:
   - {fileID: 68815232969754942}
 --- !u!114 &5720945526446464324
@@ -333,6 +334,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4a88297cf35eca44bd4dc92b6e45ecf, type: 3}
+--- !u!114 &725380519565276132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3963129979236921346, guid: c4a88297cf35eca44bd4dc92b6e45ecf, type: 3}
+  m_PrefabInstance: {fileID: 4390671033019073510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59de50543f14cf242838cbc80bcda2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7996730912955587308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5914585784516172042, guid: c4a88297cf35eca44bd4dc92b6e45ecf, type: 3}

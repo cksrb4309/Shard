@@ -18,6 +18,8 @@ public class PlayerAttributes : MonoBehaviour
     public PlayerSkill mainSkill;
     public PlayerSkill subSkill;
 
+    public Ability[] upgradeAbilityArray;
+
     //Dictionary<Attribute, Dictionary<string, float>> passiveStatModifiers = new Dictionary<Attribute, Dictionary<string, float>>();
     //Dictionary<Attribute, Dictionary<string, float>> activeBuffEffects = new Dictionary<Attribute, Dictionary<string, float>>();
     //Dictionary<Attribute, float> baseAttributes = new Dictionary<Attribute, float>();

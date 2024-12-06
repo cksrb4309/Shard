@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ff21154d65fc418da85ec5730f480, type: 3}
   m_Name: CoreUpgradCriticalDamage
   m_EditorClassIdentifier: 
-  abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uB370\uBBF8\uC9C0 \uC99D\uAC00 (Core)"
+  abilityName: "\uD50C\uB808\uC774\uC5B4 \uD06C\uB9AC\uD2F0\uCEEC \uB370\uBBF8\uC9C0
+    \uAC15\uD654"
+  tear: 0
   attribute: 6
   startValue: 1.1
   stackValue: 0.1

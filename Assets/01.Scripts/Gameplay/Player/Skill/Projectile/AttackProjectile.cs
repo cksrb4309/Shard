@@ -7,6 +7,8 @@ public class AttackProjectile : MonoBehaviour
 
     public bool isPiercing = false;
 
+    public HitEffectName hitEffectName; 
+
     AttackData attackData = null;
 
     float criticalChance;
@@ -63,6 +65,8 @@ public class AttackProjectile : MonoBehaviour
         attackable.ReceiveHit(damage);
 
         attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+        ParticleManager.Play(transform.position, hitEffectName);
 
         if (!attackable.IsAlive())
         {

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5d0ddfc10e065e44aa41f2678a67502f
+timeCreated: 1487175664
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 83128
+  packageName: Blasters Large
+  packageVersion: 1.1
+  assetPath: Assets/Imphenzia/Blasters/Demo/Prefabs/Turrets/TurretObject.prefab
+  uploadId: 210103

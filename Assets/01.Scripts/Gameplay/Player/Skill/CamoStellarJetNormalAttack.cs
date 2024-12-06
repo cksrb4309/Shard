@@ -7,6 +7,8 @@ public class CamoStellarJetNormalAttack : PlayerSkill
     public float damageMultiplier; // 데미지 계수
     public float baseProjectileDuration; // 기본 투사체 유지시간
     public float baseProjectileSpeed; // 기본 투사체 속도
+
+    public ParticleSystem attackParticle; // 공격 시 효과
     private void Start()
     {
         currentCooltime = baseCooltime;
@@ -32,6 +34,9 @@ public class CamoStellarJetNormalAttack : PlayerSkill
                     destroyDelay:   baseProjectileDuration * projectileDuration,
                     pos:            position,
                     rotation:       firePos.rotation);
+
+                attackParticle.transform.position = position;
+                attackParticle.Play();
             }
         }
     }

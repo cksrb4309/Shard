@@ -60,6 +60,11 @@ MonoBehaviour:
     - cabcaac6a59e0f341885873d0cd894ca
     - 2c7ee892bb81bb848b8d5bdb18332edf
     - 2e34f46ed7a1d7142847af65dd1a9494
+    - 8991aca9da388fe4fbd3ce96cf90f404
+    - 9cdee27f0abf92b408768bebbf6c5e97
+    - fdbca45cf1a9d394a9bd485b6478290f
+    - 3bf9bd810d04eb14bbb3c88a7085ea94
+    - cb9f0ffdf6c29e44cb518342b9be2d27
     values:
     - iconNameOrGuid: cs Script Icon
       colorIndex: 1
@@ -245,6 +250,30 @@ MonoBehaviour:
       colorIndex: 0
       isIconRecursive: 1
       isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Material Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
   bookmarks:
   - guid: 8805d850d95f5934191eb5d4e4be3266
   - guid: 2e34f46ed7a1d7142847af65dd1a9494
+  - guid: fdbca45cf1a9d394a9bd485b6478290f
+  - guid: 3bf9bd810d04eb14bbb3c88a7085ea94
+  - guid: cb9f0ffdf6c29e44cb518342b9be2d27
+  - guid: 90f4e03f9a445314880c0d8eebfe18d3

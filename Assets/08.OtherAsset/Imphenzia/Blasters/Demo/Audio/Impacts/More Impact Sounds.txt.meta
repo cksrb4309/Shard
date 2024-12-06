@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 97a3eb55b0de0dd4280f4e13faf605d9
+timeCreated: 1487110263
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 83128
+  packageName: Blasters Large
+  packageVersion: 1.1
+  assetPath: Assets/Imphenzia/Blasters/Demo/Audio/Impacts/More Impact Sounds.txt
+  uploadId: 210103

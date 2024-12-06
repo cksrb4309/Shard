@@ -9,6 +9,8 @@ public abstract class PlayerSkill : MonoBehaviour
     public float attackDelay; // 공격 사이 딜레이
     public float baseCooltime; // 기본 스킬 충전 쿨타임
 
+    public Sprite skillIcon; // 스킬 아이콘
+
     int baseStackCount; // 기본 스킬 저장 횟수
 
     protected float currentCooltime; // 현재 스킬 충전 쿨타임
@@ -30,6 +32,8 @@ public abstract class PlayerSkill : MonoBehaviour
 
     protected AttackData attackData = new AttackData(true);
 
+    bool isCooltimeTextOn = false;
+
     protected int StackCount
     {
         get
@@ -40,7 +44,64 @@ public abstract class PlayerSkill : MonoBehaviour
         {
             stackCount = value;
 
-            if (baseStackCount > 1) skillSlot?.SetCountText(stackCount);
+            // 현재 스택이 0보다 많을 때
+            if (stackCount > 0)
+            {
+                // 현재 가질 수 있는 스택이 1보다 클 때
+                if (baseStackCount > 1)
+                {
+                    // 스택 텍스트 표시
+                    skillSlot?.SetCountText(stackCount);
+
+                    // Fill Image 숨기기
+                    skillSlot?.DisableFillAmount();
+
+                    // 쿨타임 텍스트 표시 트리거 변수 ON
+                    isCooltimeTextOn = true;
+
+                    skillSlot?.EnableHandle();
+
+                    // 만약 가질 수 있는 스택을 모두 채웠을 경우
+                    if (stackCount == baseStackCount)
+                    {
+                        // 쿨타임 텍스트 정리
+                        skillSlot?.ClearCooltimeText();
+
+                        skillSlot?.DisableHandle();
+                    }
+                }
+                // 현재 가질 수 있는 스택이 한개 밖에 없을 때
+                else
+                {
+                    // 스택 텍스트 정리하기
+                    skillSlot?.ClearCountText();
+
+                    // Fill Image 숨기기
+                    skillSlot?.DisableFillAmount();
+
+                    // 쿨타임 텍스트 표시 트리거 변수 OFF
+                    isCooltimeTextOn = false;
+
+                    skillSlot?.DisableHandle();
+                }
+            }
+            // 현재 스택이 0일 때
+            else
+            {
+                // 스택 텍스트 정리
+                skillSlot?.ClearCountText();
+
+                // Fill Image 표시
+                skillSlot?.EnableFillAmount();
+
+                // 쿨타임 텍스트 정리
+                skillSlot?.ClearCooltimeText();
+
+                // 쿨타임 텍스트 표시 트리거 변수 OFF
+                isCooltimeTextOn = false;
+
+                skillSlot?.EnableHandle();
+            }
         }
     }
 
@@ -54,10 +115,12 @@ public abstract class PlayerSkill : MonoBehaviour
         {
             cooltime = value;
 
-            if (stackCount == 0)
-                skillSlot?.SetFillAmount(1 - cooltime / currentCooltime);
-            else
-                skillSlot?.SetFillAmount(0);
+            if (isCooltimeTextOn) // 쿨타임 텍스트가 필요할 때
+            {
+                skillSlot?.SetCooltimeText((int)Mathf.Ceil(currentCooltime - cooltime));
+            }
+
+            skillSlot?.SetFillAmount(cooltime / currentCooltime);
         }
     }
 
@@ -73,13 +136,11 @@ public abstract class PlayerSkill : MonoBehaviour
             // 만약 쿨타임이 다 찼을 경우
             if (Cooltime >= currentCooltime)
             {
-                // 스킬 충전 횟수를 늘린다
-                stackCount++;
-
-                Debug.Log("Skill Stack : " + stackCount.ToString());
-
                 // 쿨타임 적용
                 Cooltime -= currentCooltime;
+
+                // 스킬 충전 횟수를 늘린다
+                StackCount++;
             }
         }
     }
@@ -87,7 +148,12 @@ public abstract class PlayerSkill : MonoBehaviour
     {
         StackCount = baseStackCount;
     }
+    public void UIConnect(SkillSlot skillSlot)
+    {
+        this.skillSlot = skillSlot;
 
+        skillSlot.SetSkillIcon(skillIcon);
+    }
     public abstract void UseSkill();
     IEnumerator AttackDelayCoroutine()
     {
@@ -123,9 +189,12 @@ public abstract class PlayerSkill : MonoBehaviour
     }
     public void SetStack(int stackCount)
     {
-        Debug.Log("스킬 스택 업데이트 : " + stackCount.ToString());
-
         baseStackCount = stackCount;
+
+        if (this.stackCount > 0)
+        {
+            skillSlot?.SetCountText(this.stackCount);
+        }
     }
     public void SetCoolDown(float speed)
     {

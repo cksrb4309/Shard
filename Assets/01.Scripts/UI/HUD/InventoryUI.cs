@@ -20,13 +20,13 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        showInventoryAction.action.Enable();
-        showInventoryAction.action.performed += show => inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+        //showInventoryAction.action.Enable();
+        //showInventoryAction.action.performed += show => inventoryPanel.SetActive(!inventoryPanel.activeSelf);
     }
     private void OnDisable()
     {
-        showInventoryAction.action.performed -= show => inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-        showInventoryAction.action.Disable();
+        //showInventoryAction.action.performed -= show => inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+        //showInventoryAction.action.Disable();
     }
     private void Start()
     {

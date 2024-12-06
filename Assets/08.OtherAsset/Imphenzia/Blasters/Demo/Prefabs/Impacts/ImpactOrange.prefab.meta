@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b3dff2fe00b54a242b6f2289383da0ec
+timeCreated: 1486712647
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 83128
+  packageName: Blasters Large
+  packageVersion: 1.1
+  assetPath: Assets/Imphenzia/Blasters/Demo/Prefabs/Impacts/ImpactOrange.prefab
+  uploadId: 210103

@@ -18,10 +18,11 @@ public class CustomMonster : MonoBehaviour, IAttackable
 
     public bool isBossMonster; // 보스 여부
 
-    // 갖춰야할 기본 스크립트 ( 이동, 추적, 검색 )
+    // 갖춰야할 기본 스크립트 ( 이동, 추적, 타겟 검색, 파편 검색 )
     public MonsterMove moveScript;
     public MonsterTracking traceScript;
     public SearchTarget searchTarget;
+    public SearchShard searchShard;
 
     // 난이도에 따른 값 조절이 필요한 공격들
     public List<MonsterAttack> monsterAttacks;
@@ -46,9 +47,12 @@ public class CustomMonster : MonoBehaviour, IAttackable
 
     public void LateUpdate()
     {
-        // 몬스터가 서로 충돌하였을 때의 힘을 없앤다
-        rb.angularVelocity = Vector3.zero;
-        rb.linearVelocity = Vector3.zero;
+        if (rb != null)
+        {
+            // 몬스터가 서로 충돌하였을 때의 힘을 없앤다
+            rb.angularVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
+        }
     }
     public virtual void ReceiveHit(float damage)
     {
@@ -83,6 +87,8 @@ public class CustomMonster : MonoBehaviour, IAttackable
         cd.enabled = false; // 충돌체 비활성화
 
         moveScript.StopMove(); // 이동 중지
+
+        searchShard.StopSearch(); // 파편 검색 비활성화
 
         // 추적 코루틴 실행 중지에 대해서는
         // 현재 스크립트에서는 Coroutine을
@@ -200,6 +206,8 @@ public class CustomMonster : MonoBehaviour, IAttackable
         searchTarget.Search(1f); // Search를 통해 이동 스크립트에 방향 설정
 
         moveScript.StartMove(); // 이동 활성화
+
+        searchShard.StartSearch(); // 파편 검색 활성화
 
         StartCoroutine(TrackingCoroutine()); // 추적 코루틴 실행
 
@@ -354,6 +362,7 @@ public class CustomMonster : MonoBehaviour, IAttackable
 
             material.SetFloat("_Amount", shardAmount);
         }
+        shardCoroutine = null;
         shardAmount = 1f;
         material.SetFloat("_Amount", shardAmount);
     }
@@ -367,6 +376,7 @@ public class CustomMonster : MonoBehaviour, IAttackable
 
             material.SetFloat("_Amount", shardAmount);
         }
+        shardCoroutine = null;
         shardAmount = 0f;
         material.SetFloat("_Amount", shardAmount);
     }

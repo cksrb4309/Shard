@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileName: CamoStellarJetSubSkill
   isPiercing: 1
+  hitEffectName: 1
 --- !u!54 &-7480983028551833628
 Rigidbody:
   m_ObjectHideFlags: 0

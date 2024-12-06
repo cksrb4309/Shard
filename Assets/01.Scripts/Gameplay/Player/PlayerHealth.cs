@@ -207,4 +207,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Heal(hpRegen);
         }
     }
+    public void Connect(Slider hpSlider, TMP_Text hpText, Slider sheildSlider)
+    {
+        this.hpSlider = hpSlider;
+        this.hpText = hpText;
+        this.sheildSlider = sheildSlider;
+    }
 }

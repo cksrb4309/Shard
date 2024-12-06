@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1be2d9bc47bd57e48907e3a2612ef699
+timeCreated: 1485565029
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 83128
+  packageName: Blasters Large
+  packageVersion: 1.1
+  assetPath: Assets/Imphenzia/Blasters/Demo/Prefabs/BulletsWithFlySFX/BulletRedSFX.prefab
+  uploadId: 210103

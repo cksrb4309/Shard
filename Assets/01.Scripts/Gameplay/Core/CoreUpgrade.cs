@@ -59,5 +59,9 @@ public class CoreUpgrade : MonoBehaviour
     {
         inventory.GetAbilityApply(coreUpgradeMoveSpeed);
     }
+    public void UpgradeUserStat(Ability ability)
+    {
+        inventory.GetAbilityApply(ability);
+    }
     #endregion
 }

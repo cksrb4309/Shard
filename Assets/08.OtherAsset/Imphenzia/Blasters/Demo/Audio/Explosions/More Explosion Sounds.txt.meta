@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3681e0870fb58934886f98b68bc25965
+timeCreated: 1487110263
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 83128
+  packageName: Blasters Large
+  packageVersion: 1.1
+  assetPath: Assets/Imphenzia/Blasters/Demo/Audio/Explosions/More Explosion Sounds.txt
+  uploadId: 210103

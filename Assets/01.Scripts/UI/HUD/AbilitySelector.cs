@@ -15,6 +15,8 @@ public class AbilitySelector : MonoBehaviour
     public Ability[] tear_2_Ability;
     public Ability[] tear_3_Ability;
 
+    public Color[] tearColors;
+    public string[] tearShowNames;
     HashSet<Ability> selectedItems = new HashSet<Ability>();
 
     Ability selectAbility = null;
@@ -86,7 +88,8 @@ public class AbilitySelector : MonoBehaviour
             }
             selectGroups[i].ability = ability;
             selectGroups[i].abilityNameText.text = ability.abilityName;
-            selectGroups[i].abilityTearText.text = "Tear " + ability.tear.ToString();
+            selectGroups[i].abilityTearText.text = tearShowNames[ability.tear-1];
+            selectGroups[i].abilityTearText.color = tearColors[ability.tear - 1];
         }
         selectedItems.Clear();
 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ff21154d65fc418da85ec5730f480, type: 3}
   m_Name: CoreUpgradMaxHealth
   m_EditorClassIdentifier: 
-  abilityName: "\uCCB4\uB825 \uC99D\uAC00 (Core)"
+  abilityName: "\uD50C\uB808\uC774\uC5B4 \uCD5C\uB300 \uCCB4\uB825 \uAC15\uD654"
+  tear: 0
   attribute: 11
   startValue: 1.1
   stackValue: 0.1

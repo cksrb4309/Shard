@@ -20,6 +20,9 @@ public class SpawnManager : MonoBehaviour
 
     public int monsterSpawnCount = 10;
 
+    public ParticleSystem waveStartPointEffect;
+    public ParticleSystem monsterSpawnEffect;
+
     [Range(0, 7568)] public int appearBossBlockCount;
 
     int currentStage = -1;
@@ -185,6 +188,12 @@ public class SpawnManager : MonoBehaviour
             Vector3 spawnPosition = defaultSpawnPoints[Random.Range(0, defaultSpawnPoints.Length)].position;
             Quaternion spawnRotation = defaultSpawnPoints[Random.Range(0, defaultSpawnPoints.Length)].rotation;
 
+            // 웨이브 시작 지점 파티클 재생
+            waveStartPointEffect.transform.position = spawnPosition;
+            waveStartPointEffect.Play();
+
+            yield return new WaitForSeconds(1f);
+
             // 진형 선택
             SpawnArea spawnArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
 
@@ -230,6 +239,12 @@ public class SpawnManager : MonoBehaviour
                     new Vector3(Random.Range(-area.area.size.x, area.area.size.x), 0, Random.Range(-area.area.size.z, area.area.size.z));
 
                 monster.transform.position = (spawnRotation * monster.transform.position) + spawnPosition;
+
+                monster.transform.rotation = spawnRotation;
+
+                // 몬스터 스폰 파티클 재생
+                monsterSpawnEffect.transform.position = monster.transform.position;
+                monsterSpawnEffect.Play();
 
                 monster.Setting(DifficultyManager.Difficulty, DifficultyManager.Difficulty);
             }
