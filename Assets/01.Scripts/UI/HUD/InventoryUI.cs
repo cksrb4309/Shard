@@ -11,7 +11,7 @@ public class InventoryUI : MonoBehaviour
 
     public Transform itemSlotParent;
 
-    public InputActionReference showInventoryAction;
+    //public InputActionReference showInventoryAction;
 
     public TMP_Text energyCoreText;
     public TMP_Text soulShardText;

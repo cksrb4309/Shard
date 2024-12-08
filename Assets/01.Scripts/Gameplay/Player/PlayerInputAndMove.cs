@@ -54,11 +54,13 @@ public class PlayerInputAndMove : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.SetMyTransform(transform);
+        //GameManager.SetMyTransform(transform);
     }
 
     private void Start()
     {
+        // GameManager.SetMyTransform(transform); TODO 이전으로 돌아갈 때 고쳐라
+
         mainCamera = Camera.main;
 
         rb = GetComponent<Rigidbody>();

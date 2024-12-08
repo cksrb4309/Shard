@@ -11,7 +11,7 @@ public abstract class PlayerSkill : MonoBehaviour
 
     public Sprite skillIcon; // 스킬 아이콘
 
-    int baseStackCount; // 기본 스킬 저장 횟수
+    protected int baseStackCount; // 기본 스킬 저장 횟수
 
     protected float currentCooltime; // 현재 스킬 충전 쿨타임
     // int currentStackCount; // 현재 스킬 저장 횟수
@@ -23,7 +23,7 @@ public abstract class PlayerSkill : MonoBehaviour
     int stackCount; // 현재 가지고 있는 스킬 저장 횟수
     protected float projectileDuration = 1; // 투사체 유지 시간
     protected float projectileSpeed; // 투사체 속도
-    protected float cooldownSpeed = 1; // 쿨다운 속도
+    [HideInInspector] public float cooldownSpeed = 1; // 쿨다운 속도
     protected float criticalChance; // 치명타 확률
     protected float criticalDamage; // 치명타 데미지
     protected float damage; // 현재 유저의 데미지
@@ -144,11 +144,11 @@ public abstract class PlayerSkill : MonoBehaviour
             }
         }
     }
-    private void Start()
+    public virtual void Start()
     {
         StackCount = baseStackCount;
     }
-    public void UIConnect(SkillSlot skillSlot)
+    public void Connect(SkillSlot skillSlot)
     {
         this.skillSlot = skillSlot;
 
@@ -178,9 +178,9 @@ public abstract class PlayerSkill : MonoBehaviour
     }
     public void ResetCooltime()
     {
-        stackCount = baseStackCount;
-
         Cooltime = 0;
+
+        StackCount = baseStackCount;
     }
     #region 데미지, 스택, 쿨다운 속도, 치명타 확률 설정 함수
     public void SetDamage(float damage)

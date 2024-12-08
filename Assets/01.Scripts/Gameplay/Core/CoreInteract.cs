@@ -6,6 +6,7 @@ public class CoreInteract : MonoBehaviour
     public InputActionReference interactAction;
     public Outline outline;
     public CoreInteractUI panel;
+
     bool inPlayer = false;
     bool isShow = false;
     private void OnTriggerEnter(Collider other)

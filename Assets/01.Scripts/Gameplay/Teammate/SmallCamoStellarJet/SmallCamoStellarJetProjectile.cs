@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SmallCamoStellarJetProjectile : MonoBehaviour
 {
+    public string projectileName = "SmallCamoStellarJetProjectile";
+
     public float speed;
     public float returnDelay;
 
@@ -22,7 +24,7 @@ public class SmallCamoStellarJetProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(returnDelay);
 
-        PoolingManager.Instance.ReturnObject("SmallCamoStellarJetProjectile", gameObject);
+        PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }
     private void FixedUpdate()
     {
@@ -32,6 +34,6 @@ public class SmallCamoStellarJetProjectile : MonoBehaviour
     {
         other.GetComponent<IAttackable>().ReceiveHit(damage);
 
-        PoolingManager.Instance.ReturnObject("SmallCamoStellarJetProjectile", gameObject);
+        PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }
 }

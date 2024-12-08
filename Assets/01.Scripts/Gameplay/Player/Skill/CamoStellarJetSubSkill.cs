@@ -33,6 +33,8 @@ public class CamoStellarJetSubSkill : PlayerSkill
                     rotation: firePos.rotation);
 
                 attackParticle.Play();
+
+                SoundManager.Play("Camo_Sub");
             }
         }
     }

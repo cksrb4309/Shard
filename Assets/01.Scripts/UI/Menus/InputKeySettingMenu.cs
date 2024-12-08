@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ using Michsky.UI.Shift;
 
 public class InputKeySettingMenu : MonoBehaviour
 {
+    public InputActionAsset inputActionAsset;
+
     [Header("Input Actions")]
     public List<InputActionReference> inputActions;
 
@@ -19,9 +22,41 @@ public class InputKeySettingMenu : MonoBehaviour
     private const string BindingFilePath = "inputBindings.json";
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
+    private void OnEnable()
+    {
+        for (int i = 0; i < inputActions.Count; i++)
+        {
+            bool isEnabled = false;
+
+            if (inputActions[i].action.enabled)
+            {
+                isEnabled = true;
+
+                inputActions[i].action.Disable();
+            }
+
+            SetDefaultBinding(inputActions[i].action);
+
+            if (isEnabled) inputActions[i].action.Enable();
+        }
+
+        var rebinds = PlayerPrefs.GetString("rebinds");
+
+        if (!string.IsNullOrEmpty(rebinds))
+        {
+            inputActionAsset.LoadBindingOverridesFromJson(rebinds);
+        }
+
+    }
+    private void OnDisable()
+    {
+        var rebinds = inputActionAsset.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
+    }
     void Start()
     {
-        LoadBindingOverrides();  // 게임 시작 시 저장된 바인딩 불러오기
+        //StartCoroutine(LoadBindingOverridesCoroutine());
+        //LoadBindingOverrides();  // 게임 시작 시 저장된 바인딩 불러오기
         InitializeUI();          // UI 버튼과 텍스트 초기화
     }
     private void InitializeUI()
@@ -59,69 +94,99 @@ public class InputKeySettingMenu : MonoBehaviour
         }
     }
 
-    // 바인딩된 키 값을 JSON 파일로 저장
-    private void SaveBindingOverrides()
-    {
-        Dictionary<string, string> bindingData = new Dictionary<string, string>();
-
-        // 각 InputAction에 대해 바인딩 데이터를 JSON으로 변환하여 저장
-        foreach (InputActionReference actionRef in inputActions)
-        {
-            string json = actionRef.action.SaveBindingOverridesAsJson();
-            bindingData[actionRef.action.name] = json;
-        }
-
-        // JSON 파일로 바인딩 데이터 저장
-        string jsonData = JsonUtility.ToJson(new SerializableDictionary<string, string>(bindingData));
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, BindingFilePath), jsonData);
-    }
-
     private void StartRebinding(InputAction action, MainButton keyText)
     {
-        // 기존 리바인딩 작업이 있다면 중지
+        // 이전 리바인딩 작업이 진행 중이라면 먼저 종료
         if (rebindingOperation != null)
         {
             rebindingOperation.Dispose();
-            UpdateKeyTexts();
         }
 
+        // 리바인딩 전에 액션을 비활성화
+        action.Disable();
+
+        // UI 업데이트
         keyText.TextSetting("...");
 
-
-        action.Dispose();
-
-        // 리바인딩 시작
+        // 리바인딩 작업 시작
         rebindingOperation = action.PerformInteractiveRebinding()
-            .WithControlsExcluding("<Mouse>/delta")  // 마우스 움직임은 제약을 검
-            .WithCancelingThrough("<Keyboard>/escape") // Escape로 리바인딩 취소 가능
-            .OnMatchWaitForAnother(0.1f)               // 중복 방지
-            .OnComplete(operation =>                   // 리바인딩 완료
+            .WithControlsExcluding("<Mouse>/delta") // 마우스 움직임 제외
+            .WithCancelingThrough("<Keyboard>/escape") // ESC로 취소
+            .OnMatchWaitForAnother(0.1f) // 중복 방지
+            .OnCancel(operation =>
             {
-                UpdateKeyText(action, keyText);  // 텍스트 업데이트
-                SaveBindingOverrides();          // 저장
-                operation.Dispose();             // 리소스 해제
-                action.Enable(); // 리바인딩이 끝난 후 다시 활성화
+                UpdateKeyText(action, keyText); // UI 복구
+                operation.Dispose(); // 리소스 해제
+                action.Enable(); // 리바인딩 취소 후 액션 활성화
+            })
+            .OnComplete(operation =>
+            {
+                UpdateKeyText(action, keyText); // UI 업데이트
+                //SaveBindingOverrides(); // 변경사항 저장
+                operation.Dispose(); // 리소스 해제
+
+                // 리바인딩 후 새로운 바인딩 적용
+                action.Enable(); // 리바인딩 후 액션 활성화
             })
             .Start();
     }
 
-    // JSON 파일로부터 바인딩된 키 값 불러오기
     private void LoadBindingOverrides()
     {
         string path = Path.Combine(Application.persistentDataPath, BindingFilePath);
 
+        bool[] isEnabled = new bool[inputActions.Count];
+
+        for (int i = 0; i < inputActions.Count; i++)
+            isEnabled[i] = inputActions[i].action.enabled;
+
+        // 파일이 존재하면 바인딩 데이터 읽기
         if (File.Exists(path))
         {
             string jsonData = File.ReadAllText(path);
-            var bindingData = JsonUtility.FromJson<SerializableDictionary<string, string>>(jsonData);
+            MyBindingData bindingData = JsonUtility.FromJson<MyBindingData>(jsonData);
 
-            // 각 InputAction에 대해 JSON 바인딩 불러오기
-            foreach (var actionRef in inputActions)
+            for (int i = 0; i < inputActions.Count; i++)
             {
-                if (bindingData.dictionary.TryGetValue(actionRef.action.name, out var json))
+                if (bindingData.keys.Contains(inputActions[i].action.name))
                 {
-                    actionRef.action.LoadBindingOverridesFromJson(json);
+                    int index = bindingData.keys.IndexOf(inputActions[i].action.name);
+                    if (!string.IsNullOrEmpty(bindingData.values[index]))  // 바인딩 값이 있을 경우
+                    {
+                        //if (isEnabled[i]) inputActions[i].action.Disable();
+
+                        inputActions[i].action.ApplyBindingOverride(bindingData.values[index]);
+
+                        if (isEnabled[i]) inputActions[i].action.Enable();
+                    }
+                    else
+                    {
+                        if (isEnabled[i]) inputActions[i].action.Disable();
+
+                        SetDefaultBinding(inputActions[i].action);
+
+                        if (isEnabled[i]) inputActions[i].action.Enable();
+                    }
                 }
+                else
+                {
+                    //if (isEnabled[i]) inputActions[i].action.Disable();
+
+                    SetDefaultBinding(inputActions[i].action);
+
+                    if (isEnabled[i]) inputActions[i].action.Enable();
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < inputActions.Count; i++)
+            {
+                //if (isEnabled[i]) inputActions[i].action.Disable();
+
+                SetDefaultBinding(inputActions[i].action);
+
+                if (isEnabled[i]) inputActions[i].action.Enable();
             }
         }
     }
@@ -129,27 +194,54 @@ public class InputKeySettingMenu : MonoBehaviour
     // 게임 종료 시 바인딩 저장
     private void OnApplicationQuit()
     {
-        SaveBindingOverrides();
+        var rebinds = inputActionAsset.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
     }
-}
-
-[System.Serializable]
-public class SerializableDictionary<TKey, TValue>
-{
-    public List<TKey> keys = new List<TKey>();
-    public List<TValue> values = new List<TValue>();
-    public Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
-
-    public SerializableDictionary(Dictionary<TKey, TValue> dict)
+    private void SetDefaultBinding(InputAction action)
     {
-        dictionary = dict;
-        foreach (var kvp in dict)
+        if (action.name == "MoveUp")
         {
-            keys.Add(kvp.Key);
-            values.Add(kvp.Value);
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/w" });
+        }
+        else if (action.name == "MoveDown")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/s" });
+        }
+        else if (action.name == "MoveLeft")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/a" });
+        }
+        else if (action.name == "MoveRight")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/d" });
+        }
+        else if (action.name == "Interact")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/f" });
+        }
+        else if (action.name == "Skill1")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Mouse>/rightButton" });
+        }
+        else if (action.name == "Skill2")
+        {
+            action.ApplyBindingOverride(new InputBinding { path = "<Keyboard>/r" });
         }
     }
+}
+[System.Serializable]
+public class MyBindingData
+{
+    public List<string> keys = new List<string>();
+    public List<string> values = new List<string>();
 
-    // JSON 변환 시 필요
-    public SerializableDictionary() { }
+    public Dictionary<string, string> GetDictionary()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        for (int i = 0; i < keys.Count; i++)
+        {
+            dict[keys[i]] = values[i];
+        }
+        return dict;
+    }
 }

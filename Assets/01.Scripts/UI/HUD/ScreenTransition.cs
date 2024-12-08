@@ -166,11 +166,7 @@ public class ScreenTransition : MonoBehaviour
 
         while (t > 0)
         {
-            Debug.Log(Time.deltaTime.ToString() + " // µ¨Å¸ °ª");
-
             t -= Time.deltaTime;
-
-            Debug.Log(Mathf.InverseLerp(fadeEnd, max, t));
 
             fadeImage.color = Color.Lerp(startColor, endColor, Mathf.InverseLerp(fadeEnd, max, t));
 

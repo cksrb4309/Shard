@@ -20,6 +20,14 @@ public class MonsterSet : ScriptableObject
         }
         return monsterList;
     }
+    public CustomMonster RandomGetMonster()
+    {
+        CustomMonster monster = monsterSpawnAmounts[Random.Range(0, monsterSpawnAmounts.Length)].monster;
+
+        monster = PoolingManager.Instance.GetObject<CustomMonster>(monster.mobName);
+
+        return monster;
+    }
 }
 
 [System.Serializable]

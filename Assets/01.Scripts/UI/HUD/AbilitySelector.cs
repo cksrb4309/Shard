@@ -31,7 +31,7 @@ public class AbilitySelector : MonoBehaviour
 
     Coroutine coroutine = null;
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
     }
@@ -67,6 +67,8 @@ public class AbilitySelector : MonoBehaviour
 
             return;
         }
+
+        SoundManager.Play("LevelUpSound");
 
         isSelect = true;
 
@@ -128,6 +130,8 @@ public class AbilitySelector : MonoBehaviour
     public void SelectAbility(int index)
     {
         if (!isCheck) return;
+
+        SoundManager.Play("AbilitySelectSFX");
 
         isCheck = false;
 

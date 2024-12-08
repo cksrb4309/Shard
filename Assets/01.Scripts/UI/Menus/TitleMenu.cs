@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 public class TitleMenu : MonoBehaviour
 {
     public GameObject optionPanel;
-
-    bool isSceneLoading = false;
+    public GameObject modeSelectPanel;
     public void OnShowOptionPanel()
     {
         optionPanel.SetActive(true);
@@ -16,11 +15,9 @@ public class TitleMenu : MonoBehaviour
     }
     public void OnGameStart()
     {
-        if (isSceneLoading) return;
+        modeSelectPanel.SetActive(true);
 
-        ScreenTransition.Play("Cube_FadeOut", "Cube_FadeIn", Color.black, Color.white, "Game", 1.5f, 0);
-
-        isSceneLoading = true;
+        // ScreenTransition.Play("Cube_FadeOut", "Cube_FadeIn", Color.black, Color.white, "Game", 1.5f, 0);
     }
     public void LoadGameScene()
     {

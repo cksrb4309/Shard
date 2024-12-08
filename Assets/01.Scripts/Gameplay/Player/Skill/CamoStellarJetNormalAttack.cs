@@ -37,6 +37,8 @@ public class CamoStellarJetNormalAttack : PlayerSkill
 
                 attackParticle.transform.position = position;
                 attackParticle.Play();
+
+                SoundManager.Play("Camo_Normal");
             }
         }
     }

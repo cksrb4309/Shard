@@ -5,7 +5,7 @@ public class CoreInteractUI : MonoBehaviour
 {
     public Inventory inventory;
 
-    public void UIConnect(Inventory inventory)
+    public void Connect(Inventory inventory)
     {
         this.inventory = inventory;
     }

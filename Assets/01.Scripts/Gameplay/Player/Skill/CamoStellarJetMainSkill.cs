@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CamoStellarJetMainSkill : PlayerSkill
 {
-    public PlayerInputAndMove playerInputAndMove;
+    public CustomPlayerInputAndMove playerInputAndMove;
     public Transform[] firePositions; // 발사 위치 및 회전 값
     public CamoStellarJetNormalAttack normalAttack;
 
@@ -68,6 +68,8 @@ public class CamoStellarJetMainSkill : PlayerSkill
             t += attackDelay;
 
             attackParticle.Play();
+
+            SoundManager.Play("Camo_Main");
 
             yield return new WaitForSeconds(attackDelay);
         }

@@ -50,6 +50,9 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         if (isSetting) return;
 
+
+        SoundManager.BlockAttackSoundPlay();
+
         hp -= damage;
 
         DamageTextController.OnDamageText(pos, damage);

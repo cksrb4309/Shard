@@ -27,6 +27,7 @@ public enum HitEffectName
     CamoStellarJetNormalAttackHit,
     CamoStellarJetSubSkillHit,
     CamoStellarJetMainSkillHit,
+    PlayerDeadParticle,
 }
 public enum OtherEffectName
 {

@@ -59,18 +59,16 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     Vector2 mousePosition;
     Camera mainCamera;
     bool canRotate = true;
-    float rotationSpeed = 30f; // 회전 속도
-    float deceleration = 10f; // 감속 속도
     Vector3 inputDir;  // 현재 이동 방향
     #endregion
 
     private void Awake()
     {
         // 게임 매니저에 나의 Transform을 전달한다
-        GameManager.SetMyTransform(transform);
+        // GameManager.SetMyTransform(transform);
     }
 
-    private void Start()
+    public virtual void Start()
     {
         // 카메라 세팅
         mainCamera = Camera.main;
@@ -82,7 +80,8 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     #region Input Action 활성화 비활성화 
     private void OnEnable()
     {
-        mousePositionAction.action.Enable();
+        if (!mousePositionAction.action.enabled)
+            mousePositionAction.action.Enable();
 
         moveLeftAction.action.Enable();
         moveRightAction.action.Enable();
@@ -93,19 +92,16 @@ public class CustomPlayerInputAndMove : MonoBehaviour
         runAction.action.started += OnRun;
         runAction.action.canceled += OnWalk;
 
-        //equipmentAction.action.Enable();
-        //equipmentAction.action.started += OnEquipment;
-
         subSkillAction.action.Enable();
 
         mainSkillAction.action.Enable();
 
         normalAttackAction.action.Enable();
-        //normalAttackAction.action.performed += OnNormalAttack;
     }
     private void OnDisable()
     {
-        mousePositionAction.action.Disable();
+        if (mousePositionAction.action.enabled)
+            mousePositionAction.action.Disable();
 
         moveLeftAction.action.Disable();
         moveRightAction.action.Disable();
@@ -116,40 +112,19 @@ public class CustomPlayerInputAndMove : MonoBehaviour
         runAction.action.started -= OnRun;
         runAction.action.canceled -= OnWalk;
 
-        //equipmentAction.action.started -= OnEquipment;
-        //equipmentAction.action.Disable();
-
         subSkillAction.action.Disable();
 
         mainSkillAction.action.Disable();
 
-        //normalAttackAction.action.performed -= OnNormalAttack;
         normalAttackAction.action.Disable();
     }
     #endregion
-
-    //private void Update()
-    //{
-    //    if (normalAttackAction.action.IsPressed())
-    //    {
-    //        OnNormalAttack();
-    //    }
-    //    if (subSkillAction.action.IsPressed())
-    //    {
-    //        OnSubSkill();
-    //    }
-    //    if (mainSkillAction.action.IsPressed())
-    //    {
-    //        OnMainSkill();
-    //    }
-    //}
-
     public void SetMoveSpeed(float speed)
     {
         walkSpeed = speed;
         runSpeed = speed * 1.5f;
     }
-    protected virtual void OnNormalAttack(/*InputAction.CallbackContext context*/)
+    protected virtual void OnNormalAttack()
     {
         normalAttack.UseSkill();
     }
@@ -170,8 +145,8 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     private void OnWalk(InputAction.CallbackContext context)
     {
         if (boostCoroutine != null) StopCoroutine(boostCoroutine);
-
-        boostCoroutine = StartCoroutine(SpeedDownCoroutine());
+        if (gameObject.activeSelf)
+            boostCoroutine = StartCoroutine(SpeedDownCoroutine());
     }
     IEnumerator SpeedUpCoroutine()
     {

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class FollowCursor : MonoBehaviour
 {
-    public Camera cam;
 
     public RectTransform cursorTransform;
     public Image cursorImage;
@@ -20,7 +19,9 @@ public class FollowCursor : MonoBehaviour
     public InputActionReference mousePositionAction;
     public InputActionReference mouseClickAction;
 
-    public Transform playerTransform;
+    public Camera cam;
+
+    Transform playerTransform;
 
     Sprite currentCursorSprite;
     Sprite beforeCursorSprite;
@@ -63,9 +64,13 @@ public class FollowCursor : MonoBehaviour
 
 
             Vector2 playerForwardPosition = cam.WorldToScreenPoint(playerTransform.position + playerTransform.forward);
+
             Vector2 playerPosition = cam.WorldToScreenPoint(playerTransform.position);
+
             Vector2 playerAttackCursorDir = (playerForwardPosition - playerPosition).normalized;
+
             float cursorDistance = (mousePos - playerPosition).magnitude;
+
             playerAttackCursor.localPosition = (playerPosition + (playerAttackCursorDir * cursorDistance)) - screenSize;
         }
 
@@ -83,12 +88,19 @@ public class FollowCursor : MonoBehaviour
     }
     private void OnEnable()
     {
-        mousePositionAction.action.Enable();
+        if (!mousePositionAction.action.enabled)
+            mousePositionAction.action.Enable();
+
         mouseClickAction.action.Enable();
     }
     private void OnDisable()
     {
-        mousePositionAction.action.Disable();
+        if (mousePositionAction.action.enabled)
+            mousePositionAction.action.Disable();
         mouseClickAction.action.Disable();
+    }
+    public void Connect(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
     }
 }

@@ -10,14 +10,13 @@ public class GameSceneUIConnectManager : MonoBehaviour
     public Slider hpSlider; // 체력 바 
     public TMP_Text hpText; // 체력 텍스트
     public Slider sheildSlider; // 실드 바
-
     public Image normalAttackImage; // 일반 공격 SkillImage
     public SkillSlot subSkillSlot; // 서브 스킬 슬롯
     public SkillSlot mainSkillSlot; // 메인 스킬 슬롯
-
     public UpgradePanel[] upgradePanels; // 코어 업그레이드 패널들
-
     public CoreInteractUI coreInteractUI; // 인벤토리 UI
+    public CoreUpgrade coreUpgrade;
+    public RealtimeCanvasUI realtimeCanvasUI; // 상황을 표시할 UI
 
     int upgradePanelIndex = 0;
 
@@ -38,4 +37,6 @@ public class GameSceneUIConnectManager : MonoBehaviour
         return instance.upgradePanels[instance.upgradePanelIndex++];
     }
     public static CoreInteractUI GetCoreInteractUI() => instance.coreInteractUI;
+    public static CoreUpgrade GetCoreUpgrade() => instance.coreUpgrade;
+    public static RealtimeCanvasUI GetRealtimeCanvasUI() => instance.realtimeCanvasUI;
 }

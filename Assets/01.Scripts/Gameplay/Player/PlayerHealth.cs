@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         Debug.Log("PlayerHealth Start");
 
-        GameManager.AddPlayer(transform);
+        //GameManager.AddPlayer(transform);
 
         StartCoroutine(RegenCoroutine());
     }
@@ -41,8 +41,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             maxHp = value;
             maxSheild = value;
 
-            hpSlider.maxValue = value;
-            sheildSlider.maxValue = value;
+            if (hpSlider != null) hpSlider.maxValue = value;
+            if (sheildSlider != null) sheildSlider.maxValue = value;
         }
     }
     float Hp
@@ -51,9 +51,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             hp = value;
 
-            hpSlider.value = hp;
+            if (hpSlider != null) hpSlider.value = hp;
 
-            hpText.text = hp.ToString("F0") + " / " + maxHp.ToString("F0");
+            if (hpText != null) hpText.text = hp.ToString("F0") + " / " + maxHp.ToString("F0");
         }
     }
     float Sheild
@@ -142,7 +142,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (hp >= maxHp) return;
 
-        hp += heal;
+        Hp = hp + heal;
 
         if (hp > maxHp) Hp = maxHp;
     }
@@ -182,7 +182,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     }
     void Dead()
     {
-        Debug.Log("사망");
+        // 파티클 효과 재생
+        ParticleManager.Play(transform.position, HitEffectName.PlayerDeadParticle);
+
+        // 게임 매니저에 사망 처리 올림
+        GameManager.PlayerDie();
+
+        // 오브젝트 비활성화
+        gameObject.SetActive(false); 
     }
     public void TakeDamage(float damage)
     {

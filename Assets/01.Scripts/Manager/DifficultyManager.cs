@@ -13,6 +13,8 @@ public class DifficultyManager : MonoBehaviour
     {
         instance = this;
 
+        Difficulty = 1;
+
         StartCoroutine(IncreaseDifficultyCoroutine());
     }
 
@@ -46,7 +48,7 @@ public class DifficultyManager : MonoBehaviour
         {
             instance.time -= 60;
 
-            Difficulty *= 1.5f;
+            Difficulty *= 1.35f;
         }
 
         instance.StartCoroutine(instance.IncreaseDifficultyCoroutine());

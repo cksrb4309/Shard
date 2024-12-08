@@ -40,7 +40,7 @@ public class NearestAttackableSelector : MonoBehaviour
     {
         Collider[] colliders;
 
-        for (float radius = 1f; radius < 30f; radius += 3f)
+        for (float radius = 0.5f; radius < 30f; radius += 3f)
         {
             colliders = Physics.OverlapSphere(position, radius, instance.layerMask);
 
@@ -144,6 +144,34 @@ public class NearestAttackableSelector : MonoBehaviour
             }
         }
 
+        return null;
+    }
+    public static IAttackable GetAttackable(Vector3 position, float maxRadius, IAttackable ignore)
+    {
+        List<IAttackable> list = new List<IAttackable>();
+
+        Collider[] colliders;
+
+        for (float radius = 1f; radius <= maxRadius; radius += 2)
+        {
+            colliders = Physics.OverlapSphere(position, radius, instance.layerMask);
+
+            if (colliders.Length > 0)
+            {
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    IAttackable attackable = colliders[i].GetComponent<IAttackable>();
+
+                    if (attackable.IsAlive())
+                        if (ignore != attackable)
+                            list.Add(attackable);
+                }
+                if (list.Count >= 1)
+                {
+                    return list[Random.Range(0, list.Count)];
+                }
+            }
+        }
         return null;
     }
 }

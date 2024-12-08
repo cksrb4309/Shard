@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 4300000, guid: 2eb5f68578851ea48b43a14ec89b378c, type: 3}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3.5367
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 3.5367
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 3.5367
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -148,9 +148,13 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.00068853796
       objectReference: {fileID: 0}
+    - target: {fileID: 5720945526446464324, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7468485689079700011, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Name
-      value: M_S_2_22
+      value: M_S_2_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

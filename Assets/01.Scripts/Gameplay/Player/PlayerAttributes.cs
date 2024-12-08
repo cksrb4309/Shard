@@ -12,7 +12,7 @@ public class PlayerAttributes : MonoBehaviour
 
     public PlayerHealth health;
     public PlayerStatus status;
-    public PlayerInputAndMove move;
+    public CustomPlayerInputAndMove move;
 
     public PlayerSkill normalAttack;
     public PlayerSkill mainSkill;

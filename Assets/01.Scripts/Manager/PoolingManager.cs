@@ -8,18 +8,19 @@ public class PoolingManager : MonoBehaviour
 
     private Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool>();
 
-    // 教臂沛 菩畔 备泅
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
+
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     // 钱 积己

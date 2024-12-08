@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,18 +10,31 @@ public class SoundManager : MonoBehaviour
     public AudioSource[] backgroundAudios;
     public AudioSource effectAudio;
 
-    public float bgmVolume = 1.0f;     // 브금 소리 크기
-    public float sfxVolume = 1.0f;     // 효과음 소리 크기
-    public float allVolume = 1.0f;     // 전체 소리 크기
+    [HideInInspector] public float bgmVolume = 1.0f;     // 브금 소리 크기
+    [HideInInspector] public float sfxVolume = 1.0f;     // 효과음 소리 크기
+    [HideInInspector] public float allVolume = 1.0f;     // 전체 소리 크기
 
     public Sound[] soundArray;
 
     public AudioClip[] monsterDieSounds;
+    public AudioClip[] blockDestroySounds;
+    public AudioClip[] blockAttackSounds;
+    public AudioClip[] sheildAttackSounds;
+
 
     Dictionary<string, AudioClip> clipDictionary = new Dictionary<string, AudioClip>();
 
     bool isBackgroundSoundPlaying = false;
     int currentBackgroundIndex = 0;
+
+    public static void SheildAttackSoundPlay()
+    {
+        instance.effectAudio.PlayOneShot(instance.sheildAttackSounds[Random.Range(0, 3)]);
+    }
+    public static void BlockAttackSoundPlay()
+    {
+        instance.effectAudio.PlayOneShot(instance.blockAttackSounds[Random.Range(0, 3)]);
+    }
 
     private void Awake()
     {
@@ -28,8 +42,18 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
 
+            allVolume = PlayerPrefs.GetFloat("ALL_Volume", 0.5f);
+            bgmVolume = PlayerPrefs.GetFloat("BGM_Volume", 0.5f);
+            sfxVolume = PlayerPrefs.GetFloat("SFX_Volume", 0.5f);
+
+            SetAllVolume(allVolume);
+            SetBGM(bgmVolume);
+            SetSFX(sfxVolume);
+
             for (int i = 0; i < soundArray.Length; i++)
                 clipDictionary.Add(soundArray[i].clipName, soundArray[i].audioClip);
+
+            PlayBackgroundMusic("Title");
 
             DontDestroyOnLoad(gameObject);
         }
@@ -38,9 +62,39 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public static void Play(string clipName, SoundType type)
+    private void OnEnable()
     {
-        Debug.Log("clipName : " + clipName.ToString());
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        PlayerPrefs.SetFloat("ALL_Volume", allVolume);
+        PlayerPrefs.SetFloat("BGM_Volume", bgmVolume);
+        PlayerPrefs.SetFloat("SFX_Volume", sfxVolume);
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        PlayBackgroundMusic(scene.name);
+    }
+    public void PlayBackgroundMusic(string sceneName)
+    {
+        string clipName = "";
+        // 씬 이름에 따라 배경음악 선택
+        switch (sceneName)
+        {
+            case "Title": clipName = "TitleBGM"; break;
+            case "Game": clipName = "BattleBGM"; break;
+            default:
+                Debug.LogWarning("해당 씬에 맞는 배경음악이 설정되지 않았습니다.");
+                return;
+        }
+
+        Play(clipName, SoundType.Background);
+    }
+    public static void Play(string clipName, SoundType type = SoundType.Effect)
+    {
         if (type == SoundType.Effect)
         {
             instance.EffectPlay(clipName);
@@ -88,7 +142,6 @@ public class SoundManager : MonoBehaviour
         }
         else if (clipDictionary.ContainsKey(clipName))
         {
-            Debug.Log("clipName:" + clipName.ToString());
             effectAudio.PlayOneShot(clipDictionary[clipName]);
         }
         else

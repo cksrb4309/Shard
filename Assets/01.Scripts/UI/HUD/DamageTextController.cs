@@ -6,7 +6,7 @@ public class DamageTextController : MonoBehaviour
     static DamageTextController instance = null;
 
     public Canvas myCanvas;
-    public Camera myCamera;
+    Camera myCamera;
 
     public Transform initialParent;
     public Transform finalParent;
@@ -16,6 +16,10 @@ public class DamageTextController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        myCamera = Camera.main;
     }
     public static void OnDamageText(Vector3 pos, float damage, bool isUser = false)
     {
@@ -35,18 +39,10 @@ public class DamageTextController : MonoBehaviour
         else
             obj = PoolingManager.Instance.GetObject("MonsterHitDamageText").GetComponent<RectTransform>();
 
-        //TMP_Text text = obj.GetComponentInChildren<TMP_Text>();
-
-        //text.text = damage.ToString("F0");
-
         obj.GetComponentInChildren<TMP_Text>().text = damage.ToString("F0");
 
-        //obj.SetParent(initialParent);
-
-        targetTransform.localPosition = pos - new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+        targetTransform.localPosition = pos - new Vector3(Screen.width * Random.Range(0.48f, 0.52f), Screen.height * Random.Range(0.49f, 0.51f), 0);
 
         obj.position = targetTransform.position;
-
-        //obj.SetParent(initialParent);
     }
 }

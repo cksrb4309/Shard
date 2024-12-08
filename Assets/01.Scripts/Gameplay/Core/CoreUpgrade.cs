@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class CoreUpgrade : MonoBehaviour
 {
     public CoreHealth coreHealth;
-    public Inventory inventory;
+    Inventory inventory;
 
     public Ability coreUpgradeAttackDamage;
     public Ability coreUpgradeAttackSpeed;
@@ -64,4 +64,5 @@ public class CoreUpgrade : MonoBehaviour
         inventory.GetAbilityApply(ability);
     }
     #endregion
+    public void Connect(Inventory inventory) => this.inventory = inventory;
 }

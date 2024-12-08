@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 4300000, guid: 05cc5274c54f99140b298dc2f57fda05, type: 3}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.5834
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.5834
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.5834
       objectReference: {fileID: 0}
     - target: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.016
       objectReference: {fileID: 0}
+    - target: {fileID: 838114916553747128, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: m_Radius
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1204610380230355975, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -99,6 +103,10 @@ PrefabInstance:
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: updateInterval
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372254956858720145, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: radius
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4499179692415912373, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Size.x
@@ -147,6 +155,10 @@ PrefabInstance:
     - target: {fileID: 4738626040893525782, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Center.z
       value: -0.008343279
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720945526446464324, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: moveSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7468485689079700011, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Name

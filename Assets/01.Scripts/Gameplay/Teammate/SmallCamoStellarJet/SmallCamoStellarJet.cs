@@ -28,6 +28,8 @@ public class SmallCamoStellarJet : Teammate
 
                 projectile.Setting(attackDamage, firePosition.rotation);
 
+                SoundManager.Play("Camo_Normal");
+
                 yield return null;
             }
 
