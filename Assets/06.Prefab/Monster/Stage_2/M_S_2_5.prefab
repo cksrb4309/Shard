@@ -1,5 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &974741763457075594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3309059909661594346}
+  - component: {fileID: 2104000522738378726}
+  m_Layer: 7
+  m_Name: RaycastHitAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3309059909661594346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974741763457075594}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.3145939, y: 1.3145939, z: 1.3145939}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8718541020260713395}
+  m_Father: {fileID: 2106485470083429157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104000522738378726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974741763457075594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546a356959c361b4b8f601d8165dda6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 10
+  isNeedTarget: 0
+  monster: {fileID: 4185375173827296930}
+  projectileName: MonsterProjectile_1
+  maxDistance: 5
+  projectileDuration: 1
+  projectileSpeed: 10
+  attackDelay: 0.5
+  cooltimeLength: 5
+  attackCount: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4160
+  firePosition: {fileID: 8718541020260713395}
+--- !u!1 &4111208904565489086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8718541020260713395}
+  m_Layer: 7
+  m_Name: FirePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8718541020260713395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111208904565489086}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.116, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3309059909661594346}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1444030809514342877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: baseMaxHp
-      value: 5000
+      value: 4500
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: isBossMonster
@@ -100,6 +190,14 @@ PrefabInstance:
       propertyPath: updateInterval
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: monsterAttacks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      propertyPath: 'monsterAttacks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2104000522738378726}
     - target: {fileID: 4499179692415912373, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Size.x
       value: 0.76379263
@@ -150,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5720945526446464324, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 1.85
       objectReference: {fileID: 0}
     - target: {fileID: 7468485689079700011, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Name
@@ -158,6 +256,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3309059909661594346}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+--- !u!4 &2106485470083429157 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+  m_PrefabInstance: {fileID: 1444030809514342877}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4185375173827296930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+  m_PrefabInstance: {fileID: 1444030809514342877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7500ff1895f2da47aeaad919d338599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -93,6 +93,8 @@ public class InterstellarRunner_Disk : MonoBehaviour
 
         if (!attackable.IsAlive()) return;
 
+        float damage = this.damage;
+
         if (criticalChance >= Random.value)
         {
             damage *= criticalDamage;

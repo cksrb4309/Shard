@@ -195,6 +195,13 @@ public abstract class PlayerSkill : MonoBehaviour
         {
             skillSlot?.SetCountText(this.stackCount);
         }
+
+        // 현재 스택이 지금 받은 설정된 스택 카운트보다 1 작을 때
+        if (this.stackCount == stackCount - 1)
+        {
+            // 쿨타임 텍스트를 표시한다
+            isCooltimeTextOn = true;
+        }
     }
     public void SetCoolDown(float speed)
     {

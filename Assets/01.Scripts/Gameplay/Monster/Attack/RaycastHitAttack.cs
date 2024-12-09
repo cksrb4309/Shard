@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RaycastHitAttack : MonsterAttack
 {
+    public CustomMonster monster;
+
     public string projectileName;
 
     public float maxDistance;
@@ -40,11 +42,16 @@ public class RaycastHitAttack : MonsterAttack
         {
             isCool = true;
 
+            monster.TriggerRangedAttack(Attack);
+
             target = hitInfo.transform;
 
-            StartCoroutine(AttackCoroutine());
             StartCoroutine(CooltimeCoroutine());
         }
+    }
+    public void Attack()
+    {
+        StartCoroutine(AttackCoroutine());
     }
     IEnumerator AttackCoroutine()
     {
@@ -81,7 +88,6 @@ public class RaycastHitAttack : MonsterAttack
     {
         isAttack = true;
     }
-
     public override void StopAttack()
     {
         isAttack = false;

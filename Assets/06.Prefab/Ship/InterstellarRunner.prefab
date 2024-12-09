@@ -30835,7 +30835,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d217e905f219b5c47b0d3aa853248ddb, type: 2}
   inputAttributes:
   - Attribute: 0
-    Value: 250
+    Value: 300
   - Attribute: 1
     Value: 1
   - Attribute: 2

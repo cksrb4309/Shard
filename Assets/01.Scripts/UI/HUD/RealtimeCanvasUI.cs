@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -17,7 +18,66 @@ public class RealtimeCanvasUI : MonoBehaviour
     public float range = 2f;
 
     public Camera cam;
-    
+
+    public Image thinCircle;
+
+    Coroutine thinCircleCoroutine = null;
+
+    IEnumerator ThinCircleCoroutine_1()
+    {
+        float t = 0;
+        Color color = Color.white;
+
+        while (t < 1f)
+        {
+            yield return null;
+
+            t += Time.deltaTime;
+            color.a = t;
+            thinCircle.color= color;
+        }
+        t = 1;
+        while (t > 0f)
+        {
+            yield return null;
+
+            t -= Time.deltaTime;
+            color.a = t;
+            thinCircle.color = color;
+        }
+        color.a = 0;
+        thinCircle.color = color;
+        thinCircleCoroutine = null;
+    }
+
+    IEnumerator ThinCircleCoroutine_2()
+    {
+        float t = 1;
+        Color color = Color.white;
+        color.a = 1f;
+
+        thinCircle.color = color;
+
+        yield return new WaitForSeconds(3f);
+
+
+        while (t > 0f)
+        {
+            yield return null;
+
+            t -= Time.deltaTime;
+
+            color.a = t;
+
+            thinCircle.color = color;
+        }
+        color.a = 0;
+
+        thinCircle.color = color;
+
+        thinCircleCoroutine = null;
+    }
+
     Transform playerTransform = null;
 
     Vector3 PlayerPosition
@@ -108,6 +168,13 @@ public class RealtimeCanvasUI : MonoBehaviour
 
             point = cam.WorldToScreenPoint(PlayerPosition + (position - PlayerPosition).normalized * range);
 
+            Vector2 thinCirclePos = cam.WorldToScreenPoint(PlayerPosition);
+
+            thinCirclePos.x -= Screen.width * 0.5f;
+            thinCirclePos.y -= Screen.height * 0.5f;
+
+            thinCircle.rectTransform.localPosition = thinCirclePos;
+
             point.x -= Screen.width * 0.5f;
             point.y -= Screen.height * 0.5f;
 
@@ -120,6 +187,17 @@ public class RealtimeCanvasUI : MonoBehaviour
         iconImages[index].gameObject.SetActive(false);
         yield return null;
         iconImages[index].gameObject.SetActive(true);
+
+        if (thinCircleCoroutine != null)
+        {
+            StopCoroutine(thinCircleCoroutine);
+
+            thinCircleCoroutine = StartCoroutine(ThinCircleCoroutine_2());
+        }
+        else
+        {
+            thinCircleCoroutine = StartCoroutine(ThinCircleCoroutine_1());
+        }
 
         float t = 0;
         Color color = iconImages[index].color;

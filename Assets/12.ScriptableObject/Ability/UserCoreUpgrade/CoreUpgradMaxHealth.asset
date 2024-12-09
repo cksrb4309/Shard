@@ -15,5 +15,5 @@ MonoBehaviour:
   abilityName: "\uD50C\uB808\uC774\uC5B4 \uCD5C\uB300 \uCCB4\uB825 \uAC15\uD654"
   tear: 0
   attribute: 11
-  startValue: 1.1
-  stackValue: 0.1
+  startValue: 1.2
+  stackValue: 0.2

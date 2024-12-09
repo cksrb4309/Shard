@@ -21,6 +21,13 @@ public class ParticleManager : MonoBehaviour
         instance.other_Effects[(int)particleName].transform.position = position;
         instance.other_Effects[(int)particleName].Play();
     }
+    public static void Play(Vector3 position, OtherEffectName particleName, float size)
+    {
+        instance.other_Effects[(int)particleName].transform.localScale = Vector3.one * size * 0.5f;
+
+        instance.other_Effects[(int)particleName].transform.position = position;
+        instance.other_Effects[(int)particleName].Play();
+    }
 }
 public enum HitEffectName
 {
@@ -31,5 +38,7 @@ public enum HitEffectName
 }
 public enum OtherEffectName
 {
-    // MonsterSpawnEffect,
+    MonsterExplosion,
+    JumpAttack,
+
 }

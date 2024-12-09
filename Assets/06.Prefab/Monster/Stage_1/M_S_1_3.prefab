@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: updateInterval
-      value: 1.2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3372254956858720145, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: radius
@@ -158,7 +158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5720945526446464324, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7468485689079700011, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: m_Name

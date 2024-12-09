@@ -5,38 +5,35 @@ using UnityEngine.UI;
 
 public class FollowCursor : MonoBehaviour
 {
-
     public RectTransform cursorTransform;
-    public Image cursorImage;
+    public Image ui_CursorImage;
 
-    public Sprite attackCursor;
+    public RectTransform playerAttack_Cursor;
 
-    public RectTransform playerAttackCursor;
-
-    public Sprite uiCursor;
-    public Sprite uiClickCursor;
+    public Sprite ui_CursorSprite;
+    public Sprite ui_ClickCursorSprite;
 
     public InputActionReference mousePositionAction;
     public InputActionReference mouseClickAction;
 
     public Camera cam;
 
-    Transform playerTransform;
+    public GameObject attack_Cursor;
+    public GameObject ui_Cursor;
 
-    Sprite currentCursorSprite;
-    Sprite beforeCursorSprite;
+    Transform playerTransform;
 
     Vector2 mousePos;
     Vector2 screenSize;
+
+    Sprite beforeSprite;
+    Sprite currentSprite;
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
-        currentCursorSprite = attackCursor;
-        beforeCursorSprite = attackCursor;
-
-        cursorImage.sprite = attackCursor;
+        ui_CursorImage.sprite = ui_CursorSprite;
 
         screenSize = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     }
@@ -46,22 +43,26 @@ public class FollowCursor : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            if (mouseClickAction.action.IsPressed())
+            if (!ui_Cursor.activeSelf) ui_Cursor.SetActive(true);
+            if (attack_Cursor.activeSelf) attack_Cursor.SetActive(false);
+            if (playerAttack_Cursor.gameObject.activeSelf) playerAttack_Cursor.gameObject.SetActive(false);
+
+            if (mouseClickAction.action.IsPressed()) currentSprite = ui_ClickCursorSprite;
+
+            else currentSprite = ui_CursorSprite;
+
+            if (currentSprite != beforeSprite)
             {
-                currentCursorSprite = uiClickCursor;
+                beforeSprite = currentSprite;
+
+                ui_CursorImage.sprite = currentSprite;
             }
-            else
-            {
-                currentCursorSprite = uiCursor;
-            }
-            if (playerAttackCursor.gameObject.activeSelf) playerAttackCursor.gameObject.SetActive(false);
         }
         else
         {
-            currentCursorSprite = attackCursor;
-            
-            if (!playerAttackCursor.gameObject.activeSelf) playerAttackCursor.gameObject.SetActive(true);
-
+            if (ui_Cursor.activeSelf) ui_Cursor.SetActive(false);
+            if (!attack_Cursor.activeSelf) attack_Cursor.SetActive(true);
+            if (!playerAttack_Cursor.gameObject.activeSelf) playerAttack_Cursor.gameObject.SetActive(true);
 
             Vector2 playerForwardPosition = cam.WorldToScreenPoint(playerTransform.position + playerTransform.forward);
 
@@ -71,33 +72,27 @@ public class FollowCursor : MonoBehaviour
 
             float cursorDistance = (mousePos - playerPosition).magnitude;
 
-            playerAttackCursor.localPosition = (playerPosition + (playerAttackCursorDir * cursorDistance)) - screenSize;
+            playerAttack_Cursor.localPosition = (playerPosition + (playerAttackCursorDir * cursorDistance)) - screenSize;
         }
-
 
         mousePos -= screenSize;
 
         cursorTransform.localPosition = mousePos;
-
-        if (currentCursorSprite != beforeCursorSprite)
-        {
-            beforeCursorSprite = currentCursorSprite;
-
-            cursorImage.sprite = currentCursorSprite;
-        }
     }
     private void OnEnable()
     {
         if (!mousePositionAction.action.enabled)
             mousePositionAction.action.Enable();
 
-        mouseClickAction.action.Enable();
+        if (!mouseClickAction.action.enabled)
+            mouseClickAction.action.Enable();
     }
     private void OnDisable()
     {
         if (mousePositionAction.action.enabled)
             mousePositionAction.action.Disable();
-        mouseClickAction.action.Disable();
+        if (mouseClickAction.action.enabled)
+            mouseClickAction.action.Disable();
     }
     public void Connect(Transform playerTransform)
     {

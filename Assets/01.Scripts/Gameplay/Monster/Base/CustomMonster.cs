@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,8 +28,11 @@ public class CustomMonster : MonoBehaviour, IAttackable
     // 난이도에 따른 값 조절이 필요한 공격들
     public List<MonsterAttack> monsterAttacks;
 
-    // 공격 중에서 타겟 설정이 따로 필요한 스크립트들
-    // public List<INeedTarget> needTargets;
+    public bool isExplosion = false;
+    public float explosionRange = 2;
+    public LayerMask explosionLayerMask;
+    float explosionDamage = 0;
+
 
     // 강체
     Rigidbody rb = null;
@@ -79,22 +83,34 @@ public class CustomMonster : MonoBehaviour, IAttackable
     }
     public virtual void Dead()
     {
-        // TODO 확인 중.. 죽은 위치를 기록한다 [없어도 되는 지 확인해야 함 !]
-        // deadPosition = transform.position;
 
-        animator.SetTrigger("Die"); // 사망 애니메이션 실행
 
-        cd.enabled = false; // 충돌체 비활성화
+        // 폭발하지 않는 몬스터의 경우
+        if (!isExplosion)
+        {
+            // 공격 중지
+            foreach (MonsterAttack attack in monsterAttacks)
+            {
+                attack.StopAttack();
+            }
 
-        moveScript.StopMove(); // 이동 중지
+            animator.SetTrigger("Die"); // 사망 애니메이션 실행
 
+            moveScript.StopMove(); // 이동 중지
+
+            cd.enabled = false; // 충돌체 비활성화
+
+            // 추적 코루틴 실행 중지에 대해서는
+            // 현재 스크립트에서는 Coroutine을
+            // 추적 코루틴만을 쓰고 있으므로
+            // StopAllCoroutines를 사용하여 중지한다
+            StopAllCoroutines();
+        }
+        else
+        {
+            animator.SetTrigger("Explosion"); // 폭발 애니메이션 실행
+        }
         searchShard.StopSearch(); // 파편 검색 비활성화
-
-        // 추적 코루틴 실행 중지에 대해서는
-        // 현재 스크립트에서는 Coroutine을
-        // 추적 코루틴만을 쓰고 있으므로
-        // StopAllCoroutines를 사용하여 중지한다
-        StopAllCoroutines();
     }
     public void CompleteDie()
     {
@@ -141,7 +157,7 @@ public class CustomMonster : MonoBehaviour, IAttackable
     IEnumerator TrackingCoroutine()
     {
         // 스폰된 몬스터가 동시에 고개를 돌릴 경우를 대비해서 랜덤하게 딜레이를 적용 [0 ~ 0.5]
-        yield return new WaitForSeconds(Random.value * 0.5f);
+        yield return new WaitForSeconds(UnityEngine.Random.value * 0.5f);
 
         while (true)
         {
@@ -169,6 +185,10 @@ public class CustomMonster : MonoBehaviour, IAttackable
         {
             monsterAttack.Setting(hpMultiplier, damageMultiplier);
         }
+
+        // 폭발 데미지 수치 조절
+        explosionDamage = damageMultiplier * 10 * 250f;
+        jumpAttackDamage = damageMultiplier * 10f;
         #endregion
 
         #region 기본 요소 초기화 ( 강체, 애니메이터, 재질, 충돌체 )
@@ -382,6 +402,92 @@ public class CustomMonster : MonoBehaviour, IAttackable
     }
 
     #endregion
+
+    Action rangedAttackAction = null;
+    public void TriggerRangedAttack(Action rangedAttackAction)
+    {
+        // 원거리 공격 실행
+        animator.SetTrigger("RangedAttack");
+
+        // 원거리 공격 액션 저장
+        this.rangedAttackAction = rangedAttackAction;
+    }
+    public void RangedAttack()
+    {
+        Debug.Log(" 공격 시점 확인 ");
+
+        rangedAttackAction?.Invoke();
+
+        rangedAttackAction = null;
+    }
+    public void Explosion()
+    {
+        // 공격 중지
+        foreach (MonsterAttack attack in monsterAttacks)
+        {
+            attack.StopAttack();
+        }
+
+        // 파티클 실행
+        ParticleManager.Play(transform.position, OtherEffectName.MonsterExplosion, explosionRange);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRange, explosionLayerMask);
+
+        foreach (Collider collider in colliders)
+        {
+            IAttackable attackable = collider.GetComponent<IAttackable>();
+
+            if (attackable != null)
+                attackable.ReceiveHit(explosionDamage);
+
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+
+            if (damageable != null)
+                damageable.TakeDamage(explosionDamage);
+        }
+
+        cd.enabled = false; // 충돌체 비활성화
+
+        // 이동 종료
+        moveScript.StopMove();
+
+        // 추적 코루틴 종료
+        StopAllCoroutines();
+
+        // 사망 처리
+        CompleteDie();
+    }
+    float jumpAttackRange;
+    public void TriggerJumpAttack(float jumpAttackRange, bool isBoss = false)
+    {
+        this.jumpAttackRange = jumpAttackRange;
+
+        Debug.Log("jumpAttackRange " + jumpAttackRange.ToString());
+
+        if (isBoss)
+            animator.SetTrigger("BossJumpAttack");
+        else
+            animator.SetTrigger("JumpAttack");
+    }
+    public LayerMask jumpAttackLayerMask;
+    float jumpAttackDamage=0;
+    public void JumpAttack()
+    {
+        Debug.Log("JumpAttack " + jumpAttackRange.ToString());
+        
+        // 이펙트 재생
+        ParticleManager.Play(transform.position, OtherEffectName.JumpAttack, jumpAttackRange);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, jumpAttackRange, jumpAttackLayerMask);
+
+        foreach (Collider collider in colliders)
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+
+            if (damageable != null)
+                damageable.TakeDamage(jumpAttackDamage);
+        }
+    }
 }
 
 public enum MonsterType

@@ -142,11 +142,11 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOverCoroutine()
     {
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "결정체를...");
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "지키지...");
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "못했습니다...");
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "G A M E O V E R");
 
         // TODO 데드엔딩 스크린 트랜지션

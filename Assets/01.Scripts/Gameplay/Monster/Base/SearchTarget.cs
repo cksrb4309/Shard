@@ -8,9 +8,16 @@ public class SearchTarget : MonoBehaviour
 
     public LayerMask layerMask;
 
+    SphereCollider cd;
+
+
     private void Awake()
     {
         customMonster = transform.parent.GetComponent<CustomMonster>();
+
+        cd = GetComponent<SphereCollider>();
+
+        cd.radius = radius / transform.lossyScale.x;
     }
 
     public void OnTriggerEnter(Collider other)
