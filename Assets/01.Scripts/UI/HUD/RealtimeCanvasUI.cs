@@ -37,6 +37,9 @@ public class RealtimeCanvasUI : MonoBehaviour
             thinCircle.color= color;
         }
         t = 1;
+
+        yield return new WaitForSeconds(2f);
+
         while (t > 0f)
         {
             yield return null;
