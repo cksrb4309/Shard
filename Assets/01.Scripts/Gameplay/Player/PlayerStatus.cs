@@ -56,11 +56,13 @@ public class PlayerStatus : MonoBehaviour
                 statEffect.effectName,
                 statEffect.value + statEffect.countValue * (statusEffects[id] - 1));
 
-            coroutines[id] = StartCoroutine(StatEffectCoroutine(statEffect));
+            if (gameObject.activeSelf)
+                coroutines[id] = StartCoroutine(StatEffectCoroutine(statEffect));
         }
         if (statusEffect is TickEffect tickEffect)
         {
-            coroutines[id] = StartCoroutine(TickEffectCoroutine(tickEffect));
+            if (gameObject.activeSelf)
+                coroutines[id] = StartCoroutine(TickEffectCoroutine(tickEffect));
         }
         #endregion
     }

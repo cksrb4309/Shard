@@ -56,22 +56,37 @@ public class AttackProjectile : MonoBehaviour
         // Physics Layer 설정을 통해 공격 할 수 있는 것만 충돌함
         IAttackable attackable = other.GetComponent<IAttackable>();
 
-        if (criticalChance >= Random.value)
+        if (LuckManager.Calculate(criticalChance, true))
         {
             damage *= criticalDamage;
 
             attackData.OnCritical();
+
+            attackable.ReceiveHit(damage, true);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            ParticleManager.Play(transform.position, hitEffectName);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
+            if (!isPiercing) PoolingManager.Instance.ReturnObject(projectileName, gameObject);
         }
-        attackable.ReceiveHit(damage);
-
-        attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
-
-        ParticleManager.Play(transform.position, hitEffectName);
-
-        if (!attackable.IsAlive())
+        else
         {
-            attackData.OnKill();
+            attackable.ReceiveHit(damage);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            ParticleManager.Play(transform.position, hitEffectName);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
+            if (!isPiercing) PoolingManager.Instance.ReturnObject(projectileName, gameObject);
         }
-        if (!isPiercing) PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }
 }

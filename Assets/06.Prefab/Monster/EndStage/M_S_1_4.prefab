@@ -78,10 +78,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDamage: 10
   isNeedTarget: 0
-  monster: {fileID: 0}
+  monster: {fileID: 4185375173827296930}
   projectileName: MonsterProjectile_1
-  maxDistance: 7
-  projectileDuration: 3
+  maxDistance: 5
+  projectileDuration: 1
   projectileSpeed: 10
   attackDelay: 0
   cooltimeLength: 3
@@ -176,11 +176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: mobName
-      value: M_S_1_4
+      value: Ending_M_S_1_4
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: baseMaxHp
-      value: 7000
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: isBossMonster
@@ -267,3 +267,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 662459058783668984, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
   m_PrefabInstance: {fileID: 1444030809514342877}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4185375173827296930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
+  m_PrefabInstance: {fileID: 1444030809514342877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7500ff1895f2da47aeaad919d338599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

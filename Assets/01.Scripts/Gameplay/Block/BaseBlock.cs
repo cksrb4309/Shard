@@ -44,7 +44,7 @@ public class BaseBlock : MonoBehaviour, IAttackable
     {
         return hp > 0;
     }
-    public void ReceiveHit(float damage)
+    public void ReceiveHit(float damage, bool isCritical = false)
     {
         if (!IsAlive()) return;
 
@@ -55,7 +55,10 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         hp -= damage;
 
-        DamageTextController.OnDamageText(pos, damage);
+        if (isCritical)
+            DamageTextController.OnCriticalDamageText(pos, damage);
+        else
+            DamageTextController.OnDamageText(pos, damage);
 
         GameManager.SetLastHit(this);
 
@@ -118,4 +121,5 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         material.SetFloat("_DamageLevel", 0); // 데미지 정도도 수정한다
     }
+
 }

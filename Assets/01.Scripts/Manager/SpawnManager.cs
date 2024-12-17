@@ -34,7 +34,6 @@ public class SpawnManager : MonoBehaviour
     {
         StartMonsterSpawn();
     }
-
     public void StartMonsterSpawn()
     {
         currentStage++;
@@ -182,8 +181,8 @@ public class SpawnManager : MonoBehaviour
         StopCoroutine(endingSpawnCoroutine);
     }
     float endingTime = 0;
-    float endingStartSpawnDealy = 0.7f;
-    float endingEndSpawnDealy = 0.1f;
+    float endingStartSpawnDealy = 0.6f;
+    float endingEndSpawnDealy = 0.05f;
     IEnumerator EndingSpawnCoroutine()
     {
         endingTime = 0;

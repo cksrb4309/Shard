@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour, IAttackable
 {
+    public void ReceiveHit(float damage, bool isCritical = false)
+    {
+        throw new System.NotImplementedException();
+    }
     public MonsterType monsterType;
     public string mobName; // ObjectPool에 리턴하기 위한 몬스터 이름
 
@@ -247,6 +251,8 @@ public class Monster : MonoBehaviour, IAttackable
         shardAmount = 0f;
         material.SetFloat("_Amount", shardAmount);
     }
+
+    
     #endregion
 }
 /*

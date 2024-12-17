@@ -20,6 +20,8 @@ public class StageManager : MonoBehaviour
     public ParticleSystem stageChangeParticle_1;
     public ParticleSystem stageChangeParticle_2;
 
+    public Transform corePosition;
+
     Vignette vignette;
 
     int currentStage = -1;
@@ -27,6 +29,7 @@ public class StageManager : MonoBehaviour
     [HideInInspector] public bool isAroundPlayers = false;
 
     Color blackColor = Color.black;
+    
     public void Awake()
     {
         instance = this;
@@ -46,6 +49,16 @@ public class StageManager : MonoBehaviour
 
         instance.OnKillBossExcute();
     }
+
+    IEnumerator NextLevelCoroutine()
+    {
+        RealtimeCanvasUI.Notification(IconType.Charge, corePosition.position, "이번 영역에 대한 에너지를 모두 수집했습니다");
+
+        yield return new WaitForSeconds(2f);
+
+        RealtimeCanvasUI.Notification(IconType.Charge, "결정체에 돌아가서 다음 차원으로 이동해주세요");
+    }
+
     void OnKillBossExcute()
     {
         StartCoroutine(WaitNextStageCoroutine());
@@ -86,6 +99,8 @@ public class StageManager : MonoBehaviour
         // 현재 스테이지가 2가 아니라면 [0, 1 일 때] 다음 스테이지 준비를 해준다
         else
         {
+            StartCoroutine(NextLevelCoroutine());
+
             searchNearPlayersObj.SetActive(true); // 찾기 활성화
 
             while (!isAroundPlayers) yield return null;

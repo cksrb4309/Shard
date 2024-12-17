@@ -4,7 +4,7 @@ using UnityEngine;
 public class CoreInteractUI : MonoBehaviour
 {
     public Inventory inventory;
-
+    public ParticleSystem successParticle;
     public void Connect(Inventory inventory)
     {
         this.inventory = inventory;
@@ -38,78 +38,40 @@ public class CoreInteractUI : MonoBehaviour
     #endregion
     #region 코어 버튼 할당 함수들
     public CoreUpgrade coreUpgrade;
+    public TMP_Text maxHealthLevelUpCountText;
     public void UpgradeMaxHealth()
     {
-        Debug.Log("최대 체력 업글 시도");
-
         if (!IsCoreUpgrade()) return;
 
-        Debug.Log("최대 체력 업글 성공");
-
         coreUpgrade.UpgradeMaxHealth();
+
+        maxHealthLevelUpCountText.text = (int.Parse(maxHealthLevelUpCountText.text)+1).ToString();
     }
+    public TMP_Text defenseLevelUpCountText;
     public void UpgrageDefense()
     {
         if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeDefense();
+
+        defenseLevelUpCountText.text = (int.Parse(defenseLevelUpCountText.text) + 1).ToString();
     }
+    public TMP_Text healthRegenLevelUpCountText;
     public void UpgradeHealthRegen()
     {
         if (!IsCoreUpgrade()) return;
 
         coreUpgrade.UpgradeHealthRegen();
-    }
-    public void UpgradeUserAttackDamage()
-    {
-        Debug.Log("공격력 업글 시도");
 
-        if (!IsCoreUpgrade()) return;
-
-        Debug.Log("공격력 업글 성공");
-        coreUpgrade.UpgradeUserAttackDamage();
+        healthRegenLevelUpCountText.text = (int.Parse(healthRegenLevelUpCountText.text) + 1).ToString();
     }
-    public void UpgradeUserAttackSpeed()
+    public void UpgradeUserStat(AbilityAndText info)
     {
         if (!IsCoreUpgrade()) return;
 
-        coreUpgrade.UpgradeUserAttackSpeed();
-    }
-    public void UpgradeUserCriticalChance()
-    {
-        if (!IsCoreUpgrade()) return;
+        coreUpgrade.UpgradeUserStat(info.ability);
 
-        coreUpgrade.UpgradeUserCriticalChance();
-    }
-    public void UpgradeUserCriticalDamage()
-    {
-        if (!IsCoreUpgrade()) return;
-
-        coreUpgrade.UpgradeUserCriticalDamage();
-    }
-    public void UpgradeUserMaxHealth()
-    {
-        if (!IsCoreUpgrade()) return;
-
-        coreUpgrade.UpgradeUserMaxHealth();
-    }
-    public void UpgradeUserHealthRegen()
-    {
-        if (!IsCoreUpgrade()) return;
-
-        coreUpgrade.UpgradeUserHealthRegen();
-    }
-    public void UpgradeUserMoveSpeed()
-    {
-        if (!IsCoreUpgrade()) return;
-
-        coreUpgrade.UpgradeUserMoveSpeed();
-    }
-    public void UpgradeUserStat(Ability ability)
-    {
-        if (!IsCoreUpgrade()) return;
-
-        coreUpgrade.UpgradeUserStat(ability);
+        info.text.text = (int.Parse(info.text.text) + 1).ToString();
     }
     #endregion
     #region 소환 버튼 할당 함수들
@@ -120,17 +82,23 @@ public class CoreInteractUI : MonoBehaviour
 
         teammateController.Summon(teammate);
     }
+    public TMP_Text summonAttackDamageLevelCountText;
     public void SummonAttackDamageUpgrade()
     {
         if (!IsSummonUpgrade()) return;
 
         teammateController.AttackDamageUpgrade();
+
+        summonAttackDamageLevelCountText.text = (int.Parse(summonAttackDamageLevelCountText.text) + 1).ToString();
     }
+    public TMP_Text summonAttackSpeedLevelCountText;
     public void SummonAttackSpeedUpgrade()
     {
         if (!IsSummonUpgrade()) return;
 
         teammateController.AttackSpeedUpgrade();
+
+        summonAttackSpeedLevelCountText.text = (int.Parse(summonAttackSpeedLevelCountText.text) + 1).ToString();
     }
     #endregion
     #region 코어 업글 비용 확인 함수
@@ -141,6 +109,8 @@ public class CoreInteractUI : MonoBehaviour
     {
         if (inventory.GetEnergyCore() >= currentCoreCost)
         {
+            successParticle.Play();
+
             inventory.UseEnergyCore(currentCoreCost);
 
             currentCoreCost = (int)(currentCoreCost * nextCoreCostMultiplier);
@@ -149,6 +119,9 @@ public class CoreInteractUI : MonoBehaviour
 
             return true;
         }
+
+        RealtimeCanvasUI.NotificationText("비용이 모자랍니다");
+
         return false;
     }
     #endregion
@@ -160,6 +133,8 @@ public class CoreInteractUI : MonoBehaviour
     {
         if (inventory.GetSoulShard() >= currentSummonCost)
         {
+            successParticle.Play();
+
             inventory.UseSoulShard(currentSummonCost);
 
             currentSummonCost = (int)(currentSummonCost * nextSummonCostMultiplier);
@@ -168,6 +143,9 @@ public class CoreInteractUI : MonoBehaviour
 
             return true;
         }
+
+        RealtimeCanvasUI.NotificationText("비용이 모자랍니다");
+
         return false;
     }
     #endregion

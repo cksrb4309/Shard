@@ -77,30 +77,54 @@ public class BombAttackProjectile : MonoBehaviour
 
         float damage = this.damage;
 
-        if (criticalChance >= Random.value)
+        if (LuckManager.Calculate(criticalChance, true))
         {
             damage *= criticalDamage;
 
             attackData.OnCritical();
-        }
-        attackable_1.ReceiveHit(damage);
+               
+            attackable_1.ReceiveHit(damage, true);
 
-        attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
 
-        if (!attackable_1.IsAlive())
-        {
-            attackData.OnKill();
-        }
-
-        List<IAttackable> list = NearestAttackableSelector.GetAttackable(transform.position, range);
-
-        foreach (IAttackable attackable_2 in list)
-        {
-            if (attackable_2.IsAlive())
+            if (!attackable_1.IsAlive())
             {
-                attackable_2.ReceiveHit(damage);
+                attackData.OnKill();
+            }
+
+            List<IAttackable> list = NearestAttackableSelector.GetAttackable(transform.position, range);
+
+            foreach (IAttackable attackable_2 in list)
+            {
+                if (attackable_2.IsAlive())
+                {
+                    attackable_2.ReceiveHit(damage, true);
+                }
             }
         }
+        else
+        {
+            attackable_1.ReceiveHit(damage);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            if (!attackable_1.IsAlive())
+            {
+                attackData.OnKill();
+            }
+            List<IAttackable> list = NearestAttackableSelector.GetAttackable(transform.position, range);
+
+            foreach (IAttackable attackable_2 in list)
+            {
+                if (attackable_2.IsAlive())
+                {
+                    attackable_2.ReceiveHit(damage);
+                }
+            }
+        }
+       
+
+       
 
         PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }

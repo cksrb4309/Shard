@@ -96,7 +96,6 @@ public class PlayerAttributes : MonoBehaviour
     }
     public void UpdatePassiveAttribute(Attribute attribute) // 패시브 적용
     {
-
         passiveAttributes[(int)attribute] = baseAttributes[(int)attribute];
 
         foreach (float value in passiveStatModifiers[(int)attribute].Values)
@@ -130,28 +129,12 @@ public class PlayerAttributes : MonoBehaviour
 
         foreach (float value in activeBuffEffects[(int)attribute].Values)
         {
-            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
-            {
-                Debug.Log(attribute.ToString() + " BeforeB : " + passiveAttributes[(int)attribute].ToString());
-
-                Debug.Log(" Value : " + value.ToString());
-            }
-
-
             if (CheckOperationType(attribute))  // 곱연산일 경우
                 //currentAttributes[attribute] *= value;
                 currentAttributes[(int)attribute] *= value;
             else  // 합연산일 경우
                 //currentAttributes[attribute] += value;
                 currentAttributes[(int)attribute] += value;
-
-
-            if (attribute == Attribute.MainSkillCooltimeRatio || attribute == Attribute.SubSkillCooltimeRatio)
-            {
-                Debug.Log(attribute.ToString() + " AfterB : " + passiveAttributes[(int)attribute].ToString());
-
-                Debug.Log(" Value : " + value.ToString());
-            }
         }
 
         UpdateAttributes(attribute);
@@ -184,7 +167,7 @@ public class PlayerAttributes : MonoBehaviour
         {
             currentAttributes[(int)Attribute.CriticalChance] =
                 currentAttributes[(int)Attribute.FlatCriticalChance] * currentAttributes[(int)Attribute.RateCriticalChance];
-
+            Debug.Log("크리티컬 확률 : " + currentAttributes[(int)Attribute.CriticalChance].ToString());
             normalAttack.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
             mainSkill.SetCriticalChance(GetAttribute(Attribute.CriticalChance));
             subSkill.SetCriticalChance(GetAttribute(Attribute.CriticalChance));

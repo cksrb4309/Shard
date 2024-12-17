@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: baseMaxHp
-      value: 100000
+      value: 80000
       objectReference: {fileID: 0}
     - target: {fileID: 3323457330630395775, guid: 2ff2a749a5a7d0a4e834cee2dbee5e8e, type: 3}
       propertyPath: isBossMonster

@@ -50,6 +50,8 @@ public class ChainAttackAbility : Ability, IOnHitChanceDamage
 
         yield return null;
 
+        float startTime = Time.realtimeSinceStartup;
+
         for (int i = 0; i < maxCount; i++)
         {
             IAttackable nextTarget = null;
@@ -74,6 +76,8 @@ public class ChainAttackAbility : Ability, IOnHitChanceDamage
                 break; // °ø°ÝÀ» ¸ØÃá´Ù
             }
         }
+
+        Debug.Log("Distance : " + (Time.realtimeSinceStartup - startTime) * 1000f);
     }
     IEnumerator AttackCoroutine(AttackData attackData, float damage, IAttackable current, IAttackable next)
     {
@@ -107,15 +111,26 @@ public class ChainAttackAbility : Ability, IOnHitChanceDamage
                 damage *= PlayerAttributes.Get(Attribute.CriticalDamage);
 
                 attackData.OnCritical();
+
+                if (next.IsAlive())
+                {
+                    next.ReceiveHit(damage, true);
+
+                    attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - current.GetPosition()).normalized);
+
+                    if (!next.IsAlive()) attackData.OnKill();
+                }
             }
-
-            if (next.IsAlive())
+            else
             {
-                next.ReceiveHit(damage);
+                if (next.IsAlive())
+                {
+                    next.ReceiveHit(damage);
 
-                attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - current.GetPosition()).normalized);
+                    attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - current.GetPosition()).normalized);
 
-                if (!next.IsAlive()) attackData.OnKill();
+                    if (!next.IsAlive()) attackData.OnKill();
+                }
             }
         }
     }

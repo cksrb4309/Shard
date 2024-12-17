@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class FollowCursor : MonoBehaviour
 {
     public RectTransform cursorTransform;
+
     public Image ui_CursorImage;
+    public Image attack_CursorImage;
+    public Image attack_Background_CursorImage;
 
     public RectTransform playerAttack_Cursor;
 
@@ -36,6 +39,25 @@ public class FollowCursor : MonoBehaviour
         ui_CursorImage.sprite = ui_CursorSprite;
 
         screenSize = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+
+        Color color = Color.white;
+        color.a = 1f;
+        color.r = PlayerPrefs.GetFloat("Cursorr", 1f);
+        color.g = PlayerPrefs.GetFloat("Cursorg", 1f);
+        color.b = PlayerPrefs.GetFloat("Cursorb", 1f);
+        ui_CursorImage.color = color;
+
+        color.r = PlayerPrefs.GetFloat("AttackCursorr", 1f);
+        color.g = PlayerPrefs.GetFloat("AttackCursorg", 1f);
+        color.b = PlayerPrefs.GetFloat("AttackCursorb", 1f);
+        attack_CursorImage.color = color;
+
+        color.a = 0.6f;
+        color.r = PlayerPrefs.GetFloat("AttackBackgroundCursorr", 1f);
+        color.g = PlayerPrefs.GetFloat("AttackBackgroundCursorg", 1f);
+        color.b = PlayerPrefs.GetFloat("AttackBackgroundCursorb", 1f);
+
+        attack_Background_CursorImage.color = color;
     }
     private void LateUpdate()
     {

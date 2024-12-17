@@ -113,6 +113,51 @@ public class RealtimeCanvasUI : MonoBehaviour
 
         instance.ExcuteMessage(message);
     }
+    Coroutine notificationTextCoroutine = null;
+    public TMP_Text notification_2_Text;
+    public static void NotificationText(string message)
+    {
+        instance.NotificationTextExcute(message);
+    }
+    void NotificationTextExcute(string message)
+    {
+        if (notificationTextCoroutine != null) StopCoroutine(notificationTextCoroutine);
+
+        notificationTextCoroutine = StartCoroutine(NotificationTextExcuteCoroutine(message));
+    }
+    IEnumerator NotificationTextExcuteCoroutine(string message)
+    {
+        notification_2_Text.text = message;
+
+        Color color = Color.white;
+        color.a = 0;
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime;
+
+            color.a = t;
+
+            notification_2_Text.color = color;
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        while (t > 0f)
+        {
+            t -= Time.deltaTime;
+
+            color.a = t;
+
+            notification_2_Text.color = color;
+
+            yield return null;
+        }
+        color.a = 0;
+        notification_2_Text.color = color;
+    }
     public void ExcuteMessage(string message)
     {
         if (messageCoroutine != null) StopCoroutine(messageCoroutine);
@@ -130,7 +175,7 @@ public class RealtimeCanvasUI : MonoBehaviour
             text_1.text += c;
             text_2.text += c;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
         yield return new WaitForSeconds(2f);
 

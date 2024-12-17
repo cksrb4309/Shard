@@ -136,9 +136,11 @@ public class GameManager : MonoBehaviour
         // 다 죽은 경우
         if (instance.alivePlayer <= 0)
         {
-            instance.StartCoroutine(instance.GameOverCoroutine());
+            if (instance.gameOverCoroutine == null)
+                instance.gameOverCoroutine = instance.StartCoroutine(instance.GameOverCoroutine());
         }
     }
+    Coroutine gameOverCoroutine = null;
     IEnumerator GameOverCoroutine()
     {
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "결정체를...");

@@ -87,21 +87,34 @@ public class TraceAttackProjectile : MonoBehaviour
 
         if (!attackable.IsAlive()) return;
 
-        if (criticalChance >= Random.value)
+        if (LuckManager.Calculate(criticalChance, true))
         {
             damage *= criticalDamage;
 
             attackData.OnCritical();
+
+            attackable.ReceiveHit(damage, true);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
         }
-
-        attackable.ReceiveHit(damage);
-
-        attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
-
-        if (!attackable.IsAlive())
+        else
         {
-            attackData.OnKill();
+            attackable.ReceiveHit(damage);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
         }
+
+        
         
         PoolingManager.Instance.ReturnObject(projectileName, gameObject);
     }

@@ -63,18 +63,33 @@ public class DamageOverExplosion : Ability, IOnHitDamage
                 tempDamage = PlayerAttributes.Get(Attribute.CriticalDamage) * damage;
 
                 attackData.OnCritical();
+
+                IAttackable next = collider.GetComponent<IAttackable>();
+
+                if (next.IsAlive())
+                {
+                    next.ReceiveHit(damage, true);
+
+                    attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - attackData.position).normalized);
+
+                    if (!next.IsAlive()) attackData.OnKill();
+                }
             }
-
-            IAttackable next = collider.GetComponent<IAttackable>();
-
-            if (next.IsAlive())
+            else
             {
-                next.ReceiveHit(damage);
+                IAttackable next = collider.GetComponent<IAttackable>();
 
-                attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - attackData.position).normalized);
+                if (next.IsAlive())
+                {
+                    next.ReceiveHit(damage);
 
-                if (!next.IsAlive()) attackData.OnKill();
+                    attackData.OnHit(damage, next.GetPosition(), (next.GetPosition() - attackData.position).normalized);
+
+                    if (!next.IsAlive()) attackData.OnKill();
+                }
             }
+
+            
         }
     }
     IEnumerator CooltimeCoroutine()

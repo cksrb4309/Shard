@@ -29,6 +29,14 @@ public class TitleCursor : MonoBehaviour
         cursorImage.sprite = uiCursor;
 
         screenSize = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+
+
+        Color color = Color.white;
+        color.a = 1f;
+        color.r = PlayerPrefs.GetFloat("Cursorr", 1f);
+        color.g = PlayerPrefs.GetFloat("Cursorg", 1f);
+        color.b = PlayerPrefs.GetFloat("Cursorb", 1f);
+        cursorImage.color = color;
     }
     private void LateUpdate()
     {
@@ -66,5 +74,9 @@ public class TitleCursor : MonoBehaviour
             mousePositionAction.action.Disable();
 
         mouseClickAction.action.Disable();
+    }
+    public void SetCursorColor(Color cursorColor)
+    {
+        cursorImage.color = cursorColor;
     }
 }

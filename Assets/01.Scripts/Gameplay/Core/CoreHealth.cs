@@ -47,7 +47,7 @@ public class CoreHealth : MonoBehaviour, IDamageable
     {
         float beforeMaxHealth = maxHealth;
 
-        maxHealth *= 1.1f;
+        maxHealth *= 1.3f;
 
         currentHealth += maxHealth - beforeMaxHealth;
 
@@ -59,7 +59,7 @@ public class CoreHealth : MonoBehaviour, IDamageable
     }
     public void UpgradeHealthRegen()
     {
-        healthRegen *= 1.2f;
+        healthRegen *= 2f;
     }
     float GetDamageReduction()
     {

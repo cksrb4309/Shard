@@ -31,6 +31,7 @@ public class CustomMonster : MonoBehaviour, IAttackable
     public bool isExplosion = false;
     public float explosionRange = 2;
     public LayerMask explosionLayerMask;
+    public MeshRenderer explosionRenderer;
     float explosionDamage = 0;
 
 
@@ -58,7 +59,7 @@ public class CustomMonster : MonoBehaviour, IAttackable
             rb.linearVelocity = Vector3.zero;
         }
     }
-    public virtual void ReceiveHit(float damage)
+    public virtual void ReceiveHit(float damage, bool isCritical = false)
     {
         if (!IsAlive()) return; // 살아있지 않다면 리턴
 
@@ -72,7 +73,14 @@ public class CustomMonster : MonoBehaviour, IAttackable
         GameManager.SetLastHit(this);
 
         // 데미지 텍스트를 띄운다
-        DamageTextController.OnDamageText(transform.position, damage);
+        if (isCritical)
+        {
+            DamageTextController.OnCriticalDamageText(transform.position, damage);
+        }
+        else
+        {
+            DamageTextController.OnDamageText(transform.position, damage);
+        }
 
         // 죽어버렸다면 Dead 호출
         if (!IsAlive()) Dead();
@@ -83,8 +91,6 @@ public class CustomMonster : MonoBehaviour, IAttackable
     }
     public virtual void Dead()
     {
-
-
         // 폭발하지 않는 몬스터의 경우
         if (!isExplosion)
         {
@@ -109,9 +115,25 @@ public class CustomMonster : MonoBehaviour, IAttackable
         else
         {
             animator.SetTrigger("Explosion"); // 폭발 애니메이션 실행
+
+            StartCoroutine(ExplosionCoroutine());
         }
         searchShard.StopSearch(); // 파편 검색 비활성화
     }
+    IEnumerator ExplosionCoroutine()
+    {
+        float t = 0;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime * 0.3f;
+
+            explosionRenderer.material.SetFloat("_Alpha", t);
+
+            yield return null;
+        }
+    }
+
     public void CompleteDie()
     {
         // RewardManager에 처치 보상 전달 ( 현재로써는 경험치와 영혼의 파편 전달 )
@@ -239,6 +261,9 @@ public class CustomMonster : MonoBehaviour, IAttackable
             attack.StartAttack();
         }
         #endregion
+
+        if (explosionRenderer != null)
+            explosionRenderer.material.SetFloat("_Alpha", 0);
     }
 
     #region 위치 확인

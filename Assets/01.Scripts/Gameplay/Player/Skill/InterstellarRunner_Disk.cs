@@ -62,12 +62,6 @@ public class InterstellarRunner_Disk : MonoBehaviour
 
         while (true)
         {
-            if (!target.IsAlive()) // 타겟이 중간에 죽었다면 
-            {
-                target = null; // 타겟을 null로 만든 후에 코루틴을 벗어난다
-                yield break;
-            }
-
             distance = (target.GetPosition() - transform.position);
 
             if (distance.magnitude < 0.3f) // 닿았다고 판정
@@ -95,21 +89,35 @@ public class InterstellarRunner_Disk : MonoBehaviour
 
         float damage = this.damage;
 
-        if (criticalChance >= Random.value)
+        if (LuckManager.Calculate(criticalChance, true))
         {
             damage *= criticalDamage;
 
             attackData.OnCritical();
+
+            attackable.ReceiveHit(damage, true);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            ParticleManager.Play(transform.position, hitEffectName);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
         }
-        attackable.ReceiveHit(damage);
-
-        attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
-
-        ParticleManager.Play(transform.position, hitEffectName);
-
-        if (!attackable.IsAlive())
+        else
         {
-            attackData.OnKill();
+            attackable.ReceiveHit(damage);
+
+            attackData.OnHit(damage, transform.position, transform.rotation.eulerAngles);
+
+            ParticleManager.Play(transform.position, hitEffectName);
+
+            if (!attackable.IsAlive())
+            {
+                attackData.OnKill();
+            }
         }
     }
 }

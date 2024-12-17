@@ -76,7 +76,7 @@ public class AbilitySelector : MonoBehaviour
         {
             Ability ability;
 
-            float randomValue = Random.value;
+            float randomValue = LuckManager.GetValue();
 
             if (randomValue > 0.95f) ability = tear_3_Ability[Random.Range(0, tear_3_Ability.Length)];
             else if (randomValue > 0.65f) ability = tear_2_Ability[Random.Range(0, tear_2_Ability.Length)];
