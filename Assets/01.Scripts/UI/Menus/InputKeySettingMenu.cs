@@ -69,11 +69,11 @@ public class InputKeySettingMenu : MonoBehaviour
             UpdateKeyText(inputActions[index].action, keyDisplayTexts[index]);  // 현재 키를 표시
         }
     }
-    private void UpdateKeyTexts()
-    {
-        for (int i = 0; i < rebindButtons.Count; i++)
-            UpdateKeyText(inputActions[i].action, keyDisplayTexts[i]);  // 현재 키를 표시
-    }
+    //private void UpdateKeyTexts()
+    //{
+    //    for (int i = 0; i < rebindButtons.Count; i++)
+    //        UpdateKeyText(inputActions[i].action, keyDisplayTexts[i]);  // 현재 키를 표시
+    //}
     private void UpdateKeyText(InputAction action, MainButton keyText)
     {
         // 첫 번째 바인딩된 키의 이름을 가져와 표시 (예: "W", "A" 등)
@@ -130,67 +130,6 @@ public class InputKeySettingMenu : MonoBehaviour
             })
             .Start();
     }
-
-    private void LoadBindingOverrides()
-    {
-        string path = Path.Combine(Application.persistentDataPath, BindingFilePath);
-
-        bool[] isEnabled = new bool[inputActions.Count];
-
-        for (int i = 0; i < inputActions.Count; i++)
-            isEnabled[i] = inputActions[i].action.enabled;
-
-        // 파일이 존재하면 바인딩 데이터 읽기
-        if (File.Exists(path))
-        {
-            string jsonData = File.ReadAllText(path);
-            MyBindingData bindingData = JsonUtility.FromJson<MyBindingData>(jsonData);
-
-            for (int i = 0; i < inputActions.Count; i++)
-            {
-                if (bindingData.keys.Contains(inputActions[i].action.name))
-                {
-                    int index = bindingData.keys.IndexOf(inputActions[i].action.name);
-                    if (!string.IsNullOrEmpty(bindingData.values[index]))  // 바인딩 값이 있을 경우
-                    {
-                        //if (isEnabled[i]) inputActions[i].action.Disable();
-
-                        inputActions[i].action.ApplyBindingOverride(bindingData.values[index]);
-
-                        if (isEnabled[i]) inputActions[i].action.Enable();
-                    }
-                    else
-                    {
-                        if (isEnabled[i]) inputActions[i].action.Disable();
-
-                        SetDefaultBinding(inputActions[i].action);
-
-                        if (isEnabled[i]) inputActions[i].action.Enable();
-                    }
-                }
-                else
-                {
-                    //if (isEnabled[i]) inputActions[i].action.Disable();
-
-                    SetDefaultBinding(inputActions[i].action);
-
-                    if (isEnabled[i]) inputActions[i].action.Enable();
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < inputActions.Count; i++)
-            {
-                //if (isEnabled[i]) inputActions[i].action.Disable();
-
-                SetDefaultBinding(inputActions[i].action);
-
-                if (isEnabled[i]) inputActions[i].action.Enable();
-            }
-        }
-    }
-
     // 게임 종료 시 바인딩 저장
     private void OnApplicationQuit()
     {

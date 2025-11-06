@@ -41,14 +41,9 @@ public class AttackData
         rotation = attackData.rotation;
 
         isMainAttack = false;
-        //killActionIsUsable = attackData.killActionIsUsable;
     }
     public void OnKill()
     {
-        //if (killActionIsUsable) return;
-
-        //killActionIsUsable = true;
-
         onKillAction?.Invoke(new AttackData(this));
     }
     public void OnHit(float damage, Vector3 position, Vector3 rotation)
