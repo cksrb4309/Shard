@@ -28,7 +28,5 @@ public class BlockSettingEffect : MonoBehaviour
         positions[index].transform.position = pos;
 
         particles[index].Play();
-
-        Debug.Log("ÀÎµ¦½º : " + index.ToString() + " / À§Ä¡ : " + pos.ToString());
     }
 }

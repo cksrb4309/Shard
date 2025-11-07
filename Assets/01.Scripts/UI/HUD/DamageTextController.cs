@@ -10,7 +10,7 @@ public class DamageTextController : MonoBehaviour
 
     Vector3 offset;
     Quaternion rotation;
-
+    int damageTextSpawnCountThisFrame = 0;
     private void Awake()
     {
         instance = this;
@@ -23,6 +23,10 @@ public class DamageTextController : MonoBehaviour
 
         offset = rotation * Vector3.back * 25f;
     }
+    private void Update()
+    {
+        damageTextSpawnCountThisFrame = 0;
+    }
     public static void OnDamageText(Vector3 pos, float damage, bool isUser = false)
     {
         instance.OnDamageTextExecute(pos, damage, isUser, false);
@@ -33,6 +37,13 @@ public class DamageTextController : MonoBehaviour
     }
     void OnDamageTextExecute(Vector3 pos, float damage, bool isUser, bool isCritical)
     {
+        if (damageTextSpawnCountThisFrame > 50)
+        {
+            return;
+        }
+
+        damageTextSpawnCountThisFrame++;
+
         DamageText damageText;
 
         if (isUser) damageText = PoolingManager.Instance.GetObject<DamageText>("UserHitDamageText");

@@ -26,7 +26,7 @@ public class ObjectPool : MonoBehaviour
             queue.Enqueue(obj);
 
             // 한 프레임마다 몇 개씩 생성할지 조절
-            if (i % 5 == 0)
+            if (i % 10 == 0)
             {
                 yield return null;
             }
@@ -54,21 +54,14 @@ public class ObjectPool : MonoBehaviour
     // 오브젝트 가져오기 (GameObject를 직접 반환)
     public GameObject GetObject()
     {
-        if (poolEntry.name == "MonsterHitDamageText")
-        {
-            Debug.Log("현재 큐 개수 : " + queue.Count.ToString());
-        }
         if (queue.Count == 0)
         {
             if (!isExpanding)
             {
-                Debug.Log("큐에 넣기 시작");
                 StartCoroutine(ExpandPoolAsync());
             }
 
             GameObject immediateObj = Instantiate(poolEntry.prefab, poolEntry.parent);
-
-            Debug.Log("생성해서 전달");
 
             return immediateObj;
         }

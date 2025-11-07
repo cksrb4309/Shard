@@ -76,8 +76,6 @@ public class ChainAttackAbility : Ability, IOnHitChanceDamage
                 break; // °ø°ÝÀ» ¸ØÃá´Ù
             }
         }
-
-        Debug.Log("Distance : " + (Time.realtimeSinceStartup - startTime) * 1000f);
     }
     IEnumerator AttackCoroutine(AttackData attackData, float damage, IAttackable current, IAttackable next)
     {

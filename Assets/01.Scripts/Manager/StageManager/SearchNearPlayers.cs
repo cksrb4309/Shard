@@ -105,8 +105,6 @@ public class SearchNearPlayers : MonoBehaviour
             circleFillImage.transform.localScale =
                 Vector3.one * Mathf.Lerp(Mathf.Lerp(0, size, t), Mathf.Lerp(size, startSize, t), t);
 
-            Debug.Log(Mathf.Lerp(Mathf.Lerp(0, size, t), Mathf.Lerp(size, startSize, t), t).ToString());
-
             yield return null;
         }
         gameObject.SetActive(false);
