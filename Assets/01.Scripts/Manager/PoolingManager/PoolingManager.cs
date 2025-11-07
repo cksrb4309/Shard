@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
 public class PoolingManager : MonoBehaviour
 {
-    private Dictionary<string, object> objectPoolList = new Dictionary<string, object>();
     public static PoolingManager Instance;
 
     private Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool>();
@@ -14,23 +14,21 @@ public class PoolingManager : MonoBehaviour
     }
 
     // Ç® »ý¼º
-    public void CreatePool(string poolName, GameObject prefab, int initialSize, Transform tr = null)
+    public void CreatePool(PoolEntry poolEntry, Transform parent)
     {
-        if (!pools.ContainsKey(poolName))
+        if (!pools.ContainsKey(poolEntry.name))
         {
-            GameObject poolObj = new GameObject(poolName + " Pool");
+            GameObject poolObj = new GameObject(poolEntry.name + " Pool");
 
-            poolObj.transform.SetParent(tr != null ? tr : transform);
+            poolObj.transform.SetParent(parent != null ? parent : transform);
+
+            poolEntry.parent = poolObj.transform;
 
             ObjectPool pool = poolObj.AddComponent<ObjectPool>();
 
-            pool.parent = tr;
-            pool.prefab = prefab;
-            pool.initialSize = initialSize;
+            pool.Setting(poolEntry, parent);
 
-            pool.CreateObject();
-
-            pools.Add(poolName, pool);
+            pools.Add(poolEntry.name, pool);
         }
     }
 

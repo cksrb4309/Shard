@@ -40,27 +40,17 @@ public class PlayerInputAndMove : MonoBehaviour
     float boost = 0;
     float walkSpeed;
     float runSpeed;
-    float moveX = 0, moveY = 0;
     float velocity = 0; // 현재 이동하는 힘
     Coroutine boostCoroutine = null;
 
     Vector2 mousePosition;
     Camera mainCamera;
     bool canRotate = true;
-    float rotationSpeed = 30f; // 회전 속도
-    float deceleration = 10f; // 감속 속도
                 
     Vector3 inputDir;  // 현재 이동 방향
 
-    private void Awake()
-    {
-        //GameManager.SetMyTransform(transform);
-    }
-
     private void Start()
     {
-        // GameManager.SetMyTransform(transform); TODO 이전으로 돌아갈 때 고쳐라
-
         mainCamera = Camera.main;
 
         rb = GetComponent<Rigidbody>();
@@ -88,7 +78,6 @@ public class PlayerInputAndMove : MonoBehaviour
         mainSkillAction.action.Enable();
 
         normalAttackAction.action.Enable();
-        //normalAttackAction.action.performed += OnNormalAttack;
     }
     private void OnDisable()
     {
@@ -135,7 +124,7 @@ public class PlayerInputAndMove : MonoBehaviour
         walkSpeed = speed;
         runSpeed = speed * 1.5f;
     }
-    private void OnNormalAttack(/*InputAction.CallbackContext context*/)
+    private void OnNormalAttack()
     {
         normalAttack.UseSkill();
     }

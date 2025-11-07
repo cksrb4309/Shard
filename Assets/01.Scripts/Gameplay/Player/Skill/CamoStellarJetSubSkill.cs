@@ -4,8 +4,6 @@ public class CamoStellarJetSubSkill : PlayerSkill
 {
     public Transform firePos;
 
-    int currentIndex = 0;
-
     public float damageMultiplier; // 데미지 계수
     public float baseProjectileDuration; // 기본 투사체 유지시간
     public float baseProjectileSpeed; // 기본 투사체 속도

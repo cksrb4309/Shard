@@ -1,17 +1,15 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageTextController : MonoBehaviour
 {
     static DamageTextController instance = null;
 
-    public Canvas myCanvas;
     Camera myCamera;
 
-    public Transform initialParent;
-    public Transform finalParent;
-
-    public Transform targetTransform;
+    Vector3 offset;
+    Quaternion rotation;
 
     private void Awake()
     {
@@ -20,50 +18,34 @@ public class DamageTextController : MonoBehaviour
     private void Start()
     {
         myCamera = Camera.main;
+
+        rotation = myCamera.transform.rotation;
+
+        offset = rotation * Vector3.back * 25f;
     }
     public static void OnDamageText(Vector3 pos, float damage, bool isUser = false)
     {
-        instance.OnDamageTextExecute(pos, damage, isUser);
+        instance.OnDamageTextExecute(pos, damage, isUser, false);
     }
     public static void OnCriticalDamageText(Vector3 pos, float damage)
     {
-        instance.OnCriticalDamageTextExcute(pos, damage);
+        instance.OnDamageTextExecute(pos, damage, false, true);
     }
-    void OnCriticalDamageTextExcute(Vector3 pos, float damage)
+    void OnDamageTextExecute(Vector3 pos, float damage, bool isUser, bool isCritical)
     {
-        pos = myCamera.WorldToScreenPoint(pos);
+        DamageText damageText;
 
-        if (pos.x < -100f || pos.x > Screen.width + 100f ||
-            pos.y < -50f || pos.y > Screen.height + 50f) return;
+        if (isUser) damageText = PoolingManager.Instance.GetObject<DamageText>("UserHitDamageText");
 
-        RectTransform obj;
+        else if (isCritical) damageText = PoolingManager.Instance.GetObject<DamageText>("MonsterHitCriticalDamageText");
 
-        obj = PoolingManager.Instance.GetObject("MonsterHitCriticalDamageText").GetComponent<RectTransform>();
+        else damageText = PoolingManager.Instance.GetObject<DamageText>("MonsterHitDamageText");
 
-        obj.GetComponentInChildren<TMP_Text>().text = damage.ToString("F0");
+        damageText.SetText(damage.ToString("F0"));
 
-        targetTransform.localPosition = pos - new Vector3(Screen.width * Random.Range(0.48f, 0.52f), Screen.height * Random.Range(0.49f, 0.51f), 0);
+        Vector3 dirToCamera = (myCamera.transform.position - pos).normalized;
+        damageText.transform.position = pos + offset;
 
-        obj.position = targetTransform.position;
-    }
-    void OnDamageTextExecute(Vector3 pos, float damage, bool isUser)
-    {
-        pos = myCamera.WorldToScreenPoint(pos);
-
-        if (pos.x < -100f || pos.x > Screen.width + 100f ||
-            pos.y < -50f || pos.y > Screen.height + 50f) return;
-
-        RectTransform obj;
-
-        if (isUser)
-            obj = PoolingManager.Instance.GetObject("UserHitDamageText").GetComponent<RectTransform>();
-        else
-            obj = PoolingManager.Instance.GetObject("MonsterHitDamageText").GetComponent<RectTransform>();
-
-        obj.GetComponentInChildren<TMP_Text>().text = damage.ToString("F0");
-
-        targetTransform.localPosition = pos - new Vector3(Screen.width * Random.Range(0.48f, 0.52f), Screen.height * Random.Range(0.49f, 0.51f), 0);
-
-        obj.position = targetTransform.position;
+        damageText.transform.rotation = rotation;
     }
 }

@@ -37,12 +37,11 @@ public class InterstellarRunnerNormalAttack : PlayerSkill
         firePosition[1] = new Transform[firePosition_2.Length];
         firePosition[2] = new Transform[firePosition_3.Length];
 
-        for (int i = 0; i < firePosition_1.Length; i++)
-            firePosition[0][i] = firePosition_1[i];
-        for (int i = 0; i < firePosition_2.Length; i++)
-            firePosition[1][i] = firePosition_2[i];
-        for (int i = 0; i < firePosition_3.Length; i++)
-            firePosition[2][i] = firePosition_3[i];
+        for (int i = 0; i < firePosition_1.Length; i++) firePosition[0][i] = firePosition_1[i];
+
+        for (int i = 0; i < firePosition_2.Length; i++) firePosition[1][i] = firePosition_2[i];
+
+        for (int i = 0; i < firePosition_3.Length; i++) firePosition[2][i] = firePosition_3[i];
     }
     public override void UseSkill()
     {

@@ -9,8 +9,10 @@ public class CamoStellarJetNormalAttack : PlayerSkill
     public float baseProjectileSpeed; // 기본 투사체 속도
 
     public ParticleSystem attackParticle; // 공격 시 효과
-    private void Start()
+    public override void Start()
     {
+        base.Start();
+
         currentCooltime = baseCooltime;
     }
     public override void UseSkill()

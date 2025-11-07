@@ -1,33 +1,76 @@
-using UnityEngine;
-using System.Collections.Generic;
 using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
 public class ObjectPool : MonoBehaviour
 {
-    [HideInInspector] public Transform parent = null;
+    PoolEntry poolEntry;
 
-    public GameObject prefab;  // 미리 생성할 오브젝트의 원본(prefab)
-    public int initialSize = 10;  // 초기 풀 사이즈
+    Queue<GameObject> queue = new Queue<GameObject>();
 
-    private Queue<GameObject> queue = new Queue<GameObject>();
+    bool isExpanding = false;
 
+    private IEnumerator ExpandPoolAsync()
+    {
+        isExpanding = true;
+
+        for (int i = 0; i < poolEntry.expansionSize; i++)
+        {
+            GameObject obj = Instantiate(poolEntry.prefab, poolEntry.parent);
+
+            obj.SetActive(false);
+
+            queue.Enqueue(obj);
+
+            // 한 프레임마다 몇 개씩 생성할지 조절
+            if (i % 5 == 0)
+            {
+                yield return null;
+            }
+        }
+
+        isExpanding = false;
+    }
     public void CreateObject()
     {
-        for (int i = 0; i < initialSize; i++)
+        for (int i = 0; i < poolEntry.initSize; i++)
         {
-            GameObject obj = GameObject.Instantiate(prefab, parent);
+            GameObject obj = Instantiate(poolEntry.prefab, poolEntry.parent);
+
             obj.SetActive(false);
+
             queue.Enqueue(obj);
         }
+    }
+    public void Setting(PoolEntry poolEntry, Transform parent = null)
+    {
+        this.poolEntry = poolEntry;
+
+        CreateObject();
     }
     // 오브젝트 가져오기 (GameObject를 직접 반환)
     public GameObject GetObject()
     {
-        if (queue.Count <= 0)
+        if (poolEntry.name == "MonsterHitDamageText")
         {
-            CreateObject();
+            Debug.Log("현재 큐 개수 : " + queue.Count.ToString());
+        }
+        if (queue.Count == 0)
+        {
+            if (!isExpanding)
+            {
+                Debug.Log("큐에 넣기 시작");
+                StartCoroutine(ExpandPoolAsync());
+            }
+
+            GameObject immediateObj = Instantiate(poolEntry.prefab, poolEntry.parent);
+
+            Debug.Log("생성해서 전달");
+
+            return immediateObj;
         }
 
         GameObject obj = queue.Dequeue();
@@ -47,7 +90,6 @@ public class ObjectPool : MonoBehaviour
     // 제네릭 메서드로 특정 컴포넌트를 가져오기
     public T GetObject<T>() where T : Component
     {
-        GameObject obj = GetObject();  // 기존 GetObject 메서드를 이용해 오브젝트를 가져옴
-        return obj.GetComponent<T>();  // T 타입의 컴포넌트를 반환
+        return GetObject().GetComponent<T>();  // T 타입의 컴포넌트를 반환
     }
 }

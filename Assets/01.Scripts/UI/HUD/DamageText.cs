@@ -4,42 +4,10 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    public string damageTextName;
+    [SerializeField] TMP_Text label;
 
-    public void Return()
+    public void SetText(string value)
     {
-        PoolingManager.Instance.ReturnObject(damageTextName, transform.parent.gameObject);
+        label.SetText(value);
     }
-
-
-    //public TMP_Text text;
-    //public string poolName;
-    //Color startColor;
-    //Color currentColor;
-    //float alpha = 1f;
-
-    //public void Awake()
-    //{
-    //    startColor = text.color;
-    //}
-    //private void OnEnable()
-    //{
-    //    text.color = startColor;
-
-    //    currentColor = startColor;
-
-    //    alpha = 1f;
-    //}
-    //private void FixedUpdate()
-    //{
-    //    transform.position += Vector3.up * Time.deltaTime;
-
-    //    alpha -= Time.fixedDeltaTime;
-
-    //    currentColor.a = alpha;
-
-    //    text.color = currentColor;
-
-    //    if (alpha < 0) PoolingManager.Instance.ReturnObject(poolName, gameObject);
-    //}
 }

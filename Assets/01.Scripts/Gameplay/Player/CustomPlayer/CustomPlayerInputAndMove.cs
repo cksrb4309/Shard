@@ -50,7 +50,6 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     float boost = 0;
     float walkSpeed;
     float runSpeed;
-    float moveX = 0, moveY = 0;
     float velocity = 0; // 현재 이동하는 힘
     Coroutine boostCoroutine = null;
     #endregion
@@ -62,11 +61,6 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     Vector3 inputDir;  // 현재 이동 방향
     #endregion
 
-    private void Awake()
-    {
-        // 게임 매니저에 나의 Transform을 전달한다
-        // GameManager.SetMyTransform(transform);
-    }
 
     public virtual void Start()
     {
