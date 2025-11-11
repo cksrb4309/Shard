@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,29 +6,29 @@ public abstract class PlayerSkill : MonoBehaviour
 {
     public PlayerAttributes attributes;
 
-    public float attackDelay; // °ø°İ »çÀÌ µô·¹ÀÌ
-    public float baseCooltime; // ±âº» ½ºÅ³ ÃæÀü ÄğÅ¸ÀÓ
+    public float attackDelay; // ê³µê²© ì‚¬ì´ ë”œë ˆì´
+    public float baseCooltime; // ê¸°ë³¸ ìŠ¤í‚¬ ì¶©ì „ ì¿¨íƒ€ì„
 
-    public Sprite skillIcon; // ½ºÅ³ ¾ÆÀÌÄÜ
+    public Sprite skillIcon; // ìŠ¤í‚¬ ì•„ì´ì½˜
 
-    protected int baseStackCount; // ±âº» ½ºÅ³ ÀúÀå È½¼ö
+    protected int baseStackCount; // ê¸°ë³¸ ìŠ¤í‚¬ ì €ì¥ íšŸìˆ˜
 
-    protected float currentCooltime; // ÇöÀç ½ºÅ³ ÃæÀü ÄğÅ¸ÀÓ
-    // int currentStackCount; // ÇöÀç ½ºÅ³ ÀúÀå È½¼ö
+    protected float currentCooltime; // í˜„ì¬ ìŠ¤í‚¬ ì¶©ì „ ì¿¨íƒ€ì„
+    // int currentStackCount; // í˜„ì¬ ìŠ¤í‚¬ ì €ì¥ íšŸìˆ˜
 
     public SkillSlot skillSlot = null;
 
-    float cooltime = 0; // ÇöÀç ÁøÇà ÁßÀÎ ÄğÅ¸ÀÓ
+    float cooltime = 0; // í˜„ì¬ ì§„í–‰ ì¤‘ì¸ ì¿¨íƒ€ì„
 
-    int stackCount; // ÇöÀç °¡Áö°í ÀÖ´Â ½ºÅ³ ÀúÀå È½¼ö
-    protected float projectileDuration = 1; // Åõ»çÃ¼ À¯Áö ½Ã°£
-    protected float projectileSpeed; // Åõ»çÃ¼ ¼Óµµ
-    [HideInInspector] public float cooldownSpeed = 1; // Äğ´Ù¿î ¼Óµµ
-    protected float criticalChance; // Ä¡¸íÅ¸ È®·ü
-    protected float criticalDamage; // Ä¡¸íÅ¸ µ¥¹ÌÁö
-    protected float damage; // ÇöÀç À¯ÀúÀÇ µ¥¹ÌÁö
+    int stackCount; // í˜„ì¬ ê°€ì§€ê³  ìˆëŠ” ìŠ¤í‚¬ ì €ì¥ íšŸìˆ˜
+    protected float projectileDuration = 1; // íˆ¬ì‚¬ì²´ ìœ ì§€ ì‹œê°„
+    protected float projectileSpeed; // íˆ¬ì‚¬ì²´ ì†ë„
+    [HideInInspector] public float cooldownSpeed = 1; // ì¿¨ë‹¤ìš´ ì†ë„
+    protected float criticalChance; // ì¹˜ëª…íƒ€ í™•ë¥ 
+    protected float criticalDamage; // ì¹˜ëª…íƒ€ ë°ë¯¸ì§€
+    protected float damage; // í˜„ì¬ ìœ ì €ì˜ ë°ë¯¸ì§€
 
-    protected bool isAttack = true; // ( µô·¹ÀÌ·Î ÀÎÇÑ ) ÇöÀç °ø°İ °¡´É ¿©ºÎ 
+    protected bool isAttack = true; // ( ë”œë ˆì´ë¡œ ì¸í•œ ) í˜„ì¬ ê³µê²© ê°€ëŠ¥ ì—¬ë¶€ 
 
     protected AttackData attackData = new AttackData(true);
 
@@ -44,60 +44,60 @@ public abstract class PlayerSkill : MonoBehaviour
         {
             stackCount = value;
 
-            // ÇöÀç ½ºÅÃÀÌ 0º¸´Ù ¸¹À» ¶§
+            // í˜„ì¬ ìŠ¤íƒì´ 0ë³´ë‹¤ ë§ì„ ë•Œ
             if (stackCount > 0)
             {
-                // ÇöÀç °¡Áú ¼ö ÀÖ´Â ½ºÅÃÀÌ 1º¸´Ù Å¬ ¶§
+                // í˜„ì¬ ê°€ì§ˆ ìˆ˜ ìˆëŠ” ìŠ¤íƒì´ 1ë³´ë‹¤ í´ ë•Œ
                 if (baseStackCount > 1)
                 {
-                    // ½ºÅÃ ÅØ½ºÆ® Ç¥½Ã
+                    // ìŠ¤íƒ í…ìŠ¤íŠ¸ í‘œì‹œ
                     skillSlot?.SetCountText(stackCount);
 
-                    // Fill Image ¼û±â±â
+                    // Fill Image ìˆ¨ê¸°ê¸°
                     skillSlot?.DisableFillAmount();
 
-                    // ÄğÅ¸ÀÓ ÅØ½ºÆ® Ç¥½Ã Æ®¸®°Å º¯¼ö ON
+                    // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ í‘œì‹œ íŠ¸ë¦¬ê±° ë³€ìˆ˜ ON
                     isCooltimeTextOn = true;
 
                     skillSlot?.EnableHandle();
 
-                    // ¸¸¾à °¡Áú ¼ö ÀÖ´Â ½ºÅÃÀ» ¸ğµÎ Ã¤¿üÀ» °æ¿ì
+                    // ë§Œì•½ ê°€ì§ˆ ìˆ˜ ìˆëŠ” ìŠ¤íƒì„ ëª¨ë‘ ì±„ì› ì„ ê²½ìš°
                     if (stackCount == baseStackCount)
                     {
-                        // ÄğÅ¸ÀÓ ÅØ½ºÆ® Á¤¸®
+                        // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ ì •ë¦¬
                         skillSlot?.ClearCooltimeText();
 
                         skillSlot?.DisableHandle();
                     }
                 }
-                // ÇöÀç °¡Áú ¼ö ÀÖ´Â ½ºÅÃÀÌ ÇÑ°³ ¹Û¿¡ ¾øÀ» ¶§
+                // í˜„ì¬ ê°€ì§ˆ ìˆ˜ ìˆëŠ” ìŠ¤íƒì´ í•œê°œ ë°–ì— ì—†ì„ ë•Œ
                 else
                 {
-                    // ½ºÅÃ ÅØ½ºÆ® Á¤¸®ÇÏ±â
+                    // ìŠ¤íƒ í…ìŠ¤íŠ¸ ì •ë¦¬í•˜ê¸°
                     skillSlot?.ClearCountText();
 
-                    // Fill Image ¼û±â±â
+                    // Fill Image ìˆ¨ê¸°ê¸°
                     skillSlot?.DisableFillAmount();
 
-                    // ÄğÅ¸ÀÓ ÅØ½ºÆ® Ç¥½Ã Æ®¸®°Å º¯¼ö OFF
+                    // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ í‘œì‹œ íŠ¸ë¦¬ê±° ë³€ìˆ˜ OFF
                     isCooltimeTextOn = false;
 
                     skillSlot?.DisableHandle();
                 }
             }
-            // ÇöÀç ½ºÅÃÀÌ 0ÀÏ ¶§
+            // í˜„ì¬ ìŠ¤íƒì´ 0ì¼ ë•Œ
             else
             {
-                // ½ºÅÃ ÅØ½ºÆ® Á¤¸®
+                // ìŠ¤íƒ í…ìŠ¤íŠ¸ ì •ë¦¬
                 skillSlot?.ClearCountText();
 
-                // Fill Image Ç¥½Ã
+                // Fill Image í‘œì‹œ
                 skillSlot?.EnableFillAmount();
 
-                // ÄğÅ¸ÀÓ ÅØ½ºÆ® Á¤¸®
+                // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ ì •ë¦¬
                 skillSlot?.ClearCooltimeText();
 
-                // ÄğÅ¸ÀÓ ÅØ½ºÆ® Ç¥½Ã Æ®¸®°Å º¯¼ö OFF
+                // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ í‘œì‹œ íŠ¸ë¦¬ê±° ë³€ìˆ˜ OFF
                 isCooltimeTextOn = false;
 
                 skillSlot?.EnableHandle();
@@ -115,7 +115,7 @@ public abstract class PlayerSkill : MonoBehaviour
         {
             cooltime = value;
 
-            if (isCooltimeTextOn) // ÄğÅ¸ÀÓ ÅØ½ºÆ®°¡ ÇÊ¿äÇÒ ¶§
+            if (isCooltimeTextOn) // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ê°€ í•„ìš”í•  ë•Œ
             {
                 skillSlot?.SetCooltimeText((int)Mathf.Ceil(currentCooltime - cooltime));
             }
@@ -125,21 +125,21 @@ public abstract class PlayerSkill : MonoBehaviour
     }
 
 
-    private void FixedUpdate() // °íÁ¤ ÇÁ·¹ÀÓÀ¸·Î °»½Å
+    private void FixedUpdate() // ê³ ì • í”„ë ˆì„ìœ¼ë¡œ ê°±ì‹ 
     {
-        // ÇöÀç °¡Áö°í ÀÖ´Â ÃæÀü È½¼ö°¡ ÃÖ´ë ÃæÀü °³¼öº¸´Ù ÀÛÀ» ¶§
+        // í˜„ì¬ ê°€ì§€ê³  ìˆëŠ” ì¶©ì „ íšŸìˆ˜ê°€ ìµœëŒ€ ì¶©ì „ ê°œìˆ˜ë³´ë‹¤ ì‘ì„ ë•Œ
         if (baseStackCount > stackCount)
         {
-            // ÄğÅ¸ÀÓÀÇ ÁøÇàµµ¸¦ ¿Ã¸°´Ù
+            // ì¿¨íƒ€ì„ì˜ ì§„í–‰ë„ë¥¼ ì˜¬ë¦°ë‹¤
             Cooltime += Time.fixedDeltaTime * cooldownSpeed;
 
-            // ¸¸¾à ÄğÅ¸ÀÓÀÌ ´Ù Ã¡À» °æ¿ì
+            // ë§Œì•½ ì¿¨íƒ€ì„ì´ ë‹¤ ì°¼ì„ ê²½ìš°
             if (Cooltime >= currentCooltime)
             {
-                // ÄğÅ¸ÀÓ Àû¿ë
+                // ì¿¨íƒ€ì„ ì ìš©
                 Cooltime -= currentCooltime;
 
-                // ½ºÅ³ ÃæÀü È½¼ö¸¦ ´Ã¸°´Ù
+                // ìŠ¤í‚¬ ì¶©ì „ íšŸìˆ˜ë¥¼ ëŠ˜ë¦°ë‹¤
                 StackCount++;
             }
         }
@@ -182,7 +182,7 @@ public abstract class PlayerSkill : MonoBehaviour
 
         StackCount = baseStackCount;
     }
-    #region µ¥¹ÌÁö, ½ºÅÃ, Äğ´Ù¿î ¼Óµµ, Ä¡¸íÅ¸ È®·ü ¼³Á¤ ÇÔ¼ö
+    #region ë°ë¯¸ì§€, ìŠ¤íƒ, ì¿¨ë‹¤ìš´ ì†ë„, ì¹˜ëª…íƒ€ í™•ë¥  ì„¤ì • í•¨ìˆ˜
     public void SetDamage(float damage)
     {
         this.damage = damage;
@@ -196,10 +196,10 @@ public abstract class PlayerSkill : MonoBehaviour
             skillSlot?.SetCountText(this.stackCount);
         }
 
-        // ÇöÀç ½ºÅÃÀÌ Áö±İ ¹ŞÀº ¼³Á¤µÈ ½ºÅÃ Ä«¿îÆ®º¸´Ù 1 ÀÛÀ» ¶§
+        // í˜„ì¬ ìŠ¤íƒì´ ì§€ê¸ˆ ë°›ì€ ì„¤ì •ëœ ìŠ¤íƒ ì¹´ìš´íŠ¸ë³´ë‹¤ 1 ì‘ì„ ë•Œ
         if (this.stackCount == stackCount - 1)
         {
-            // ÄğÅ¸ÀÓ ÅØ½ºÆ®¸¦ Ç¥½ÃÇÑ´Ù
+            // ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ë¥¼ í‘œì‹œí•œë‹¤
             isCooltimeTextOn = true;
         }
     }
@@ -228,7 +228,7 @@ public abstract class PlayerSkill : MonoBehaviour
         this.projectileSpeed = projectileSpeed;
     }
     #endregion
-    #region ¾ÆÀÌÅÛÀÇ Interface¿¡ µû¶ó Action ¹× Func ¼öÁ¤
+    #region ì•„ì´í…œì˜ Interfaceì— ë”°ë¼ Action ë° Func ìˆ˜ì •
     public void AddOnKillAbility(IOnKill onKill)
     {
         attackData.onKillAction += onKill.OnKill;
