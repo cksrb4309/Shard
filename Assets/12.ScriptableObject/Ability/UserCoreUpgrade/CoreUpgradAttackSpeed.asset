@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CoreUpgradAttackSpeed
   m_EditorClassIdentifier: 
   abilityName: "\uD50C\uB808\uC774\uC5B4 \uACF5\uACA9\uC18D\uB3C4 \uAC15\uD654"
-  tear: 0
+  tier: 1
   attribute: 1
   startValue: 1.1
   stackValue: 0.1

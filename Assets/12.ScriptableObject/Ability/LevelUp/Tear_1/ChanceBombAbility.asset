@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChanceBombAbility
   m_EditorClassIdentifier: 
   abilityName: "\uD655\uB960\uC801 \uC2DC\uD55C\uD3ED\uD0C4 \uC124\uCE58"
-  tear: 1
+  tier: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 640

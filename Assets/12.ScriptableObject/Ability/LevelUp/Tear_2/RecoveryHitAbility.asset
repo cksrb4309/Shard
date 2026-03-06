@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RecoveryHitAbility
   m_EditorClassIdentifier: 
   abilityName: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-  tear: 2
+  tier: 2

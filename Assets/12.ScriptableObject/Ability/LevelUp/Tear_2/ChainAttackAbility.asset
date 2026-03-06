@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainAttackAbility
   m_EditorClassIdentifier: 
   abilityName: "\uC801\uC911 \uC2DC \uC5F0\uC1C4 \uBC88\uAC1C \uBC1C\uC0DD"
-  tear: 2
+  tier: 2
   startRange: 3
   stackRange: 0.5
   startDamage: 0.8

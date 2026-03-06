@@ -8,11 +8,11 @@ public class TestEditor : Editor
     {
         base.OnInspectorGUI();
 
-        Test myScript = (Test)target;
+        //Test myScript = (Test)target;
 
-        if (GUILayout.Button("테스트"))
-        {
-            myScript.Excute();
-        }
+        //if (GUILayout.Button("테스트"))
+        //{
+        //    myScript.Excute();
+        //}
     }
 }

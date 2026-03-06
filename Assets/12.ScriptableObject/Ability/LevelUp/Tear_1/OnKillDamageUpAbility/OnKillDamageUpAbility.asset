@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: "\uCC98\uCE58 \uD639\uC740 \uD30C\uAD34 \uC2DC 2\uCD08\uAC04 \uACF5\uACA9\uB825
     \uC99D\uAC00"
-  tear: 1
+  tier: 1
   statusEffect: {fileID: 11400000, guid: 9ebcb4341338c8948885d24817acc887, type: 2}

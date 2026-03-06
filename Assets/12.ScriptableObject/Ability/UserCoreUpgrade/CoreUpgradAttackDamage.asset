@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CoreUpgradAttackDamage
   m_EditorClassIdentifier: 
   abilityName: "\uD50C\uB808\uC774\uC5B4 \uACF5\uACA9\uB825 \uAC15\uD654"
-  tear: 0
+  tier: 1
   attribute: 0
   startValue: 1.1
   stackValue: 0.1
