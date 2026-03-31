@@ -15,7 +15,7 @@ public class CoreUpgrade : MonoBehaviour
     public Ability coreUpgradeHealthRegen;
     public Ability coreUpgradeMoveSpeed;
 
-    #region ÄÚ¾î °­È­
+    #region ì½”ì–´ ê°•í™”
     public void UpgradeMaxHealth()
     {
         coreHealth.UpgradeMaxHealth();
@@ -29,7 +29,7 @@ public class CoreUpgrade : MonoBehaviour
         coreHealth.UpgradeHealthRegen();
     }
     #endregion
-    #region À¯Àú °­È­
+    #region ìœ ì € ê°•í™”
     public void UpgradeUserAttackDamage()
     {
         inventory.GetAbilityApply(coreUpgradeAttackDamage);

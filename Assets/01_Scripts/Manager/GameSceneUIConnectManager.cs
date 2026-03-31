@@ -6,17 +6,17 @@ public class GameSceneUIConnectManager : MonoBehaviour
 {
     static GameSceneUIConnectManager instance = null;
 
-    // ÇÃ·¹ÀÌ¾î¿¡°Ô ÇÊ¿äÇÑ UI ¿ä¼Ò
-    public Slider hpSlider; // Ã¼·Â ¹Ù 
-    public TMP_Text hpText; // Ã¼·Â ÅØ½ºÆ®
-    public Slider sheildSlider; // ½Çµå ¹Ù
-    public Image normalAttackImage; // ÀÏ¹İ °ø°İ SkillImage
-    public SkillSlot subSkillSlot; // ¼­ºê ½ºÅ³ ½½·Ô
-    public SkillSlot mainSkillSlot; // ¸ŞÀÎ ½ºÅ³ ½½·Ô
-    public UpgradePanel[] upgradePanels; // ÄÚ¾î ¾÷±×·¹ÀÌµå ÆĞ³Îµé
-    public CoreInteractUI coreInteractUI; // ÀÎº¥Åä¸® UI
+    // í”Œë ˆì´ì–´ì—ê²Œ í•„ìš”í•œ UI ìš”ì†Œ
+    public Slider hpSlider; // ì²´ë ¥ ë°” 
+    public TMP_Text hpText; // ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider sheildSlider; // ì‹¤ë“œ ë°”
+    public Image normalAttackImage; // ì¼ë°˜ ê³µê²© SkillImage
+    public SkillSlot subSkillSlot; // ì„œë¸Œ ìŠ¤í‚¬ ìŠ¬ë¡¯
+    public SkillSlot mainSkillSlot; // ë©”ì¸ ìŠ¤í‚¬ ìŠ¬ë¡¯
+    public UpgradePanel[] upgradePanels; // ì½”ì–´ ì—…ê·¸ë ˆì´ë“œ íŒ¨ë„ë“¤
+    public CoreInteractUI coreInteractUI; // ì¸ë²¤í† ë¦¬ UI
     public CoreUpgrade coreUpgrade;
-    public RealtimeCanvasUI realtimeCanvasUI; // »óÈ²À» Ç¥½ÃÇÒ UI
+    public RealtimeCanvasUI realtimeCanvasUI; // ìƒí™©ì„ í‘œì‹œí•  UI
 
     int upgradePanelIndex = 0;
 

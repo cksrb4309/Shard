@@ -4,7 +4,7 @@ public static class AbilityNameToIdMapper
 {
     static Dictionary<string, int> abilityNameToId = new Dictionary<string, int>();
     static int abilityId = 0;
-    // ¾ÆÀÌÅÛ µî·Ï
+    // ì•„ì´í…œ ë“±ë¡
     public static void RegisterAbility(string abilityName)
     {
         if (!abilityNameToId.ContainsKey(abilityName))
@@ -13,13 +13,13 @@ public static class AbilityNameToIdMapper
         }
     }
 
-    // ÀÌ¸§À¸·Î ID °¡Á®¿À±â
+    // ì´ë¦„ìœ¼ë¡œ ID ê°€ì ¸ì˜¤ê¸°
     public static int GetId(string abilityName)
     {
         return abilityNameToId.TryGetValue(abilityName, out int id) ? id : -1;
     }
 
-    // ÀüÃ¼ ÃÊ±âÈ­
+    // ì „ì²´ ì´ˆê¸°í™”
     public static void Clear()
     {
         abilityNameToId.Clear();
@@ -30,7 +30,7 @@ public static class PlayerStatusNameToIdMapper
 {
     static Dictionary<string, int> statusNameToId = new Dictionary<string, int>();
     static int statusId = 0;
-    // ¾ÆÀÌÅÛ µî·Ï
+    // ì•„ì´í…œ ë“±ë¡
     public static void RegisterStatusEffect(string abilityName)
     {
         if (!statusNameToId.ContainsKey(abilityName))
@@ -39,13 +39,13 @@ public static class PlayerStatusNameToIdMapper
         }
     }
 
-    // ÀÌ¸§À¸·Î ID °¡Á®¿À±â
+    // ì´ë¦„ìœ¼ë¡œ ID ê°€ì ¸ì˜¤ê¸°
     public static int GetId(string abilityName)
     {
         return statusNameToId.TryGetValue(abilityName, out int id) ? id : -1;
     }
 
-    // ÀüÃ¼ ÃÊ±âÈ­
+    // ì „ì²´ ì´ˆê¸°í™”
     public static void Clear()
     {
         statusNameToId.Clear();
@@ -55,7 +55,7 @@ public static class MonsterStatusNameToIdMapper
 {
     static Dictionary<string, int> statusNameToId = new Dictionary<string, int>();
     static int statusId = 0;
-    // ¾ÆÀÌÅÛ µî·Ï
+    // ì•„ì´í…œ ë“±ë¡
     public static void RegisterStatusEffect(string abilityName)
     {
         if (!statusNameToId.ContainsKey(abilityName))
@@ -64,13 +64,13 @@ public static class MonsterStatusNameToIdMapper
         }
     }
 
-    // ÀÌ¸§À¸·Î ID °¡Á®¿À±â
+    // ì´ë¦„ìœ¼ë¡œ ID ê°€ì ¸ì˜¤ê¸°
     public static int GetId(string abilityName)
     {
         return statusNameToId.TryGetValue(abilityName, out int id) ? id : -1;
     }
 
-    // ÀüÃ¼ ÃÊ±âÈ­
+    // ì „ì²´ ì´ˆê¸°í™”
     public static void Clear()
     {
         statusNameToId.Clear();

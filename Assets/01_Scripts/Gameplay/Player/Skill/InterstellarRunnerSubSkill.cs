@@ -40,7 +40,7 @@ public class InterstellarRunnerSubSkill : PlayerSkill
         {
             if (StackCount == 0) return;
 
-            // ÃæÀüÇÏ°í ÀÖÁö ¾ÊÀ» ¶§
+            // ì¶©ì „í•˜ê³  ìˆì§€ ì•Šì„ ë•Œ
             chargeCoroutine = StartCoroutine(ChargeCoroutine());
 
             isCharged = true;
@@ -49,7 +49,7 @@ public class InterstellarRunnerSubSkill : PlayerSkill
         {
             StopCoroutine(chargeCoroutine);
 
-            // ÃæÀüÇÏ°í ÀÖÀ» ¶§
+            // ì¶©ì „í•˜ê³  ìˆì„ ë•Œ
             Attack();
 
             isCharged = false;
@@ -71,7 +71,7 @@ public class InterstellarRunnerSubSkill : PlayerSkill
 
         Vector3 position = transform.position;
 
-        // ·¹ÀÌ°¡ groundLayer¿¡ ¸Â¾ÒÀ» ¶§¸¸ ½ÇÇà
+        // ë ˆì´ê°€ groundLayerì— ë§ì•˜ì„ ë•Œë§Œ ì‹¤í–‰
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
             position = hit.point;

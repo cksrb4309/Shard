@@ -55,7 +55,7 @@ public class BombAttackProjectile : MonoBehaviour
     {
         transform.position += transform.forward * Time.fixedDeltaTime * speed;
 
-        // ·ÎÄÃ ZÃà ±âÁØÀ¸·Î È¸Àü
+        // ë¡œì»¬ Zì¶• ê¸°ì¤€ìœ¼ë¡œ íšŒì „
         transform.Rotate(0, 0, rotateSpeed * Time.fixedDeltaTime, Space.Self);
     }
     private void OnTriggerEnter(Collider other)
@@ -63,7 +63,7 @@ public class BombAttackProjectile : MonoBehaviour
         if (isAttack) return;
         isAttack = true;
 
-        // Physics Layer ¼³Á¤À» ÅëÇØ °ø°İ ÇÒ ¼ö ÀÖ´Â °Í¸¸ Ãæµ¹ÇÔ
+        // Physics Layer ì„¤ì •ì„ í†µí•´ ê³µê²© í•  ìˆ˜ ìˆëŠ” ê²ƒë§Œ ì¶©ëŒí•¨
         IAttackable attackable_1 = other.GetComponent<IAttackable>();
 
         attackData.OnHit(attackable_1, null, false);

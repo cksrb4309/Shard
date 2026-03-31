@@ -67,6 +67,6 @@ public class SmallInterStellarRunner : Teammate
             }
             yield return null;
         }
-        Patrol(); // ¼øÂû·Î ÀüÈ¯
+        Patrol(); // ìˆœì°°ë¡œ ì „í™˜
     }
 }

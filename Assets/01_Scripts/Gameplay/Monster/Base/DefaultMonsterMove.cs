@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class DefaultMonsterMove : MonsterMove
 {
-    public float moveSpeed = 3f;        // ÀÌµ¿ ¼Óµµ
-    public float rotationSpeed = 360f;  // È¸Àü ¼Óµµ
+    public float moveSpeed = 3f;        // ì´ë™ ì†ë„
+    public float rotationSpeed = 360f;  // íšŒì „ ì†ë„
 
     Transform myTransform;
 
@@ -36,7 +36,7 @@ public class DefaultMonsterMove : MonsterMove
 
             transform.position += moveDir * moveSpeed * Time.deltaTime;
 
-            // ÇöÀç ¹Ù¶óº¸´Â ¹æÇâÀ» Á¡ÁøÀûÀ¸·Î ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î È¸Àü
+            // í˜„ì¬ ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ ì ì§„ì ìœ¼ë¡œ í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ íšŒì „
             Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
 
             myTransform.rotation = Quaternion.RotateTowards(myTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);

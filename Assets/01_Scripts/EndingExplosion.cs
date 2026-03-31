@@ -11,7 +11,7 @@ public class EndingExplosion : MonoBehaviour
     }
     public void StartExplosion()
     {
-        // Ȱ��ȭ
+        // 활성화
         endingExplostionTransform[0].gameObject.SetActive(true);
         endingExplostionTransform[1].gameObject.SetActive(true);
 

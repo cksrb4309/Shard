@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        myTransform  = transform; // TODO Å¸ÀÌÆ²¿¡¼­ ÁøÀÔ ¸¸µé¸é »èÁ¦ÇÏ±â
+        myTransform  = transform; // TODO íƒ€ì´í‹€ì—ì„œ ì§„ì… ë§Œë“¤ë©´ ì‚­ì œí•˜ê¸°
 
         instance = this;
 
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
             playerShips[i] = PlayerPrefs.GetInt("Player" + i.ToString());
             GameObject ship = Instantiate(ships[playerShips[i]]);
 
-            // À§Ä¡´Â ·£´ıÇÏ°Ô ÄÚ¾î ±ÙÃ³·Î ÁöÁ¤
+            // ìœ„ì¹˜ëŠ” ëœë¤í•˜ê²Œ ì½”ì–´ ê·¼ì²˜ë¡œ ì§€ì •
             ship.transform.position =
                 coreTransform.position +
                 new Vector3(Random.Range(-1f,1f), 0, Random.Range(-1f, 1f)).normalized * range;
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    // °ÔÀÓ ¸Å´ÏÀú¿¡ ÇÃ·¹ÀÌ¾î¸¦ Ãß°¡ÇÑ´Ù
+    // ê²Œì„ ë§¤ë‹ˆì €ì— í”Œë ˆì´ì–´ë¥¼ ì¶”ê°€í•œë‹¤
     public void AddPlayer(Transform playerTransform)
     {
         playerPositions.Add(playerTransform);
@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
     {
         instance.alivePlayer--;
 
-        // ´Ù Á×Àº °æ¿ì
+        // ë‹¤ ì£½ì€ ê²½ìš°
         if (instance.alivePlayer <= 0)
         {
             if (instance.gameOverCoroutine == null)
@@ -132,15 +132,15 @@ public class GameManager : MonoBehaviour
     Coroutine gameOverCoroutine = null;
     IEnumerator GameOverCoroutine()
     {
-        RealtimeCanvasUI.Notification(IconType.DeadEnding, "°áÁ¤Ã¼¸¦...");
+        RealtimeCanvasUI.Notification(IconType.DeadEnding, "ê²°ì •ì²´ë¥¼...");
         yield return new WaitForSeconds(1f);
-        RealtimeCanvasUI.Notification(IconType.DeadEnding, "ÁöÅ°Áö...");
+        RealtimeCanvasUI.Notification(IconType.DeadEnding, "ì§€í‚¤ì§€...");
         yield return new WaitForSeconds(1f);
-        RealtimeCanvasUI.Notification(IconType.DeadEnding, "¸øÇß½À´Ï´Ù...");
+        RealtimeCanvasUI.Notification(IconType.DeadEnding, "ëª»í–ˆìŠµë‹ˆë‹¤...");
         yield return new WaitForSeconds(1f);
         RealtimeCanvasUI.Notification(IconType.DeadEnding, "G A M E O V E R");
 
-        // TODO µ¥µå¿£µù ½ºÅ©¸° Æ®·£Áö¼Ç
+        // TODO ë°ë“œì—”ë”© ìŠ¤í¬ë¦° íŠ¸ëœì§€ì…˜
         ScreenTransition.Play("DeadEnding_FadeOut", "DeadEnding_FadeIn", Color.black, Color.black, "Title", 0, 0);
     }
 }

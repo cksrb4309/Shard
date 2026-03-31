@@ -11,8 +11,8 @@ public class TestMonster : Monster
     //float damage;
 
     //public float moveSpeed = 3f;
-    //public float updateInterval; // ¸ñÇ¥ À§Ä¡ °»½Å ÁÖ±â
-    //public float rotationSpeed = 360f; // È¸Àü ¼Óµµ
+    //public float updateInterval; // ëª©í‘œ ìœ„ì¹˜ ê°±ì‹  ì£¼ê¸°
+    //public float rotationSpeed = 360f; // íšŒì „ ì†ë„
 
     //Transform myTransfrom;
 
@@ -43,7 +43,7 @@ public class TestMonster : Monster
     //    {
     //        myTransfrom.position += moveDir * moveSpeed * Time.fixedDeltaTime;
 
-    //        // ÇöÀç ¹Ù¶óº¸´Â ¹æÇâÀ» Á¡ÁøÀûÀ¸·Î ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î È¸Àü
+    //        // í˜„ì¬ ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ ì ì§„ì ìœ¼ë¡œ í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ íšŒì „
     //        Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
     //        myTransfrom.rotation = Quaternion.RotateTowards(myTransfrom.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
     //    }

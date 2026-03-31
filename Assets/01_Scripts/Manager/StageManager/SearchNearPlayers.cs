@@ -54,13 +54,13 @@ public class SearchNearPlayers : MonoBehaviour
     {
         currentPlayerCount++;
 
-        Debug.Log("Enter ÇöÀç ¼ö : " + currentPlayerCount.ToString() + " / ÇÊ¿ä ¼ö : " + needPlayerCounts.ToString());
+        Debug.Log("Enter í˜„ìž¬ ìˆ˜ : " + currentPlayerCount.ToString() + " / í•„ìš” ìˆ˜ : " + needPlayerCounts.ToString());
     }
     private void OnTriggerExit(Collider other)
     {
         currentPlayerCount--;
 
-        Debug.Log("Exit ÇöÀç ¼ö : " + currentPlayerCount.ToString() + " / ÇÊ¿ä ¼ö : " + needPlayerCounts.ToString());
+        Debug.Log("Exit í˜„ìž¬ ìˆ˜ : " + currentPlayerCount.ToString() + " / í•„ìš” ìˆ˜ : " + needPlayerCounts.ToString());
     }
     IEnumerator FillCoroutine()
     {

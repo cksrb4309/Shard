@@ -33,14 +33,14 @@ public class CoreHeart : MonoBehaviour, IDamageable
         TakeDamage(damage);
     }
 
-    public void GameOver() // TODO °ÔÀÓ ¿À¹ö ±¸Çö ÇØ¾ßÇÔ
+    public void GameOver() // TODO ê²Œìž„ ì˜¤ë²„ êµ¬í˜„ í•´ì•¼í•¨
     {
         cd.enabled = false;
 
         StartCoroutine(GameOverCoroutine());
 
 
-        //ScreenTransition.Play("¾ÀÀüÈ¯½ÃÀÛÈ¿°ú", "¾ÀÀüÈ¯Á¾·áÈ¿°ú", Color.black, Color.black, "Title", 0, 1f);
+        //ScreenTransition.Play("ì”¬ì „í™˜ì‹œìž‘íš¨ê³¼", "ì”¬ì „í™˜ì¢…ë£Œíš¨ê³¼", Color.black, Color.black, "Title", 0, 1f);
     }
     IEnumerator GameOverCoroutine()
     {

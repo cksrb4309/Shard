@@ -20,13 +20,13 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     [Header("Character Mapping")]
     [SerializeField] private SymbolsTextureData textureData;
 
-    // ���� ���� (x = charIndexInRow, y = textIndex)
+    // Character index lookup table (x = charIndexInRow, y = textIndex)
     private Texture2D charIndexInRowTable;
 
-    // ���� glyph ���̺� (x = charIndex, y = textIndex)
+    // Packed glyph lookup table (x = charIndex, y = textIndex)
     private Texture2D charTable;
 
-    // �ؽ�Ʈ �Ķ���� ���̺�
+    // Text parameter table
     private Texture2D paramTable;
 
     private readonly List<DefaultTextRequest> pendingDefaultRequests = new();
@@ -36,7 +36,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     static readonly ProfilerMarker marker_WriteTextTexture_Damage = new("TextVFX.WriteTexture.Damage");
 
 
-    // Odin Inspector�� �׽�Ʈ ��ư
+    // Test button in Odin Inspector
     int testCounter = 0;
     [Button]
     public void Test()
@@ -76,14 +76,14 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     private void InitializeTextures()
     {
         Debug.Log("InitializeTextures called");
-        // �ʱ�ȭ ���� ���� �ؽ�ó�� ������ �޸� ���� ���� ���� �ı�
+        // Recreate textures on initialization and dispose previous allocations first.
         if (charIndexInRowTable != null) Destroy(charIndexInRowTable);
         if (charTable != null) Destroy(charTable);
         if (paramTable != null) Destroy(paramTable);
 
         MaxTotalChars = MaxChars * MaxTextCount;
 
-        // ��ü ���� �� (textIndex, charIndexInRow)
+        // Global spawn table (textIndex, charIndexInRow)
         charIndexInRowTable = new Texture2D(
             MaxTotalChars, 1,
             TextureFormat.RGFloat, false, true
@@ -91,7 +91,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
         charIndexInRowTable.filterMode = FilterMode.Point;
         charIndexInRowTable.wrapMode = TextureWrapMode.Clamp;
 
-        // ���� glyph ���̺�
+        // Packed glyph table
         charTable = new Texture2D(
             MaxChars, MaxTextCount,
             TextureFormat.RFloat, false, true
@@ -141,7 +141,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
             WriteCharRow(req.Message, length, textIndex);
             WriteParamRow(req.TextEmitParams, length, textIndex);
 
-            // ��ü ���� �� (textIndex, charIndexInRow) ����
+            // Populate the global spawn table (textIndex, charIndexInRow).
             for (int charIndex = 0; charIndex < length; charIndex++)
             {
                 if (spawnIndex >= MaxTotalChars) break;
@@ -238,7 +238,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
 
             if (isNegative && x == 0)
             {
-                // ù ���� '-'
+                // First character is '-'
                 char c = '-';
                 var uv = textureData.GetTextureCoordinates(c);
                 packed = Mathf.RoundToInt(uv.x) * 10 + Mathf.RoundToInt(uv.y);
@@ -248,7 +248,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
                 int digitIndex = length - 1 - x;
 
                 if (isNegative)
-                    digitIndex--; // '-' ������ �� ĭ �и�
+                    digitIndex--; // Reserve one slot for '-'
 
                 int digit = GetDigitAt(absValue, digitIndex);
                 char c = (char)('0' + digit);
@@ -274,8 +274,8 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
 
         if (value < 0)
         {
-            count++;        // '-' �ڸ�
-            value = -value; // ����
+            count++;        // '-' slot
+            value = -value; // absolute value
         }
 
         while (value != 0)
@@ -288,18 +288,18 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     }
     private void WriteParamRow(TextEmitParams emitParams, int length, int index)
     {
-        // ��ġ rgb + ���� a
+        // Position rgb + lifetime a
         paramTable.SetPixel(
             index, 0,
             new Color(emitParams.Position.x, emitParams.Position.y, emitParams.Position.z, emitParams.Lifetime)
         );
 
-        // ��Ʈ �÷� rgb + ��Ʈ ũ�� a
+        // Font color rgb + font size a
         paramTable.SetPixel(
             index, 1,
             new Color(emitParams.FontColor.r, emitParams.FontColor.g, emitParams.FontColor.b, emitParams.FontSize)
         );
-        // �ܰ� ��Ʈ �÷� rgb + ���� ���� a
+        // Outline color rgb + character count a
         paramTable.SetPixel(
             index, 2,
             new Color(emitParams.OutlineColor.r, emitParams.OutlineColor.g, emitParams.OutlineColor.b, length)
@@ -339,10 +339,10 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     #endregion
 
     #region Text Emit Request Data Structures
-    // �ؽ�Ʈ ����Ʈ(VFX / UI)�� ���޵Ǵ� ��� ��û�� ������ ����ü ����
-    // - TextEmitParams : ��� �ؽ�Ʈ ��¿� �������� ���Ǵ� �ð��� �Ķ����
-    // - DefaultTextRequest : ���ڿ� ��� �ؽ�Ʈ ��� ��û
-    // - DamageTextRequest : ������(int) ��� �ؽ�Ʈ ��� ��û
+    // Text emit request data structures passed to VFX / UI output.
+    // - TextEmitParams: common visual parameters for emitted text.
+    // - DefaultTextRequest: request for generic string text.
+    // - DamageTextRequest: request for integer damage text.
 
     [Serializable]
     public struct TextEmitParams

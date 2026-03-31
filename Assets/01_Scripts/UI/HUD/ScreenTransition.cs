@@ -49,7 +49,7 @@ public class ScreenTransition : MonoBehaviour
 
         if (st == null || ed == null)
         {
-            Debug.LogError("Transition Ã£±â ½ÇÆĞ " + (st == null ? startTransition : endTransition));
+            Debug.LogError("Transition ì°¾ê¸° ì‹¤íŒ¨ " + (st == null ? startTransition : endTransition));
 
             return;
         }
@@ -76,7 +76,7 @@ public class ScreenTransition : MonoBehaviour
 
         if (st == null || ed == null)
         {
-            Debug.LogError("Transition Ã£±â ½ÇÆĞ " + (st == null ? startTransition : endTransition));
+            Debug.LogError("Transition ì°¾ê¸° ì‹¤íŒ¨ " + (st == null ? startTransition : endTransition));
 
             return;
         }
@@ -117,7 +117,7 @@ public class ScreenTransition : MonoBehaviour
             yield return null;
         }
 
-        action.Invoke(); // ÇÔ¼ö ½ÇÇà
+        action.Invoke(); // í•¨ìˆ˜ ì‹¤í–‰
 
         t = 1f;
 
@@ -175,10 +175,10 @@ public class ScreenTransition : MonoBehaviour
     }
     private IEnumerator WaitForSceneLoad(string sceneName)
     {
-        // ¾À ·Îµù ½ÃÀÛ (ÇöÀç ¾À ÀÌ¸§À¸·Î ¿¹Á¦ ÀÛ¼º)
+        // ì”¬ ë¡œë”© ì‹œì‘ (í˜„ì¬ ì”¬ ì´ë¦„ìœ¼ë¡œ ì˜ˆì œ ì‘ì„±)
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
 
-        // ¾À ·ÎµùÀÌ ¿Ï·áµÉ ¶§±îÁö ´ë±â
+        // ì”¬ ë¡œë”©ì´ ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
         while (!asyncOperation.isDone)
         {
             yield return null;

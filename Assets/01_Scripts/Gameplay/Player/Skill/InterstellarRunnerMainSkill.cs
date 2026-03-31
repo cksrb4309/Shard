@@ -41,7 +41,7 @@ public class InterstellarRunnerMainSkill : PlayerSkill
         {
             if (StackCount == 0) return;
 
-            // ÃæÀüÇÏ°í ÀÖÁö ¾ÊÀ» ¶§
+            // ì¶©ì „í•˜ê³  ìˆì§€ ì•Šì„ ë•Œ
             chargeCoroutine = StartCoroutine(ChargeCoroutine());
 
             isCharged = true;
@@ -50,7 +50,7 @@ public class InterstellarRunnerMainSkill : PlayerSkill
         {
             StopCoroutine(chargeCoroutine);
 
-            // ÃæÀüÇÏ°í ÀÖÀ» ¶§
+            // ì¶©ì „í•˜ê³  ìˆì„ ë•Œ
             Attack();
 
             isCharged = false;

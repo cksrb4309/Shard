@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class StatusEffect : ScriptableObject // »óÅÂ º¯È­ È¿°ú
+public class StatusEffect : ScriptableObject // ìƒíƒœ ë³€í™” íš¨ê³¼
 {
     [Header("Base")]
-    public string effectName; // ¸íÄª
-    public float duration; // Áö¼Ó½Ã°£
+    public string effectName; // ëª…ì¹­
+    public float duration; // ì§€ì†ì‹œê°„
 
-    [HideInInspector] public int maxCount; // ÁßÃ¸ È½¼ö
+    [HideInInspector] public int maxCount; // ì¤‘ì²© íšŸìˆ˜
     public int startCount;
     public int stackCount;
     public virtual void SetCount(int count)

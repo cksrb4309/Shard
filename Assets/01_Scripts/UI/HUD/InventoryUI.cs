@@ -58,7 +58,7 @@ public class InventoryUI : MonoBehaviour
     }
     public void SetEnergyCoreTextApply(int amount)
     {
-        energyCoreText.text = "ÆÄÆí: " + amount.ToString();
+        energyCoreText.text = "íŒŒí¸: " + amount.ToString();
     }
     public static void SetSoulShardText(int amount)
     {
@@ -66,6 +66,6 @@ public class InventoryUI : MonoBehaviour
     }
     public void SetSoulShardTextApply(int amount)
     {
-        soulShardText.text = "¿µÈ¥: " + amount.ToString();
+        soulShardText.text = "ì˜í˜¼: " + amount.ToString();
     }
 }
