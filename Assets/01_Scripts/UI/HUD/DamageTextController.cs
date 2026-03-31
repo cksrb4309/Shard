@@ -67,22 +67,5 @@ public class DamageTextController : MonoBehaviour
 
             emitter.EnqueueText(new DamageTextVfxBatchEmitter.DamageTextRequest((int)damage, criticalTextParams));
         }
-
-
-
-        //DamageText damageText;
-
-        //if (isUser) damageText = PoolingManager.Instance.GetObject<DamageText>("UserHitDamageText");
-
-        //else if (isCritical) damageText = PoolingManager.Instance.GetObject<DamageText>("MonsterHitCriticalDamageText");
-
-        //else damageText = PoolingManager.Instance.GetObject<DamageText>("MonsterHitDamageText");
-
-        //damageText.SetText(damage.ToString("F0"));
-
-        //Vector3 dirToCamera = (myCamera.transform.position - pos).normalized;
-        //damageText.transform.position = pos + offset;
-
-        //damageText.transform.rotation = rotation;
     }
 }

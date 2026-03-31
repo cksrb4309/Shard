@@ -20,13 +20,13 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     [Header("Character Mapping")]
     [SerializeField] private SymbolsTextureData textureData;
 
-    // ¹®ÀÚ Á¤º¸ (x = charIndexInRow, y = textIndex)
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (x = charIndexInRow, y = textIndex)
     private Texture2D charIndexInRowTable;
 
-    // ¹®ÀÚ glyph Å×ÀÌºí (x = charIndex, y = textIndex)
+    // ï¿½ï¿½ï¿½ï¿½ glyph ï¿½ï¿½ï¿½Ìºï¿½ (x = charIndex, y = textIndex)
     private Texture2D charTable;
 
-    // ÅØ½ºÆ® ÆÄ¶ó¹ÌÅÍ Å×ÀÌºí
+    // ï¿½Ø½ï¿½Æ® ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
     private Texture2D paramTable;
 
     private readonly List<DefaultTextRequest> pendingDefaultRequests = new();
@@ -36,7 +36,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     static readonly ProfilerMarker marker_WriteTextTexture_Damage = new("TextVFX.WriteTexture.Damage");
 
 
-    // Odin Inspector¿ë Å×½ºÆ® ¹öÆ°
+    // Odin Inspectorï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½Æ°
     int testCounter = 0;
     [Button]
     public void Test()
@@ -75,7 +75,15 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     }
     private void InitializeTextures()
     {
-        // ÀüÃ¼ ¹®ÀÚ ¡æ (textIndex, charIndexInRow)
+        Debug.Log("InitializeTextures called");
+        // ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä±ï¿½
+        if (charIndexInRowTable != null) Destroy(charIndexInRowTable);
+        if (charTable != null) Destroy(charTable);
+        if (paramTable != null) Destroy(paramTable);
+
+        MaxTotalChars = MaxChars * MaxTextCount;
+
+        // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (textIndex, charIndexInRow)
         charIndexInRowTable = new Texture2D(
             MaxTotalChars, 1,
             TextureFormat.RGFloat, false, true
@@ -83,7 +91,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
         charIndexInRowTable.filterMode = FilterMode.Point;
         charIndexInRowTable.wrapMode = TextureWrapMode.Clamp;
 
-        // ¹®ÀÚ glyph Å×ÀÌºí
+        // ï¿½ï¿½ï¿½ï¿½ glyph ï¿½ï¿½ï¿½Ìºï¿½
         charTable = new Texture2D(
             MaxChars, MaxTextCount,
             TextureFormat.RFloat, false, true
@@ -101,10 +109,14 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
         paramTable.filterMode = FilterMode.Point;
         paramTable.wrapMode = TextureWrapMode.Clamp;
     }
-    public void EnqueueText(DefaultTextRequest request)
-        => pendingDefaultRequests.Add(request);
-    public void EnqueueText(DamageTextRequest request)
-        => pendingDamageRequests.Add(request);
+    //public void EnqueueText(DefaultTextRequest request)
+    //    => pendingDefaultRequests.Add(request);
+    //public void EnqueueText(DamageTextRequest request)
+    //    => pendingDamageRequests.Add(request);
+
+    public void EnqueueText(DefaultTextRequest request) { }
+    public void EnqueueText(DamageTextRequest request) { }
+
     private void LateUpdate()
     {
         if (pendingDefaultRequests.Count > 0 || pendingDamageRequests.Count > 0)
@@ -129,7 +141,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
             WriteCharRow(req.Message, length, textIndex);
             WriteParamRow(req.TextEmitParams, length, textIndex);
 
-            // ÀüÃ¼ ¹®ÀÚ ¡æ (textIndex, charIndexInRow) ¸ÅÇÎ
+            // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (textIndex, charIndexInRow) ï¿½ï¿½ï¿½ï¿½
             for (int charIndex = 0; charIndex < length; charIndex++)
             {
                 if (spawnIndex >= MaxTotalChars) break;
@@ -226,7 +238,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
 
             if (isNegative && x == 0)
             {
-                // Ã¹ ±ÛÀÚ '-'
+                // Ã¹ ï¿½ï¿½ï¿½ï¿½ '-'
                 char c = '-';
                 var uv = textureData.GetTextureCoordinates(c);
                 packed = Mathf.RoundToInt(uv.x) * 10 + Mathf.RoundToInt(uv.y);
@@ -236,7 +248,7 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
                 int digitIndex = length - 1 - x;
 
                 if (isNegative)
-                    digitIndex--; // '-' ¶§¹®¿¡ ÇÑ Ä­ ¹Ð¸²
+                    digitIndex--; // '-' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä­ ï¿½Ð¸ï¿½
 
                 int digit = GetDigitAt(absValue, digitIndex);
                 char c = (char)('0' + digit);
@@ -262,8 +274,8 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
 
         if (value < 0)
         {
-            count++;        // '-' ÀÚ¸®
-            value = -value; // Àý´ñ°ª
+            count++;        // '-' ï¿½Ú¸ï¿½
+            value = -value; // ï¿½ï¿½ï¿½ï¿½
         }
 
         while (value != 0)
@@ -276,18 +288,18 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     }
     private void WriteParamRow(TextEmitParams emitParams, int length, int index)
     {
-        // À§Ä¡ rgb + ¼ö¸í a
+        // ï¿½ï¿½Ä¡ rgb + ï¿½ï¿½ï¿½ï¿½ a
         paramTable.SetPixel(
             index, 0,
             new Color(emitParams.Position.x, emitParams.Position.y, emitParams.Position.z, emitParams.Lifetime)
         );
 
-        // ÆùÆ® ÄÃ·¯ rgb + ÆùÆ® Å©±â a
+        // ï¿½ï¿½Æ® ï¿½Ã·ï¿½ rgb + ï¿½ï¿½Æ® Å©ï¿½ï¿½ a
         paramTable.SetPixel(
             index, 1,
             new Color(emitParams.FontColor.r, emitParams.FontColor.g, emitParams.FontColor.b, emitParams.FontSize)
         );
-        // ¿Ü°û ÆùÆ® ÄÃ·¯ rgb + ±ÛÀÚ ±æÀÌ a
+        // ï¿½Ü°ï¿½ ï¿½ï¿½Æ® ï¿½Ã·ï¿½ rgb + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ a
         paramTable.SetPixel(
             index, 2,
             new Color(emitParams.OutlineColor.r, emitParams.OutlineColor.g, emitParams.OutlineColor.b, length)
@@ -300,19 +312,37 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
     }
     private void OnValidate()
     {
-        MaxTotalChars = MaxChars * MaxTextCount;
+        //InitializeTextures();
 
-        InitializeTextures();
+        //EditorUtility.SetDirty(this);
+    }
+    private void OnDestroy()
+    {
+        if (charIndexInRowTable != null)
+        {
+            Destroy(charIndexInRowTable);
+            charIndexInRowTable = null;
+        }
 
-        EditorUtility.SetDirty(this);
+        if (charTable != null)
+        {
+            Destroy(charTable);
+            charTable = null;
+        }
+
+        if (paramTable != null)
+        {
+            Destroy(paramTable);
+            paramTable = null;
+        }
     }
     #endregion
 
     #region Text Emit Request Data Structures
-    // ÅØ½ºÆ® ÀÌÆåÆ®(VFX / UI)¿¡ Àü´ÞµÇ´Â Ãâ·Â ¿äÃ»¿ë µ¥ÀÌÅÍ ±¸Á¶Ã¼ ¸ðÀ½
-    // - TextEmitParams : ¸ðµç ÅØ½ºÆ® Ãâ·Â¿¡ °øÅëÀ¸·Î »ç¿ëµÇ´Â ½Ã°¢Àû ÆÄ¶ó¹ÌÅÍ
-    // - DefaultTextRequest : ¹®ÀÚ¿­ ±â¹Ý ÅØ½ºÆ® Ãâ·Â ¿äÃ»
-    // - DamageTextRequest : µ¥¹ÌÁö(int) ±â¹Ý ÅØ½ºÆ® Ãâ·Â ¿äÃ»
+    // ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®(VFX / UI)ï¿½ï¿½ ï¿½ï¿½ï¿½ÞµÇ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+    // - TextEmitParams : ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½
+    // - DefaultTextRequest : ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
+    // - DamageTextRequest : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(int) ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
 
     [Serializable]
     public struct TextEmitParams
