@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(LookAtTarget))] // Å¸°Ù Å¬·¡½º
-[CanEditMultipleObjects] // ´ÙÁß ¼±ÅÃ Çã¿ë
+[CustomEditor(typeof(LookAtTarget))] // íƒ€ê²Ÿ í´ë˜ìŠ¤
+[CanEditMultipleObjects] // ë‹¤ì¤‘ ì„ íƒ í—ˆìš©
 public class LookAtTargetEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -12,7 +12,7 @@ public class LookAtTargetEditor : Editor
         
         LookAtTarget lookAtTarget = (LookAtTarget)target;
 
-        if (GUILayout.Button("ÃÄ´Ùº¸±â"))
+        if (GUILayout.Button("ì³ë‹¤ë³´ê¸°"))
         {
             foreach (var target in targets)
             {

@@ -1,21 +1,21 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(BaseBlock), true)] // 'true'¸¦ Ãß°¡ÇÏ¸é ÇÏÀ§ Å¬·¡½ºµµ Áö¿ø
-[CanEditMultipleObjects] // ´ÙÁß ¼±ÅÃ Çã¿ë
+[CustomEditor(typeof(BaseBlock), true)] // 'true'ë¥¼ ì¶”ê°€í•˜ë©´ í•˜ìœ„ í´ë˜ìŠ¤ë„ ì§€ì›
+[CanEditMultipleObjects] // ë‹¤ì¤‘ ì„ íƒ í—ˆìš©
 public class BlockCustomEditor : Editor
 {
     public override void OnInspectorGUI()
     { 
-        // ±âÁ¸ ±âº» Inspector UI Ç¥½Ã
+        // ê¸°ì¡´ ê¸°ë³¸ Inspector UI í‘œì‹œ
         serializedObject.Update();
         base.OnInspectorGUI();
 
         BaseBlock baseBlock = (BaseBlock)target;
 
-        if (GUILayout.Button("À§Ä¡¸¦ ÅëÇÑ °æµµ ±¸ÇÏ±â"))
+        if (GUILayout.Button("ìœ„ì¹˜ë¥¼ í†µí•œ ê²½ë„ êµ¬í•˜ê¸°"))
         {
-            foreach (var targetObject in targets) // ¿©·¯ °´Ã¼¸¦ ¼øÈ¸
+            foreach (var targetObject in targets) // ì—¬ëŸ¬ ê°ì²´ë¥¼ ìˆœíšŒ
             {
                 BaseBlock myScript = (BaseBlock)targetObject;
                 myScript.Setting();

@@ -10,7 +10,7 @@ public class TestEditor : Editor
 
         //Test myScript = (Test)target;
 
-        //if (GUILayout.Button("�׽�Ʈ"))
+        //if (GUILayout.Button("테스트"))
         //{
         //    myScript.Excute();
         //}

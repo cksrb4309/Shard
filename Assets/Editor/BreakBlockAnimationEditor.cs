@@ -7,8 +7,8 @@ public class BreakBlockAnimationEditor : EditorWindow
     private GameObject parentObject;
     private string savePath = "Assets/Animations/BreakAnimation.anim";
 
-    private float animationDuration = 1.0f; // ¾Ö´Ï¸ŞÀÌ¼Ç ±æÀÌ (ÃÊ)
-    private float samplingInterval = 0.1f; // Å°ÇÁ·¹ÀÓ »ùÇÃ¸µ °£°İ (ÃÊ)
+    private float animationDuration = 1.0f; // ì• ë‹ˆë©”ì´ì…˜ ê¸¸ì´ (ì´ˆ)
+    private float samplingInterval = 0.1f; // í‚¤í”„ë ˆì„ ìƒ˜í”Œë§ ê°„ê²© (ì´ˆ)
 
     [MenuItem("Tools/Break Block Animation Editor")]
     public static void ShowWindow()
@@ -40,7 +40,7 @@ public class BreakBlockAnimationEditor : EditorWindow
 
     private void GenerateAndSaveAnimation()
     {
-        // µğ·ºÅä¸® »ı¼º
+        // ë””ë ‰í† ë¦¬ ìƒì„±
         string directory = Path.GetDirectoryName(savePath);
         if (!Directory.Exists(directory))
         {
@@ -48,10 +48,10 @@ public class BreakBlockAnimationEditor : EditorWindow
             AssetDatabase.Refresh();
         }
 
-        // Animation Clip »ı¼º
+        // Animation Clip ìƒì„±
         AnimationClip clip = new AnimationClip
         {
-            frameRate = 30 // ÇÁ·¹ÀÓ ¼Óµµ
+            frameRate = 30 // í”„ë ˆì„ ì†ë„
         };
 
         Transform[] fragments = parentObject.GetComponentsInChildren<Transform>();
@@ -62,11 +62,11 @@ public class BreakBlockAnimationEditor : EditorWindow
 
             string path = AnimationUtility.CalculateTransformPath(fragment, parentObject.transform);
 
-            // ÆÄÃ÷º° ÃÊ±â°ªÀ» ¹İ¿µÇÏ¿© ¾Ö´Ï¸ŞÀÌ¼Ç »ı¼º
+            // íŒŒì¸ ë³„ ì´ˆê¸°ê°’ì„ ë°˜ì˜í•˜ì—¬ ì• ë‹ˆë©”ì´ì…˜ ìƒì„±
             AddAnimatedKeyframes(clip, path, fragment);
         }
 
-        // Animation Clip ÀúÀå
+        // Animation Clip ì €ì¥
         AssetDatabase.CreateAsset(clip, savePath);
         AssetDatabase.SaveAssets();
 
@@ -75,7 +75,7 @@ public class BreakBlockAnimationEditor : EditorWindow
 
     private void AddAnimatedKeyframes(AnimationClip clip, string path, Transform fragment)
     {
-        // AnimationCurve ÃÊ±âÈ­
+        // AnimationCurve ì´ˆê¸°í™”
         AnimationCurve posX = new AnimationCurve();
         AnimationCurve posY = new AnimationCurve();
         AnimationCurve posZ = new AnimationCurve();
@@ -84,20 +84,20 @@ public class BreakBlockAnimationEditor : EditorWindow
         AnimationCurve scaleY = new AnimationCurve();
         AnimationCurve scaleZ = new AnimationCurve();
 
-        // ÃÊ±â À§Ä¡, Å©±â
+        // ì´ˆê¸° ìœ„ì¹˜, í¬ê¸°
         Vector3 initialPosition = fragment.localPosition;
 
         Vector3 initialScale = fragment.localScale;
 
-        // 0~1ÃÊ µ¿¾È »ùÇÃ¸µ
+        // 0~1ì´ˆ ë™ì•ˆ ìƒ˜í”Œë§
         for (float t = 0; t <= animationDuration; t += samplingInterval)
         {
-            // ÃÊ±â°ªÀ» ±â¹İÀ¸·Î ¾Ö´Ï¸ŞÀÌ¼Ç °ª °è»ê
+            // ì´ˆê¸°ê°’ì„ ê¸°ë°˜ìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ ê°’ ê³„ì‚°
             Vector3 position = CalculatePosition(fragment, t, initialPosition);
 
             Vector3 scale = CalculateScale(fragment, t, initialScale);
 
-            // Å°ÇÁ·¹ÀÓ Ãß°¡
+            // í‚¤í”„ë ˆì„ ì¶”ê°€
             posX.AddKey(t, position.x);
             posY.AddKey(t, position.y);
             posZ.AddKey(t, position.z);
@@ -107,7 +107,7 @@ public class BreakBlockAnimationEditor : EditorWindow
             scaleZ.AddKey(t, scale.z);
         }
 
-        // AnimationCurve¸¦ Animation Clip¿¡ ¼³Á¤
+        // AnimationCurveë¥¼ Animation Clipì— ì„¤ì •
         clip.SetCurve(path, typeof(Transform), "localPosition.x", posX);
         clip.SetCurve(path, typeof(Transform), "localPosition.y", posY);
         clip.SetCurve(path, typeof(Transform), "localPosition.z", posZ);
@@ -120,9 +120,9 @@ public class BreakBlockAnimationEditor : EditorWindow
 
     private Vector3 CalculatePosition(Transform fragment, float time, Vector3 initialPosition)
     {
-        // BreakBaseBlockPartsÀÇ À§Ä¡ °è»ê ·ÎÁ÷ (¿¹: ¹Ù±ùÀ¸·Î ÆÛÁü)
+        // BreakBaseBlockPartsì˜ ìœ„ì¹˜ ê³„ì‚° ë¡œì§ (ì˜ˆ: ë°”ê¹¥ìœ¼ë¡œ í¼ì§)
         Vector3 direction = (fragment.position - parentObject.transform.position).normalized;
-        float speed = 2.0f; // ÆÄÆíÀÌ ÆÛÁö´Â ¼Óµµ
+        float speed = 2.0f; // íŒŒí¸ì´ í¼ì§€ëŠ” ì†ë„
         return initialPosition + direction * speed * time;
     }
 
