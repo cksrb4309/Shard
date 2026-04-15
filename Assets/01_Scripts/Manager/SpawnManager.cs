@@ -20,8 +20,8 @@ public class SpawnManager : MonoBehaviour
 
     public int monsterSpawnCount = 10;
 
-    public ParticleSystem waveStartPointEffect;
-    public ParticleSystem monsterSpawnEffect;
+    // public ParticleSystem waveStartPointEffect;
+    // public ParticleSystem monsterSpawnEffect;
 
     [Range(0, 7568)] public int appearBossBlockCount;
 
@@ -72,8 +72,8 @@ public class SpawnManager : MonoBehaviour
         // 보스 등장한다는 경고 !
         int spawnIndex = Random.Range(0, bossSpawnPoints.Length);
 
-        waveStartPointEffect.transform.position = bossSpawnPoints[spawnIndex].position;
-        waveStartPointEffect.Play();
+        // waveStartPointEffect.transform.position = bossSpawnPoints[spawnIndex].position;
+        // waveStartPointEffect.Play();
 
         RealtimeCanvasUI.Notification(IconType.Boss, bossSpawnPoints[spawnIndex].position, "강력한 개체가 다가오고 있습니다");
 
@@ -104,8 +104,8 @@ public class SpawnManager : MonoBehaviour
             RealtimeCanvasUI.Notification(IconType.Wave, spawnPosition, "적들이 몰려옵니다");
 
             // 웨이브 시작 지점 파티클 재생
-            waveStartPointEffect.transform.position = spawnPosition;
-            waveStartPointEffect.Play();
+            // waveStartPointEffect.transform.position = spawnPosition;
+            // waveStartPointEffect.Play();
 
             yield return new WaitForSeconds(1f);
 
@@ -158,8 +158,8 @@ public class SpawnManager : MonoBehaviour
                 monster.transform.rotation = spawnRotation;
 
                 // 몬스터 스폰 파티클 재생
-                monsterSpawnEffect.transform.position = monster.transform.position;
-                monsterSpawnEffect.Play();
+                // monsterSpawnEffect.transform.position = monster.transform.position;
+                // monsterSpawnEffect.Play();
 
                 monster.Setting(DifficultyManager.Difficulty, DifficultyManager.Difficulty);
             }
@@ -202,8 +202,8 @@ public class SpawnManager : MonoBehaviour
             monster.transform.rotation = spawnTransform.rotation;
 
             // 몬스터 스폰 파티클 재생
-            monsterSpawnEffect.transform.position = monster.transform.position;
-            monsterSpawnEffect.Play();
+            // monsterSpawnEffect.transform.position = monster.transform.position;
+            // monsterSpawnEffect.Play();
 
             monster.Setting(DifficultyManager.Difficulty, DifficultyManager.Difficulty);
         }

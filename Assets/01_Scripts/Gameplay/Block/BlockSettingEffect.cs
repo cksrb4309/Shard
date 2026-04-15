@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 public class BlockSettingEffect : MonoBehaviour
 {
-    public ParticleSystem[] particles; // 30개의 파티클 대기 중
+    public ParticleSystem[] particles; // 5개의 파티클 대기 중
     public Transform[] positions;
 
     int currentPlayCount = 0;

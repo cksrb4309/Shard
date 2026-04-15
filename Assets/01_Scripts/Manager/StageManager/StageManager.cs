@@ -110,7 +110,7 @@ public class StageManager : MonoBehaviour
             // 코어 쪽에 파티클 추가할지는 고민하는중...
             // 여기다가 파티클 추가
             stageChangeParticle_1.Play();
-            stageChangeParticle_2.Play();
+            // stageChangeParticle_2.Play(); 쉐이더 문제로 제거.
 
             StartCoroutine(NextStageColorCoroutine());
 
