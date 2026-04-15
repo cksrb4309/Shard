@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BaseBlock : MonoBehaviour, IAttackable
 {
+    static readonly int DamageLevelShaderId = Shader.PropertyToID("_DamageLevel");
+
     public static bool isSetting = false;
 
     public bool isNearest = false;
@@ -22,7 +24,8 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
     float hp;
 
-    Material material;
+    MeshRenderer blockRenderer;
+    MaterialPropertyBlock blockPropertyBlock;
 
     List<(string, Coroutine)> statusEffectList = new List<(string, Coroutine)>();
 
@@ -36,8 +39,11 @@ public class BaseBlock : MonoBehaviour, IAttackable
         pos = transform.position + new Vector3(0.39194f, 0, 0);
         hp = maxHp;
         blockObj = transform.GetChild(0).gameObject;
-        material = blockObj.GetComponent<MeshRenderer>().material;
+        blockRenderer = blockObj.GetComponent<MeshRenderer>();
+        blockPropertyBlock = new MaterialPropertyBlock();
         cd = GetComponent<Collider>();
+
+        SetDamageLevel(0f);
     }
     public bool IsAlive()
     {
@@ -66,7 +72,7 @@ public class BaseBlock : MonoBehaviour, IAttackable
         }
         else
         {
-            material.SetFloat("_DamageLevel", 1f - hp / maxHp);
+            SetDamageLevel(1f - hp / maxHp);
         }
     }
     void Dead()
@@ -81,7 +87,7 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         cd.enabled = false;
 
-        material.SetFloat("_DamageLevel", 0);
+        SetDamageLevel(0f);
     }
     public Vector3 GetPosition()
     {
@@ -117,7 +123,16 @@ public class BaseBlock : MonoBehaviour, IAttackable
 
         reward *= 3; // 보상 또한 3배로 늘림
 
-        material.SetFloat("_DamageLevel", 0); // 데미지 정도도 수정한다
+        SetDamageLevel(0f); // 데미지 정도도 수정한다
+    }
+
+    void SetDamageLevel(float damageLevel)
+    {
+        if (blockRenderer == null) return;
+
+        blockRenderer.GetPropertyBlock(blockPropertyBlock);
+        blockPropertyBlock.SetFloat(DamageLevelShaderId, damageLevel);
+        blockRenderer.SetPropertyBlock(blockPropertyBlock);
     }
 
 }
