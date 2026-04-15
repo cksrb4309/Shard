@@ -1,0 +1,4 @@
+kit-commit: {{KIT_COMMIT_HASH}}
+installed: {{INSTALL_DATE}}
+kit-path: {{KIT_PATH}}
+agent: {{AGENT_TYPE}}

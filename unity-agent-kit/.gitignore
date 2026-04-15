@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+.obsidian/
+*.suo
+*.user
+
+# Graphify outputs
+graphify-out/
+.graphify_*.json
+__pycache__/
+**/Assets/**/graphify-out/
+
+# Kit-only: generated outputs should live in project, not in kit
+docs/HarnessMistakes/
+
+# Claude local overrides
+.claude/settings.local.json
