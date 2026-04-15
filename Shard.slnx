@@ -85,6 +85,7 @@
   <Project Path="Coffee.UIParticle.Demo.csproj" />
   <Project Path="Unity.Mathematics.Extensions.Hybrid.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
+  <Project Path="Shard.EditModeTests.csproj" />
   <Project Path="Unity.Collections.Editor.csproj" />
   <Project Path="Unity.Cloud.Assets.Runtime.Embedded.csproj" />
 </Solution>
