@@ -109,13 +109,13 @@ public class DamageTextVfxBatchEmitter : MonoBehaviour
         paramTable.filterMode = FilterMode.Point;
         paramTable.wrapMode = TextureWrapMode.Clamp;
     }
-    //public void EnqueueText(DefaultTextRequest request)
-    //    => pendingDefaultRequests.Add(request);
-    //public void EnqueueText(DamageTextRequest request)
-    //    => pendingDamageRequests.Add(request);
+    public void EnqueueText(DefaultTextRequest request)
+       => pendingDefaultRequests.Add(request);
+    public void EnqueueText(DamageTextRequest request)
+       => pendingDamageRequests.Add(request);
 
-    public void EnqueueText(DefaultTextRequest request) { }
-    public void EnqueueText(DamageTextRequest request) { }
+    // public void EnqueueText(DefaultTextRequest request) { }
+    // public void EnqueueText(DamageTextRequest request) { }
 
     private void LateUpdate()
     {
