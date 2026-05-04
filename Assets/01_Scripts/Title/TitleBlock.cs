@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class TitleBlock : MonoBehaviour
@@ -32,11 +31,9 @@ public class TitleBlock : MonoBehaviour
 
         if (hp <= 0)
         {
-            GameObject breakBlock = PoolingManager.Instance.GetObject("BreakBaseBlock");
-
-            breakBlock.transform.position = transform.position + new Vector3(0.39194f, 0, 0);
-
-            StartCoroutine(ReturnObjectCoroutine(breakBlock));
+            BreakBaseBlock breakBlock = PoolingManager.Instance.GetObject<BreakBaseBlock>("BreakBaseBlock");
+            if (breakBlock != null)
+                breakBlock.Play(transform.position + new Vector3(0.39194f, 0, 0));
 
             meshRenderer.enabled = false;
 
@@ -48,13 +45,5 @@ public class TitleBlock : MonoBehaviour
     public bool IsAlive()
     {
         return hp > 0;
-    }
-    IEnumerator ReturnObjectCoroutine(GameObject obj)
-    {
-        yield return new WaitForSeconds(1f);
-
-        PoolingManager.Instance.ReturnObject("BreakBaseBlock", obj);
-
-        PoolingManager.Instance.ReturnObject("TitleBlock", gameObject);
     }
 }

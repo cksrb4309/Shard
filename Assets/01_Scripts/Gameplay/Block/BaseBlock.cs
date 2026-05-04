@@ -77,7 +77,9 @@ public class BaseBlock : MonoBehaviour, IAttackable
     }
     void Dead()
     {
-        PoolingManager.Instance.GetObject("BreakBaseBlock").transform.position = pos;
+        BreakBaseBlock breakBlock = PoolingManager.Instance.GetObject<BreakBaseBlock>("BreakBaseBlock");
+        if (breakBlock != null)
+            breakBlock.Play(pos);
 
         RewardManager.BaseBlockDrop(reward);
 
