@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 
 /// <summary>
@@ -7,14 +9,21 @@ using NUnit.Framework;
 /// </summary>
 public class ShardSmokeTests
 {
+    // AppDomain.CurrentDomain.Load()는 에디터 환경에서 FileLoadException을 던질 수 있다.
+    // GetAssemblies()로 이미 로드된 어셈블리를 탐색하는 것이 안전하다.
+    private static Assembly GetRuntimeAssembly()
+    {
+        return AppDomain.CurrentDomain.GetAssemblies()
+            .FirstOrDefault(a => a.GetName().Name == "Assembly-CSharp");
+    }
+
     // ── 타입 존재 확인 ─────────────────────────────────────
 
     [Test]
     public void CoreTypes_ExistInAssembly()
     {
-        // 핵심 시스템 클래스가 런타임 어셈블리에 존재하는지 확인한다.
-        // Assembly-CSharp는 asmdef 없이 빌드되므로 reflection으로 조회한다.
-        var assembly = AppDomain.CurrentDomain.Load("Assembly-CSharp");
+        var assembly = GetRuntimeAssembly();
+        Assert.IsNotNull(assembly, "Assembly-CSharp 어셈블리가 도메인에 로드되지 않음");
 
         Assert.IsNotNull(assembly.GetType("AbilityManager"),       "AbilityManager 타입이 없음");
         Assert.IsNotNull(assembly.GetType("SpawnManager"),         "SpawnManager 타입이 없음");
@@ -25,7 +34,9 @@ public class ShardSmokeTests
     [Test]
     public void AbilityEventType_HasExpectedValues()
     {
-        var assembly = AppDomain.CurrentDomain.Load("Assembly-CSharp");
+        var assembly = GetRuntimeAssembly();
+        Assert.IsNotNull(assembly, "Assembly-CSharp 어셈블리가 도메인에 로드되지 않음");
+
         var enumType = assembly.GetType("AbilityEventType");
 
         Assert.IsNotNull(enumType, "AbilityEventType enum이 없음");
@@ -48,7 +59,7 @@ public class ShardSmokeTests
         float xpToNext = 100f;
         int level = 1;
 
-        xp += 350f; // 레벨업을 3번 발생시킬 수 있는 XP
+        xp += 350f; // 100 + 120 < 350 < 100 + 120 + 144 → 레벨업 2회 (Lv1→Lv3)
 
         while (xp > xpToNext)
         {
@@ -57,7 +68,7 @@ public class ShardSmokeTests
             level++;
         }
 
-        Assert.AreEqual(3, level - 1, "350XP로 레벨업이 정확히 2회 발생해야 한다 (Lv1→2→3)");
+        Assert.AreEqual(2, level - 1, "350XP로 레벨업이 정확히 2회 발생해야 한다 (Lv1→Lv3)");
         Assert.Greater(xpToNext, 100f, "레벨업마다 필요 XP가 증가해야 한다");
     }
 
