@@ -74,3 +74,8 @@ crashlytics-build.properties
 # Plugin
 /[Aa]ssets/[Pp]lugins/*
 /[Aa]ssets/Plugins.meta
+
+# Harness — graphify 생성 산출물
+graphify-out/
+.graphify_*.json
+__pycache__/

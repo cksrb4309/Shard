@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File ./.codex/hooks/guard-assets-check.ps1"
+          }
+        ]
+      }
+    ]
+  }
+}

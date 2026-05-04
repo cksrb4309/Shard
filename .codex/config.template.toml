@@ -1,0 +1,21 @@
+# Merge the blocks you need into ~/.codex/config.toml.
+# Do not copy this file into a project and expect Codex to load it automatically.
+
+[features]
+multi_agent = true
+
+[mcp_servers.unity_cli]
+command = "node"
+args = ["C:\\Users\\rlack\\.local\\bin\\unity-cli-mcp.js"]
+
+[mcp_servers.unity_prefab_parser]
+command = "node"
+args = ["{{UNITY_PREFAB_PARSER_PATH}}/dist/index.js"]
+
+# Optional image analysis pipeline
+# [mcp_servers.ollama_vision]
+# command = "{{OLLAMA_VISION_PYTHON}}"
+# args = ["-m", "src.server"]
+
+[projects.'C:\Users\rlack\Desktop\git\StarLost\Shard']
+trust_level = "trusted"

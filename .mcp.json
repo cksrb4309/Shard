@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "unity-parser": {
+      "command": "node",
+      "args": ["{{UNITY_PREFAB_PARSER_PATH}}/dist/index.js"]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tools/*)",
+      "Bash(tools/*.cmd)",
+      "Bash(tools/*.ps1)"
+    ],
+    "deny": [
+      "Edit(Assets/**/*.unity)",
+      "Write(Assets/**/*.unity)",
+      "Edit(Assets/**/*.prefab)",
+      "Write(Assets/**/*.prefab)",
+      "Edit(ProjectSettings/**)",
+      "Write(ProjectSettings/**)",
+      "Edit(Assets/12.ScriptableObject/**)",
+      "Write(Assets/12.ScriptableObject/**)",
+      "Bash(rm *)",
+      "Bash(Remove-Item *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fd*)",
+      "Bash(del *)",
+      "Bash(rmdir *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File .claude/hooks/guard-assets-check.ps1"
+          }
+        ]
+      }
+    ]
+  }
+}
