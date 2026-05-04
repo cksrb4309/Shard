@@ -8,7 +8,7 @@ public class Test_BlockGroup : MonoBehaviour
     [SerializeField] Test_Break_3[] test_3_blocks;
     [SerializeField] Test_Break_4[] test_4_blocks;
     [SerializeField] Test_Break_5[] test_5_blocks;
-    [SerializeField] Test_Break_6[] test_6_blocks;
+    [SerializeField] GpuBreakBlockEffect[] test_6_blocks;
 
     [Button]
     public void Setting()
@@ -59,12 +59,12 @@ public class Test_BlockGroup : MonoBehaviour
             test_5_blocks[i] = test_break_5s[i];
         }
 
-        Test_Break_6[] test_break_6s = transform.GetComponentsInChildren<Test_Break_6>();
-        test_6_blocks = new Test_Break_6[test_break_6s.Length];
+        GpuBreakBlockEffect[] test_break_6s = transform.GetComponentsInChildren<GpuBreakBlockEffect>();
+        test_6_blocks = new GpuBreakBlockEffect[test_break_6s.Length];
 
         for (int i = 0; i < test_6_blocks.Length; i++)
         {
-            test_break_6s[i].Setting();
+            test_break_6s[i].Setup();
             test_6_blocks[i] = test_break_6s[i];
         }
     }
@@ -122,7 +122,7 @@ public class Test_BlockGroup : MonoBehaviour
             for (int i = 0; i < test_6_blocks.Length; i++)
             {
                 test_6_blocks[i].gameObject.SetActive(true);
-                test_6_blocks[i].ResetShard();
+                test_6_blocks[i].ResetEffect();
             }
         }
     }
@@ -148,7 +148,7 @@ public class Test_BlockGroup : MonoBehaviour
             case 5:
                 for (int i = 0; i < test_5_blocks.Length; i++) test_5_blocks[i].Break(); break;
             case 6:
-                for (int i = 0; i < test_6_blocks.Length; i++) test_6_blocks[i].Break(); break;
+                for (int i = 0; i < test_6_blocks.Length; i++) test_6_blocks[i].PlayBreak(); break;
         }
     }
 }
