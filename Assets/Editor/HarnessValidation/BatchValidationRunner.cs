@@ -142,12 +142,17 @@ public static class BatchValidationRunner
             scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
             opened = true;
 
+            var missingDetails = new List<string>();
             int missingScriptCount = 0;
             foreach (GameObject root in scene.GetRootGameObjects())
-                missingScriptCount += CountMissingScripts(root);
+                missingScriptCount += CountMissingScripts(root, missingDetails);
 
             if (missingScriptCount > 0)
+            {
                 errors.Add($"{scenePath} contains {missingScriptCount} missing MonoBehaviour reference(s).");
+                foreach (string detail in missingDetails)
+                    errors.Add($"Missing script object: {detail}");
+            }
         }
         catch (Exception exception)
         {
@@ -170,10 +175,15 @@ public static class BatchValidationRunner
         try
         {
             prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
-            int missingScriptCount = CountMissingScripts(prefabRoot);
+            var missingDetails = new List<string>();
+            int missingScriptCount = CountMissingScripts(prefabRoot, missingDetails);
 
             if (missingScriptCount > 0)
+            {
                 errors.Add($"{prefabPath} contains {missingScriptCount} missing MonoBehaviour reference(s).");
+                foreach (string detail in missingDetails)
+                    errors.Add($"Missing script object: {detail}");
+            }
         }
         catch (Exception exception)
         {
@@ -212,14 +222,32 @@ public static class BatchValidationRunner
             warnings.Add("Assets/99_Tests does not contain project test scripts yet.");
     }
 
-    private static int CountMissingScripts(GameObject gameObject)
+    private static int CountMissingScripts(GameObject gameObject, List<string> details)
     {
         int count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(gameObject);
+        if (count > 0)
+            details.Add($"{GetTransformPath(gameObject.transform)} ({count})");
 
         foreach (Transform child in gameObject.transform)
-            count += CountMissingScripts(child.gameObject);
+            count += CountMissingScripts(child.gameObject, details);
 
         return count;
+    }
+
+    private static string GetTransformPath(Transform transform)
+    {
+        if (transform == null)
+            return "<null>";
+
+        string path = transform.name;
+        Transform current = transform.parent;
+        while (current != null)
+        {
+            path = current.name + "/" + path;
+            current = current.parent;
+        }
+
+        return path;
     }
 
     private static void RunMenuValidation(string title, Action action)
