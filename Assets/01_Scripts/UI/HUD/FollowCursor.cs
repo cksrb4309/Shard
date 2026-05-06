@@ -24,10 +24,13 @@ public class FollowCursor : MonoBehaviour
     public GameObject attack_Cursor;
     public GameObject ui_Cursor;
 
+    [SerializeField] private Canvas cursorCanvas;
+
     Transform playerTransform;
+    RectTransform rootCanvasRect;
+    Camera uiCamera;
 
     Vector2 mousePos;
-    Vector2 screenSize;
 
     Sprite beforeSprite;
     Sprite currentSprite;
@@ -37,8 +40,7 @@ public class FollowCursor : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
 
         ui_CursorImage.sprite = ui_CursorSprite;
-
-        screenSize = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        CacheCanvasReferences();
 
         Color color = Color.white;
         color.a = 1f;
@@ -61,9 +63,13 @@ public class FollowCursor : MonoBehaviour
     }
     private void LateUpdate()
     {
-        mousePos = mousePositionAction.action.ReadValue<Vector2>();
+        CacheCanvasReferences();
 
-        if (EventSystem.current.IsPointerOverGameObject())
+        mousePos = mousePositionAction.action.ReadValue<Vector2>();
+        if (!TryScreenToCanvasLocal(mousePos, out Vector2 mouseLocalPos))
+            return;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             if (!ui_Cursor.activeSelf) ui_Cursor.SetActive(true);
             if (attack_Cursor.activeSelf) attack_Cursor.SetActive(false);
@@ -86,20 +92,18 @@ public class FollowCursor : MonoBehaviour
             if (!attack_Cursor.activeSelf) attack_Cursor.SetActive(true);
             if (!playerAttack_Cursor.gameObject.activeSelf) playerAttack_Cursor.gameObject.SetActive(true);
 
-            Vector2 playerForwardPosition = cam.WorldToScreenPoint(playerTransform.position + playerTransform.forward);
+            if (playerTransform != null && cam != null &&
+                TryScreenToCanvasLocal(cam.WorldToScreenPoint(playerTransform.position + playerTransform.forward), out Vector2 playerForwardLocalPos) &&
+                TryScreenToCanvasLocal(cam.WorldToScreenPoint(playerTransform.position), out Vector2 playerLocalPos))
+            {
+                Vector2 playerAttackCursorDir = (playerForwardLocalPos - playerLocalPos).normalized;
+                float cursorDistance = (mouseLocalPos - playerLocalPos).magnitude;
 
-            Vector2 playerPosition = cam.WorldToScreenPoint(playerTransform.position);
-
-            Vector2 playerAttackCursorDir = (playerForwardPosition - playerPosition).normalized;
-
-            float cursorDistance = (mousePos - playerPosition).magnitude;
-
-            playerAttack_Cursor.localPosition = (playerPosition + (playerAttackCursorDir * cursorDistance)) - screenSize;
+                playerAttack_Cursor.anchoredPosition = playerLocalPos + (playerAttackCursorDir * cursorDistance);
+            }
         }
 
-        mousePos -= screenSize;
-
-        cursorTransform.localPosition = mousePos;
+        cursorTransform.anchoredPosition = mouseLocalPos;
     }
     private void OnEnable()
     {
@@ -119,5 +123,34 @@ public class FollowCursor : MonoBehaviour
     public void Connect(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
+    }
+
+    private void CacheCanvasReferences()
+    {
+        if (cursorCanvas == null)
+        {
+            cursorCanvas = (cursorTransform != null)
+                ? cursorTransform.GetComponentInParent<Canvas>()
+                : GetComponentInParent<Canvas>();
+        }
+
+        if (cursorCanvas == null)
+            return;
+
+        rootCanvasRect = cursorCanvas.rootCanvas.transform as RectTransform;
+        uiCamera = cursorCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : (cursorCanvas.worldCamera != null ? cursorCanvas.worldCamera : Camera.main);
+    }
+
+    private bool TryScreenToCanvasLocal(Vector2 screenPos, out Vector2 localPos)
+    {
+        if (rootCanvasRect == null)
+        {
+            localPos = default;
+            return false;
+        }
+
+        return RectTransformUtility.ScreenPointToLocalPointInRectangle(rootCanvasRect, screenPos, uiCamera, out localPos);
     }
 }

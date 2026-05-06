@@ -154,7 +154,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0.5
+        m_Name: AnimationPositionY
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -312,21 +315,30 @@ VisualEffect:
           - serializedVersion: 3
             time: 0
             value: 0
-            inSlope: 2.851641
-            outSlope: 2.851641
+            inSlope: 4.4557242
+            outSlope: 4.4557242
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
-            outWeight: 0.23519431
+            outWeight: 0.17211367
           - serializedVersion: 3
-            time: 0.41048914
-            value: 0.76094556
-            inSlope: 1.0062755
-            outSlope: 1.0062755
+            time: 0.17167035
+            value: 0.555239
+            inSlope: 1.9922624
+            outSlope: 1.9922624
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
+            inWeight: 0.10901143
+            outWeight: 0.17575166
+          - serializedVersion: 3
+            time: 0.41497132
+            value: 0.86576957
+            inSlope: 0.8471055
+            outSlope: 0.8471055
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.1817444
+            outWeight: 0.08115854
           - serializedVersion: 3
             time: 1
             value: 1
@@ -393,6 +405,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
 --- !u!1 &2596057686162988317
 GameObject:
   m_ObjectHideFlags: 0
