@@ -13,11 +13,14 @@ public class TitleCursor : MonoBehaviour
     public InputActionReference mousePositionAction;
     public InputActionReference mouseClickAction;
 
+    [SerializeField] private Canvas cursorCanvas;
+
     Sprite currentCursorSprite;
     Sprite beforeCursorSprite;
 
     Vector2 mousePos;
-    Vector2 screenSize;
+    RectTransform rootCanvasRect;
+    Camera uiCamera;
 
     private void Awake()
     {
@@ -27,8 +30,7 @@ public class TitleCursor : MonoBehaviour
         currentCursorSprite = uiCursor;
         beforeCursorSprite = uiCursor;
         cursorImage.sprite = uiCursor;
-
-        screenSize = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        CacheCanvasReferences();
 
 
         Color color = Color.white;
@@ -40,7 +42,11 @@ public class TitleCursor : MonoBehaviour
     }
     private void LateUpdate()
     {
+        CacheCanvasReferences();
+
         mousePos = mousePositionAction.action.ReadValue<Vector2>();
+        if (!TryScreenToCanvasLocal(mousePos, out Vector2 mouseLocalPos))
+            return;
 
         if (mouseClickAction.action.IsPressed())
         {
@@ -57,9 +63,7 @@ public class TitleCursor : MonoBehaviour
             cursorImage.sprite = beforeCursorSprite;
         }
 
-        mousePos -= screenSize;
-
-        cursorTransform.localPosition = mousePos;
+        cursorTransform.anchoredPosition = mouseLocalPos;
     }
     private void OnEnable()
     {
@@ -78,5 +82,34 @@ public class TitleCursor : MonoBehaviour
     public void SetCursorColor(Color cursorColor)
     {
         cursorImage.color = cursorColor;
+    }
+
+    private void CacheCanvasReferences()
+    {
+        if (cursorCanvas == null)
+        {
+            cursorCanvas = (cursorTransform != null)
+                ? cursorTransform.GetComponentInParent<Canvas>()
+                : GetComponentInParent<Canvas>();
+        }
+
+        if (cursorCanvas == null)
+            return;
+
+        rootCanvasRect = cursorCanvas.rootCanvas.transform as RectTransform;
+        uiCamera = cursorCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : (cursorCanvas.worldCamera != null ? cursorCanvas.worldCamera : Camera.main);
+    }
+
+    private bool TryScreenToCanvasLocal(Vector2 screenPos, out Vector2 localPos)
+    {
+        if (rootCanvasRect == null)
+        {
+            localPos = default;
+            return false;
+        }
+
+        return RectTransformUtility.ScreenPointToLocalPointInRectangle(rootCanvasRect, screenPos, uiCamera, out localPos);
     }
 }

@@ -9,11 +9,11 @@ public class CamoStellarJet_InputAndMove : CustomPlayerInputAndMove
         {
             OnNormalAttack();
         }
-        if (subSkillAction.action.IsPressed())
+        if (subSkillAction.action.WasPressedThisFrame())
         {
             OnSubSkill();
         }
-        if (mainSkillAction.action.IsPressed())
+        if (mainSkillAction.action.WasPressedThisFrame())
         {
             OnMainSkill();
         }

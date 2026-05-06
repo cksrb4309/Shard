@@ -110,11 +110,11 @@ public class PlayerInputAndMove : MonoBehaviour
         {
             OnNormalAttack();
         }
-        if (subSkillAction.action.IsPressed())
+        if (subSkillAction.action.WasPressedThisFrame())
         {
             OnSubSkill();
         }
-        if (mainSkillAction.action.IsPressed())
+        if (mainSkillAction.action.WasPressedThisFrame())
         {
             OnMainSkill();
         }
