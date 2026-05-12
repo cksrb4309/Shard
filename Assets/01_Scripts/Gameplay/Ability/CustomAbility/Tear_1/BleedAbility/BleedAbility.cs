@@ -16,9 +16,9 @@ public class BleedAbility : Ability
     }
     public override void OnEvent(AttackData attackData)
     {
-        if (LuckManager.Calculate(probability, true))
+        if (LuckManager.Calculate(probability * count, true))
         {
-            GameManager.GetLastHit().ReceiveDebuff(bleedStatusEffect);
+            attackData.HitTarget?.ReceiveDebuff(bleedStatusEffect);
         }
     }
 }

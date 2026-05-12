@@ -11,6 +11,7 @@ public class AttackData
     private List<int> dispatchedAbilities = new List<int>();
 
     public Vector3 Position = Vector3.zero;
+    public IAttackable HitTarget { get; private set; }
 
     public AttackData() { }
     public AttackData(AbilityEventType type, float value, Vector3 position, List<int> dispatchedAbilities)
@@ -27,6 +28,7 @@ public class AttackData
         Type = attackData.Type;
         Value = attackData.Value;
         Position = attackData.Position;
+        HitTarget = null;
 
         dispatchedAbilities.Clear();
         dispatchedAbilities.AddRange(attackData.dispatchedAbilities);
@@ -71,6 +73,7 @@ public class AttackData
                 damageAmount,
                 pos,
                 dispatchedAbilities);
+            attackData.HitTarget = attackable;
 
             // 이벤트 전달
             AbilityManager.Instance.Dispatch(attackData);
@@ -116,6 +119,7 @@ public class AttackData
         attackData.Type = type;
         attackData.Value = value;
         attackData.Position = position;
+        attackData.HitTarget = null;
 
         attackData.dispatchedAbilities.Clear();
         attackData.dispatchedAbilities.AddRange(dispatchedAbilities);
@@ -132,6 +136,8 @@ public class AttackData
     }
     public static void ReleaseAttackData(AttackData attackData)
     {
+        attackData.HitTarget = null;
+        attackData.dispatchedAbilities.Clear();
         pool.Release(attackData);
     }
     public static readonly HashSet<AbilityEventType> DamageEventType = new()
