@@ -130,6 +130,21 @@ public class CustomPlayerInputAndMove : MonoBehaviour
     {
         subSkill.UseSkill();
     }
+    protected bool WasSubSkillPressedThisFrame()
+    {
+        bool inputSystemPressed = subSkillAction.action.WasPressedThisFrame();
+        bool webGLBridgePressed = WebGLMouseButtonBridge.ConsumeRightButtonDown();
+
+        return inputSystemPressed || webGLBridgePressed;
+    }
+    protected bool IsSubSkillPressed()
+    {
+        return subSkillAction.action.IsPressed() || WebGLMouseButtonBridge.IsRightButtonPressed();
+    }
+    protected void ClearBufferedSubSkillPress()
+    {
+        WebGLMouseButtonBridge.ClearRightButtonDown();
+    }
     private void OnRun(InputAction.CallbackContext context)
     {
         if (boostCoroutine != null) StopCoroutine(boostCoroutine);

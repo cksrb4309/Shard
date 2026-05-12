@@ -42,7 +42,7 @@ public class InterstellarRunner_InputAndMove : CustomPlayerInputAndMove
 
         if (!isNormalAttack && !isMainSkill)
         {
-            if (subSkillAction.action.IsPressed())
+            if (IsSubSkillPressed())
             {
                 if (!isCharged)
                 {
@@ -51,6 +51,8 @@ public class InterstellarRunner_InputAndMove : CustomPlayerInputAndMove
                     isSubSkill = true;
 
                     OnSubSkill();
+
+                    ClearBufferedSubSkillPress();
                 }
             }
             else
@@ -64,6 +66,10 @@ public class InterstellarRunner_InputAndMove : CustomPlayerInputAndMove
                     isSubSkill = false;
                 }
             }
+        }
+        else
+        {
+            ClearBufferedSubSkillPress();
         }
         if (!isNormalAttack && !isSubSkill)
         {

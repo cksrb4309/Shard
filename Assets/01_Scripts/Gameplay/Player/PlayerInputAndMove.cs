@@ -110,7 +110,9 @@ public class PlayerInputAndMove : MonoBehaviour
         {
             OnNormalAttack();
         }
-        if (subSkillAction.action.WasPressedThisFrame())
+        bool subSkillPressed = subSkillAction.action.WasPressedThisFrame();
+        bool webGLSubSkillPressed = WebGLMouseButtonBridge.ConsumeRightButtonDown();
+        if (subSkillPressed || webGLSubSkillPressed)
         {
             OnSubSkill();
         }
