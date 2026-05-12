@@ -30,7 +30,7 @@ public class WebGLDamageTextParticleEmitter : MonoBehaviour
     [SerializeField] private float characterSpacingScale = 1f;
     [SerializeField] private float horizontalJitter = 0f;
     [SerializeField] private Vector2 sideDriftSpeedRange = new Vector2(0f, 0f);
-    [SerializeField] private Vector2 upwardSpeedRange = new Vector2(1.2f, 1.4f);
+    [SerializeField] private Vector2 upwardSpeedRange = new Vector2(1.3f, 1.3f);
     [SerializeField] private float baseLifetime = 0.6f;
     [SerializeField] private float baseSize = 0.2f;
     [SerializeField] private float sizePerCharacter = 0.03f;
@@ -221,6 +221,7 @@ public class WebGLDamageTextParticleEmitter : MonoBehaviour
 
         renderer.renderMode = ParticleSystemRenderMode.Billboard;
         renderer.alignment = ParticleSystemRenderSpace.View;
+        renderer.sortMode = ParticleSystemSortMode.YoungestInFront;
         renderer.material = runtimeMaterial;
         ConfigureVertexStreams(renderer);
     }
