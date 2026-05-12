@@ -23,6 +23,10 @@ public class RealtimeCanvasUI : MonoBehaviour
 
     Coroutine thinCircleCoroutine = null;
 
+    Canvas realtimeCanvas;
+    RectTransform rootCanvasRect;
+    Camera uiCamera;
+
     IEnumerator ThinCircleCoroutine_1()
     {
         float t = 0;
@@ -94,6 +98,8 @@ public class RealtimeCanvasUI : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        CacheCanvasReferences();
     }
     public static void Notification(IconType iconType, Vector3 position)
     {
@@ -186,6 +192,9 @@ public class RealtimeCanvasUI : MonoBehaviour
     }
     public void ExcutePositionIcon(IconType iconType, Vector3 position)
     {
+        if (playerTransform == null || cam == null)
+            return;
+
         if ((PlayerPosition - position).magnitude < range) return;
 
         int index = (int)iconType;
@@ -206,7 +215,8 @@ public class RealtimeCanvasUI : MonoBehaviour
     {
         float t = 0;
 
-        Vector2 point;
+        Vector2 iconPosition;
+        Vector2 circlePosition;
 
         while (t < 4f)
         {
@@ -214,19 +224,16 @@ public class RealtimeCanvasUI : MonoBehaviour
 
             t += Time.deltaTime;
 
-            point = cam.WorldToScreenPoint(PlayerPosition + (position - PlayerPosition).normalized * range);
+            CacheCanvasReferences();
 
-            Vector2 thinCirclePos = cam.WorldToScreenPoint(PlayerPosition);
+            if (TryWorldToCanvasLocal(PlayerPosition, out circlePosition))
+                thinCircle.rectTransform.anchoredPosition = circlePosition;
 
-            thinCirclePos.x -= Screen.width * 0.5f;
-            thinCirclePos.y -= Screen.height * 0.5f;
-
-            thinCircle.rectTransform.localPosition = thinCirclePos;
-
-            point.x -= Screen.width * 0.5f;
-            point.y -= Screen.height * 0.5f;
-
-            iconImages[index].rectTransform.localPosition = point;
+            Vector3 iconWorldPosition = PlayerPosition + (position - PlayerPosition).normalized * range;
+            if (TryWorldToCanvasLocal(iconWorldPosition, out iconPosition))
+            {
+                iconImages[index].rectTransform.anchoredPosition = iconPosition;
+            }
         }
         iconPositionCoroutine[index] = null;
     }
@@ -282,6 +289,45 @@ public class RealtimeCanvasUI : MonoBehaviour
         iconImages[index].gameObject.SetActive(false);
     }
     public void SetPlayerTransform(Transform playerTransform) => this.playerTransform = playerTransform;
+
+    void CacheCanvasReferences()
+    {
+        if (realtimeCanvas == null)
+            realtimeCanvas = GetComponentInParent<Canvas>();
+
+        if (realtimeCanvas == null)
+            return;
+
+        rootCanvasRect = realtimeCanvas.rootCanvas.transform as RectTransform;
+        uiCamera = realtimeCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : (realtimeCanvas.worldCamera != null ? realtimeCanvas.worldCamera : Camera.main);
+    }
+
+    bool TryWorldToCanvasLocal(Vector3 worldPosition, out Vector2 localPosition)
+    {
+        localPosition = default;
+
+        if (cam == null)
+            return false;
+
+        Vector3 screenPosition = cam.WorldToScreenPoint(worldPosition);
+        if (screenPosition.z < 0f)
+            return false;
+
+        return TryScreenToCanvasLocal(screenPosition, out localPosition);
+    }
+
+    bool TryScreenToCanvasLocal(Vector2 screenPosition, out Vector2 localPosition)
+    {
+        if (rootCanvasRect == null)
+        {
+            localPosition = default;
+            return false;
+        }
+
+        return RectTransformUtility.ScreenPointToLocalPointInRectangle(rootCanvasRect, screenPosition, uiCamera, out localPosition);
+    }
 }
 public enum IconType
 {
