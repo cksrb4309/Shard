@@ -1,0 +1,23 @@
+{
+  "name": "UnityCliTools.Editor",
+  "rootNamespace": "UnityCliTools",
+  "references": [
+    "UnityCliConnector.Editor",
+    "UnityCliTools.Runtime",
+    "UnityEngine.UI",
+    "Unity.TextMeshPro",
+    "UnityEngine.UIElementsModule",
+    "UnityEditor.UIElementsModule"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

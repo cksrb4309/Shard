@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="tutorial_root" class="tutorial-root">
+        <ui:VisualElement name="tutorial_backdrop" class="tutorial-backdrop">
+            <ui:VisualElement name="tutorial_card" class="tutorial-card">
+                <ui:Label name="title_label" class="title-text" text="How To Play" />
+                <ui:VisualElement name="page_container" class="page-container">
+            <ui:VisualElement name="page_0" class="tutorial-page">
+                <ui:Label name="page_0_text" class="body-text" text="Use movement controls to explore the stage." />
+            </ui:VisualElement>
+            <ui:VisualElement name="page_1" class="tutorial-page hidden">
+                <ui:Label name="page_1_text" class="body-text" text="Read objectives before entering the game scene." />
+            </ui:VisualElement>
+            <ui:VisualElement name="page_2" class="tutorial-page hidden">
+                <ui:Label name="page_2_text" class="body-text" text="Press X to close this tutorial." />
+            </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="button_row" class="button-row">
+                    <ui:Button name="previous_button" class="nav-button secondary-button" text="&lt;" />
+                    <ui:Button name="next_button" class="nav-button primary-button" text="&gt;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

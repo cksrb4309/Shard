@@ -1,0 +1,10 @@
+{
+  "name": "com.rlack.unity-cli-tools",
+  "version": "0.1.0",
+  "displayName": "Unity CLI Tools",
+  "description": "Shared custom UnityCliTool package and tool catalog for LLM-driven Unity workflows.",
+  "unity": "6000.3",
+  "author": {
+    "name": "rlack"
+  }
+}

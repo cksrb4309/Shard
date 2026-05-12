@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a129df410ddf4627a8fed03b2643f97a, type: 3}
+  m_Name: SmokeTutorialScreenConfig
+  m_EditorClassIdentifier: UnityCliTools.Runtime::UnityCliTools.Runtime.Ui.UiScreenConfig
+  title: Theme Driven Tutorial
+  pageTexts:
+  - 'Theme page 1: base information.'
+  - 'Theme page 2: controls are data-driven.'
+  - 'Theme page 3: close from config.'
+  previousText: <
+  nextText: '>'
+  closeText: X
+  panelMargins: {x: 32, y: 32, z: 32, w: 32}
+  panelMinSize: {x: 280, y: 360}
+  panelMaxSize: {x: 1320, y: 900}

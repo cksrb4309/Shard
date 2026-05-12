@@ -1,0 +1,118 @@
+:root {
+    --uitk-bg: rgba(8, 14, 22, 0.72);
+    --uitk-panel: rgb(245, 241, 226);
+    --uitk-text: rgb(18, 24, 32);
+    --uitk-muted: rgb(84, 92, 102);
+    --uitk-primary: rgb(35, 112, 92);
+    --uitk-secondary: rgb(222, 214, 190);
+    --uitk-radius: 24px;
+    --uitk-title-size: 52px;
+    --uitk-body-size: 30px;
+}
+
+.tutorial-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.tutorial-backdrop {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color: var(--uitk-bg);
+}
+
+.tutorial-card {
+    width: 78%;
+    max-width: 1120px;
+    min-width: 280px;
+    max-height: 86%;
+    padding-left: 52px;
+    padding-right: 52px;
+    padding-top: 42px;
+    padding-bottom: 38px;
+    border-top-left-radius: var(--uitk-radius);
+    border-top-right-radius: var(--uitk-radius);
+    border-bottom-left-radius: var(--uitk-radius);
+    border-bottom-right-radius: var(--uitk-radius);
+    background-color: var(--uitk-panel);
+}
+
+.title-text {
+    font-size: var(--uitk-title-size);
+    color: var(--uitk-text);
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: 28px;
+}
+
+.page-container {
+    min-height: 180px;
+    flex-grow: 1;
+}
+
+.tutorial-page {
+    flex-grow: 1;
+}
+
+.body-text {
+    font-size: var(--uitk-body-size);
+    color: var(--uitk-muted);
+    white-space: normal;
+}
+
+.button-row {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 34px;
+}
+
+.nav-button {
+    min-width: 96px;
+    min-height: 64px;
+    margin-left: 16px;
+    font-size: 34px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.primary-button {
+    background-color: var(--uitk-primary);
+    color: white;
+}
+
+.secondary-button {
+    background-color: var(--uitk-secondary);
+    color: var(--uitk-text);
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .tutorial-card {
+        width: 94%;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 24px;
+        padding-bottom: 22px;
+    }
+
+    .title-text {
+        font-size: 34px;
+    }
+
+    .body-text {
+        font-size: 22px;
+    }
+}

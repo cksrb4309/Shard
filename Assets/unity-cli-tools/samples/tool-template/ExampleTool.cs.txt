@@ -1,0 +1,31 @@
+using Newtonsoft.Json.Linq;
+using UnityCliConnector;
+using UnityCliTools.Core;
+
+namespace UnityCliTools.Scene;
+
+[UnityCliTool(
+    Name = UnityCliToolNames.OpenScene,
+    Description = "Open a scene by asset path.",
+    Group = UnityCliToolGroups.Scene)]
+public static class ExampleTool
+{
+    public sealed class Parameters
+    {
+        [ToolParameter("Scene asset path.", Required = true)]
+        public string Path { get; set; }
+    }
+
+    public static object HandleCommand(JObject parameters)
+    {
+        var path = parameters.Value<string>("path");
+        UnityCliToolShared.GuardRequired(path, nameof(path));
+
+        return new SuccessResponse(
+            "Template tool executed.",
+            new
+            {
+                path = UnityCliToolShared.NormalizeAssetPath(path)
+            });
+    }
+}

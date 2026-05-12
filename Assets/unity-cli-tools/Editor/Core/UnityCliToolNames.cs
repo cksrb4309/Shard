@@ -1,0 +1,86 @@
+namespace UnityCliTools.Core
+{
+
+public static class UnityCliToolNames
+{
+    public const string ListOpenScenes = "list_open_scenes";
+    public const string OpenScene = "open_scene";
+    public const string SaveScene = "save_scene";
+    public const string CreateGameObject = "create_game_object";
+    public const string SetTransform = "set_transform";
+    public const string SetActive = "set_active";
+    public const string FindGameObjects = "find_game_objects";
+    public const string DumpHierarchy = "dump_hierarchy";
+    public const string FindPrefab = "find_prefab";
+    public const string InspectPrefab = "inspect_prefab";
+    public const string ValidatePrefab = "validate_prefab";
+    public const string FindAsset = "find_asset";
+    public const string GetAssetInfo = "get_asset_info";
+    public const string FindAssetsByDependency = "find_assets_by_dependency";
+    public const string FindShaders = "find_shaders";
+    public const string FindMaterialsUsingShader = "find_materials_using_shader";
+    public const string InspectShaderProperties = "inspect_shader_properties";
+    public const string ReserializeTargets = "reserialize_targets";
+    public const string FindMissingScripts = "find_missing_scripts";
+    public const string InspectComponents = "inspect_components";
+    public const string FindObjectsWithComponent = "find_objects_with_component";
+    public const string AddComponent = "add_component";
+    public const string RemoveComponent = "remove_component";
+    public const string ValidateSceneReferences = "validate_scene_references";
+    public const string FindMissingReferences = "find_missing_references";
+    public const string SetObjectReference = "set_object_reference";
+    public const string ValidateBuildSettings = "validate_build_settings";
+    public const string ValidateSelection = "validate_selection";
+    public const string EditorState = "editor_state";
+    public const string SelectionState = "selection_state";
+    public const string BatchRename = "batch_rename";
+    public const string BatchSetActive = "batch_set_active";
+    public const string BatchReplaceComponent = "batch_replace_component";
+    public const string BatchUpdateSerializedProperty = "batch_update_serialized_property";
+    public const string BuildPreflight = "build_preflight";
+    public const string InspectProjectSettings = "inspect_project_settings";
+    public const string InspectTagsLayers = "inspect_tags_layers";
+    public const string ListPackages = "list_packages";
+    public const string InspectImportSettings = "inspect_import_settings";
+    public const string AddressablesState = "addressables_state";
+    public const string PlayModeState = "play_mode_state";
+    public const string ListCameras = "list_cameras";
+    public const string InspectUiCanvases = "inspect_ui_canvases";
+    public const string ReadInputAxes = "read_input_axes";
+    public const string InspectUiHierarchy = "inspect_ui_hierarchy";
+    public const string InspectRectTransform = "inspect_rect_transform";
+    public const string SetRectTransform = "set_rect_transform";
+    public const string FindUiElements = "find_ui_elements";
+    public const string InspectCanvasScaler = "inspect_canvas_scaler";
+    public const string ValidateUiLayout = "validate_ui_layout";
+    public const string SetUiText = "set_ui_text";
+    public const string SetUiImage = "set_ui_image";
+    public const string SetButtonState = "set_button_state";
+    public const string CreateUiElement = "create_ui_element";
+    public const string SetCanvasScaler = "set_canvas_scaler";
+    public const string SetButtonOnClick = "set_button_on_click";
+    public const string CreateMonoScript = "create_mono_script";
+    public const string SetSerializedArray = "set_serialized_array";
+    public const string SetTmpTextStyle = "set_tmp_text_style";
+    public const string CreateUiLayoutGroup = "create_ui_layout_group";
+    public const string CreateUiControl = "create_ui_control";
+    public const string SetCanvasGroup = "set_canvas_group";
+    public const string CreateUiPrefab = "create_ui_prefab";
+    public const string ApplyUiPrefab = "apply_ui_prefab";
+    public const string ValidateUiFlow = "validate_ui_flow";
+    public const string SetResponsiveRect = "set_responsive_rect";
+    public const string CreateUiTheme = "create_ui_theme";
+    public const string SetUiThemeValue = "set_ui_theme_value";
+    public const string SetUiThemeValues = "set_ui_theme_values";
+    public const string ApplyUiTheme = "apply_ui_theme";
+    public const string BindUiThemeElement = "bind_ui_theme_element";
+    public const string ValidateUiThemeBindings = "validate_ui_theme_bindings";
+    public const string CreateUiScreenConfig = "create_ui_screen_config";
+    public const string ApplyUiScreenConfig = "apply_ui_screen_config";
+    public const string CreateUitkScreen = "create_uitk_screen";
+    public const string CreateUitkDocument = "create_uitk_document";
+    public const string SetUitkUssTokens = "set_uitk_uss_tokens";
+    public const string ConfigureUitkTutorialPager = "configure_uitk_tutorial_pager";
+    public const string ValidateUitkUi = "validate_uitk_ui";
+}
+}

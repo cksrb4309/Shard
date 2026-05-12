@@ -1,0 +1,22 @@
+{
+  "name": "UnityCliTools.Editor.Tests",
+  "rootNamespace": "UnityCliTools.Tests",
+  "references": [
+    "UnityCliTools.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
+

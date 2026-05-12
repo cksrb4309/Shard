@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce66a3efbdca4db39e5c2e9ff53129a8, type: 3}
+  m_Name: SmokeUiTheme
+  m_EditorClassIdentifier: UnityCliTools.Runtime::UnityCliTools.Runtime.Ui.UiTheme
+  backgroundColor: {r: 0.04, g: 0.05, b: 0.06, a: 1}
+  panelColor: {r: 0.06, g: 0.1, b: 0.14, a: 0.96}
+  primaryColor: {r: 0.2, g: 0.76, b: 0.58, a: 1}
+  secondaryColor: {r: 0.18, g: 0.33, b: 0.52, a: 1}
+  dangerColor: {r: 0.82, g: 0.22, b: 0.18, a: 1}
+  textColor: {r: 0.96, g: 0.98, b: 0.92, a: 1}
+  mutedTextColor: {r: 0.7, g: 0.74, b: 0.78, a: 1}
+  buttonTextColor: {r: 0.02, g: 0.04, b: 0.05, a: 1}
+  buttonHighlightedColor: {r: 1, g: 0.86, b: 0.42, a: 1}
+  buttonPressedColor: {r: 0.78, g: 0.58, b: 0.18, a: 1}
+  buttonDisabledColor: {r: 0.42, g: 0.42, b: 0.42, a: 0.55}
+  titleFont: {fileID: 0}
+  bodyFont: {fileID: 0}
+  buttonFont: {fileID: 0}
+  titleFontSize: 54
+  bodyFontSize: 31
+  buttonFontSize: 36
+  panelSprite: {fileID: 0}
+  buttonSprite: {fileID: 0}
+  iconSprite: {fileID: 0}
